@@ -23,6 +23,7 @@
   start.graphics.beginFill("grey").drawRect(0, 0, 100, 100);
   start.x = 0;
   start.y = 0;
+stage.addChild(start)
   start.on("stagemousedown", function(evt) {
     playerball = new createjs.Shape();
     playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
