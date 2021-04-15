@@ -27,6 +27,7 @@ var ballplaced = false;
 var pressmovestarted = false;
 var movestartx;
 var movestarty;
+var playerball;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
