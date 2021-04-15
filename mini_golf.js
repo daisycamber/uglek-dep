@@ -2,9 +2,12 @@
   var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
+scale = 800/window.innerWidth;
+stage.scaleX = stage.scaleY = scale;
   stage.canvas.height = window.innerHeight - 54;
+
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0, 0, window.innerWidth, window.innerHeight);
+  green.graphics.beginFill("green").drawRect(0, 0, 800, window.innerHeight * scale);
   stage.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
