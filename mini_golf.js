@@ -78,6 +78,7 @@ stage.on("stagemouseup", function(evt) {
           playerball.x = playerball.x + movex;
           playerball.y = playerball.y + movey;
           }
+  stage.removeChild(line);
       pressmovestarted = false
       });
 stage.on("stagemousemove", function(evt) {
