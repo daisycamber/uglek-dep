@@ -6,7 +6,7 @@ less = window.innerWidth;
 if(window.innerHeight < window.innerWidth){
   less = window.innerHeight;
 }
-scale = less/1000;
+scale = 1000/less;
 stage.scaleX = stage.scaleY = scale;
   stage.canvas.height = window.innerHeight - 54;
 
