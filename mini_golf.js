@@ -69,7 +69,7 @@ function drawLine(x,y,xx,yy){
 
             // Set the 'brush stroke' style (basically the thickness of the line)
             //      Then start drawing a black line
-            line.graphics.setStrokeStyle(3).beginStroke("rgba(0,0,0,1)");
+            line.graphics.setStrokeStyle(2).beginStroke("rgba(0,0,0,1)");
 
             // Tell EaselJS where to go to start drawing the line
             line.graphics.moveTo(x, y);
