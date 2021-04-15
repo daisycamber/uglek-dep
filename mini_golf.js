@@ -41,6 +41,8 @@ var playerball;
       playerball.x = evt.stageX;
       playerball.y = evt.stageY;
     }
+    stage.removeChild(line);
+      pressmovestarted = false;
   });
   stage.addChild(start);
 
@@ -80,9 +82,9 @@ stage.on("stagemouseup", function(evt) {
           playerball.y = playerball.y + movey;
           }
   stage.removeChild(line);
-      pressmovestarted = false
+      pressmovestarted = false;
       });
-stage.on("stagemousemove", function(evt) {
+stage.on("stagemousedrag", function(evt) {
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
           drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
