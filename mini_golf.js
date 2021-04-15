@@ -10,7 +10,7 @@ stage.addChild(container);
 less = window.innerWidth;
 if(window.innerWidth > window.innerHeight){
   less = window.innerHeight;
-  container.x = (window.innerWidth - window.innerHeight)/2;
+  container.x = (window.innerHeight-window.innerWidth)/2;
 }
   stage.canvas.height = window.innerHeight - 54;
 
