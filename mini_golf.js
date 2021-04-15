@@ -33,19 +33,6 @@ var movestarty;
       playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
       playerball.x = evt.stageX;
       playerball.y = evt.stageY;
-      playerball.on("pressmove", function(evt) {
-        if(!pressmovestarted){
-          movestartx = evt.stageX;
-          movestarty = evt.stageY;
-        }
-      });
-      playerball.on("pressup", function(evt) {
-          movex = movestartx - evt.stageX;
-          movey = movestartx - evt.stageY;
-          playerball.x = playerball.x + movex;
-          playerball.y = playerball.y + movex;
-        pressmovestarted = false;
-      });
       stage.addChild(playerball)
       ballplaced = true;
     }
@@ -55,6 +42,13 @@ var movestarty;
     }
   });
   stage.addChild(start);
+
+stage.on("stagemouseup", function(evt) {
+          movex = playerball.x - evt.stageX;
+          movey = playerball.y - evt.stageY;
+          playerball.x = playerball.x + movex;
+          playerball.y = playerball.y + movex;
+      });
   
     //Update stage will render next frame
   stage.update();
