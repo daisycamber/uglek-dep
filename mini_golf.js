@@ -3,17 +3,19 @@
   var last = 0;
   var stage = new createjs.Stage("game156");
 var container = new createjs.Container();
+green = new createjs.Shape();
+  green.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
+  container.addChild(background);
+stage.addChild(container);
 less = window.innerWidth;
 if(window.innerWidth > window.innerHeight){
   less = window.innerHeight;
   container.x = (window.innerWidth - window.innerHeight)/2;
 }
-scale = 1000/less;
-stage.scaleX = stage.scaleY = scale;
   stage.canvas.height = window.innerHeight - 54;
 
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0, 0, 800, less);
+  green.graphics.beginFill("green").drawRect(0, 0, less, window.innerHeight-54);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
