@@ -84,10 +84,12 @@ stage.on("stagemouseup", function(evt) {
   stage.removeChild(line);
       pressmovestarted = false;
       });
-stage.on("stagemousedrag", function(evt) {
+stage.on("stagemousemove", function(evt) {
+  if(pressmovestarted){
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
           drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
+  }
       });
   
     //Update stage will render next frame
