@@ -44,7 +44,7 @@ var hity = 0;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
-      playerball.graphics.beginFill("white").drawCircle(0, 0, less/40);
+      playerball.graphics.beginFill("white").drawCircle(0, 0, less/40.0);
       playerball.x = evt.stageX / scale;
       playerball.y = evt.stageY / scale;
       container.addChild(playerball)
