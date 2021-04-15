@@ -23,12 +23,20 @@
   start.graphics.beginFill("grey").drawRect(0, 0, 100, 50);
   start.x = 0;
   start.y = 0;
+var ballplaced = false;
   start.on("mousedown", function(evt) {
-    playerball = new createjs.Shape();
-    playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
-    playerball.x = evt.stageX;
-    playerball.y = evt.stageY;
-    stage.addChild(playerball)
+    if(!ballplaced){
+      playerball = new createjs.Shape();
+      playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
+      playerball.x = evt.stageX;
+      playerball.y = evt.stageY;
+      stage.addChild(playerball)
+      ballplaced = true;
+    }
+    else {
+      playerball.x = evt.stageX;
+      playerball.y = evt.stageY;
+    }
   });
   stage.addChild(start);
   
