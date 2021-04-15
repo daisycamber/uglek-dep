@@ -11,6 +11,8 @@ less = window.innerWidth;
 if(window.innerWidth > window.innerHeight){
   less = window.innerHeight;
   container.x = (window.innerWidth-window.innerHeight)/2;
+  console.log("Container:");
+  console.log(container.x);
 }
   stage.canvas.height = window.innerHeight - 54;
 
