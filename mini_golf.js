@@ -2,7 +2,7 @@
   var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
-  stage.canvas.height = window.innerHeight - 54;
+  this.canvas.height = window.innerHeight - 54;
   green = new createjs.Shape();
   green.graphics.beginFill("green").drawRect(0, 0, window.innerWidth, window.innerHeight);
   stage.addChild(green);
