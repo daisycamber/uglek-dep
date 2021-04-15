@@ -2,7 +2,7 @@
   var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
-scale = 800/window.innerWidth;
+scale = window.innerWidth/1000;
 stage.scaleX = stage.scaleY = scale;
   stage.canvas.height = window.innerHeight - 54;
 
@@ -37,8 +37,8 @@ var hity = 0;
     if(!ballplaced){
       playerball = new createjs.Shape();
       playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
-      playerball.x = evt.stageX;
-      playerball.y = evt.stageY;
+      playerball.x = evt.stageX * scale;
+      playerball.y = evt.stageY * scale;
       stage.addChild(playerball)
       playerball.on("mousedown", function(evt) {
         pressmovestarted = true;
@@ -46,8 +46,8 @@ var hity = 0;
       ballplaced = true;
     }
     else {
-      playerball.x = evt.stageX;
-      playerball.y = evt.stageY;
+      playerball.x = evt.stageX * scale;
+      playerball.y = evt.stageY * scale;
     }
   });
   stage.addChild(start);
