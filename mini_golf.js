@@ -28,6 +28,8 @@ var pressmovestarted = false;
 var movestartx;
 var movestarty;
 var playerball;
+var hitx = 0;
+var hity = 0;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
@@ -82,10 +84,9 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
-          if(movex > 5 && movey > 5){
-          playerball.x = playerball.x + movex;
-          playerball.y = playerball.y + movey;
-
+          if(Math.abs(movex) > 5 && Math.abs(movey) > 5){
+            hitx = movex/30;
+            hity = movey/30;
           }
   stage.removeChild(line);
       pressmovestarted = false;
@@ -104,5 +105,15 @@ stage.on("stagemousemove", function(evt) {
   createjs.Ticker.addEventListener("tick", stage);
   createjs.Ticker.addEventListener("tick", handleTick);
   function handleTick(event) {
+    hitx = hitx - hitx/100;
+    hity = hity - hity/100;
+    if(hitx < 0.01){
+      hitx = 0;
+    }
+    if(hity < 0.01){
+      hity = 0;
+    }
+    playerball.x = playerball.x + hitx;
+    playerball.y = playerball.y + hity;
     stage.update();
   }
