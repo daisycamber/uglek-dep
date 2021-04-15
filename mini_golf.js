@@ -66,7 +66,7 @@ function drawLine(x,y,xx,yy){
 stage.on("stagemousedown", function(evt) {
           if(!pressmovestarted){
           movestartx = evt.stageX;
-            movestartY = evt.stageY;
+            movestarty = evt.stageY;
             pressmovestarted = true;
           }
         
@@ -81,8 +81,8 @@ stage.on("stagemouseup", function(evt) {
       pressmovestarted = false
       });
 stage.on("stagemousemove", function(evt) {
-          movex = movestart.x - evt.stageX;
-          movey = movestart.y - evt.stageY;
+          movex = movestartx - evt.stageX;
+          movey = movestarty - evt.stageY;
           drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
       });
   
