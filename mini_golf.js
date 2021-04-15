@@ -3,8 +3,8 @@
   var last = 0;
   var stage = new createjs.Stage("game156");
 var container = new createjs.Container();
-green = new createjs.Shape();
-  green.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
+background = new createjs.Shape();
+  background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
   container.addChild(background);
 stage.addChild(container);
 less = window.innerWidth;
