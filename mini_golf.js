@@ -87,6 +87,18 @@ stage.on("stagemouseup", function(evt) {
           if(Math.abs(movex) > 5 && Math.abs(movey) > 5){
             hitx = movex/30;
             hity = movey/30;
+            if(hitx > 10) {
+              hitx = 10;
+            }
+            if(hity > 10) {
+              hity = 10;
+            }
+            if(hitx < -10) {
+              hitx = -10;
+            }
+            if(hity < -10) {
+              hity = -10;
+            }
           }
   stage.removeChild(line);
       pressmovestarted = false;
@@ -107,13 +119,15 @@ stage.on("stagemousemove", function(evt) {
   function handleTick(event) {
     hitx = hitx - hitx/100;
     hity = hity - hity/100;
-    if(hitx < 0.01){
+    if(hitx < 0.1){
       hitx = 0;
     }
-    if(hity < 0.01){
+    if(hity < 0.1){
       hity = 0;
     }
+    if(playerball){
     playerball.x = playerball.x + hitx;
     playerball.y = playerball.y + hity;
+    }
     stage.update();
   }
