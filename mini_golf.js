@@ -84,7 +84,7 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
-          if(Math.abs(movex) > 5 && Math.abs(movey) > 5){
+
             hitx = movex/30;
             hity = movey/30;
             if(hitx > 10) {
@@ -99,7 +99,6 @@ stage.on("stagemouseup", function(evt) {
             if(hity < -10) {
               hity = -10;
             }
-          }
   stage.removeChild(line);
       pressmovestarted = false;
       });
