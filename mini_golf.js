@@ -20,17 +20,17 @@
   });*/
   
   start = new createjs.Shape();
-  start.graphics.beginFill("grey").drawRect(0, 0, 100, 100);
+  start.graphics.beginFill("grey").drawRect(0, 0, 100, 50);
   start.x = 0;
   start.y = 0;
-stage.addChild(start)
-  start.on("stagemousedown", function(evt) {
+  start.on("mousedown", function(evt) {
     playerball = new createjs.Shape();
     playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
     playerball.x = evt.stageX;
     playerball.y = evt.stageY;
     stage.addChild(playerball)
   });
+  stage.addChild(start);
   
     //Update stage will render next frame
   stage.update();
