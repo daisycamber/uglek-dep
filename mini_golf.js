@@ -43,13 +43,47 @@ var movestarty;
   });
   stage.addChild(start);
 
+var line;
+function drawLine(x,y,xx,yy){
+   // Get a new 'shape' which comes with a 'graphics' property that allows us to draw
+  stage.removeChild(line);
+            line = new createjs.Shape();
+
+            // Add this line shape to the canvas
+            stage.addChild(line);
+
+            // Set the 'brush stroke' style (basically the thickness of the line)
+            //      Then start drawing a black line
+            line.graphics.setStrokeStyle(3).beginStroke("rgba(0,0,0,1)");
+
+            // Tell EaselJS where to go to start drawing the line
+            line.graphics.moveTo(x, y);
+
+            // Tell EaselJS where to draw the line to
+            line.graphics.lineTo(xx, yy);
+}
+
+stage.on("stagemousedown", function(evt) {
+          if(!pressmovestarted){
+          movestartx = evt.stageX;
+            movestartY = evt.stageY;
+            pressmovestarted = true;
+          }
+        
+      });
 stage.on("stagemouseup", function(evt) {
-          movex = playerball.x - evt.stageX;
-          movey = playerball.y - evt.stageY;
+          movex = movestart.x - evt.stageX;
+          movey = movestart.y - evt.stageY;
           if(movex > 30 && movey > 30){
           playerball.x = playerball.x + movex;
           playerball.y = playerball.y + movey;
           }
+      pressmovestarted = false
+      });
+stage.on("stagemousemove", function(evt) {
+          movex = movestart.x - evt.stageX;
+          movey = movestart.y - evt.stageY;
+          drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
       });
   
     //Update stage will render next frame
