@@ -46,8 +46,10 @@ var movestarty;
 stage.on("stagemouseup", function(evt) {
           movex = playerball.x - evt.stageX;
           movey = playerball.y - evt.stageY;
+          if(movex > 30 && movey > 30){
           playerball.x = playerball.x + movex;
-          playerball.y = playerball.y + movex;
+          playerball.y = playerball.y + movey;
+          }
       });
   
     //Update stage will render next frame
