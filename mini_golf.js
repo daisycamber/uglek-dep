@@ -2,17 +2,19 @@
   var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
+var container = new createjs.Container();
 less = window.innerWidth;
-if(window.innerHeight < window.innerWidth){
+if(window.innerWidth > window.innerHeight){
   less = window.innerHeight;
+  container.x = (window.innerWidth - window.innerHeight)/2;
 }
 scale = 1000/less;
 stage.scaleX = stage.scaleY = scale;
   stage.canvas.height = window.innerHeight - 54;
 
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0, 0, 800, window.innerHeight * scale);
-  stage.addChild(green);
+  green.graphics.beginFill("green").drawRect(0, 0, 800, less);
+  container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
     playerball = new createjs.Shape();
@@ -43,7 +45,7 @@ var hity = 0;
       playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
       playerball.x = evt.stageX / scale;
       playerball.y = evt.stageY / scale;
-      stage.addChild(playerball)
+      container.addChild(playerball)
       playerball.on("mousedown", function(evt) {
         pressmovestarted = true;
       });
@@ -54,16 +56,16 @@ var hity = 0;
       playerball.y = evt.stageY / scale;
     }
   });
-  stage.addChild(start);
+  container.addChild(start);
 
 var line;
 function drawLine(x,y,xx,yy){
    // Get a new 'shape' which comes with a 'graphics' property that allows us to draw
-  stage.removeChild(line);
+  container.removeChild(line);
             line = new createjs.Shape();
 
             // Add this line shape to the canvas
-            stage.addChild(line);
+            container.addChild(line);
 
             // Set the 'brush stroke' style (basically the thickness of the line)
             //      Then start drawing a black line
@@ -107,7 +109,7 @@ stage.on("stagemouseup", function(evt) {
               hity = -10;
             }
           }
-  stage.removeChild(line);
+  container.removeChild(line);
       pressmovestarted = false;
       });
 stage.on("stagemousemove", function(evt) {
