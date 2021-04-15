@@ -45,8 +45,8 @@ var hity = 0;
     if(!ballplaced){
       playerball = new createjs.Shape();
       playerball.graphics.beginFill("white").drawCircle(0, 0, less/40.0);
-      playerball.x = evt.stageX / scale;
-      playerball.y = evt.stageY / scale;
+      playerball.x = evt.stageX;
+      playerball.y = evt.stageY;
       container.addChild(playerball)
       playerball.on("mousedown", function(evt) {
         pressmovestarted = true;
@@ -54,8 +54,8 @@ var hity = 0;
       ballplaced = true;
     }
     else {
-      playerball.x = evt.stageX / scale;
-      playerball.y = evt.stageY / scale;
+      playerball.x = evt.stageX;
+      playerball.y = evt.stageY;
     }
   });
   container.addChild(start);
