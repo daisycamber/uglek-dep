@@ -78,7 +78,7 @@ stage.on("stagemousedown", function(evt) {
 stage.on("stagemouseup", function(evt) {
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
-          if(movex > 30 && movey > 30){
+          if(movex > 5 && movey > 5){
           playerball.x = playerball.x + movex;
           playerball.y = playerball.y + movey;
           }
