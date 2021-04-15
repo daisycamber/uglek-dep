@@ -31,7 +31,7 @@ if(window.innerWidth > window.innerHeight){
   });*/
   
   start = new createjs.Shape();
-  start.graphics.beginFill("grey").drawRect(0, 0, 100, 50);
+  start.graphics.beginFill("grey").drawRect(0, 0, less/10, less/20);
   start.x = 0;
   start.y = 0;
 var ballplaced = false;
@@ -44,7 +44,7 @@ var hity = 0;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
-      playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
+      playerball.graphics.beginFill("white").drawCircle(0, 0, less/40);
       playerball.x = evt.stageX / scale;
       playerball.y = evt.stageY / scale;
       container.addChild(playerball)
