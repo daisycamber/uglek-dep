@@ -78,9 +78,14 @@ stage.on("stagemousedown", function(evt) {
 stage.on("stagemouseup", function(evt) {
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
+  
+        console.log("Move:");
+              console.log(movex);
+            console.log(movey);
           if(movex > 5 && movey > 5){
           playerball.x = playerball.x + movex;
           playerball.y = playerball.y + movey;
+
           }
   stage.removeChild(line);
       pressmovestarted = false;
