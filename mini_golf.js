@@ -1,4 +1,4 @@
-function init() {
+
   var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
@@ -39,4 +39,3 @@ function init() {
   function handleTick(event) {
     stage.update();
   }
-}
