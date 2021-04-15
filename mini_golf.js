@@ -35,14 +35,15 @@ var playerball;
       playerball.x = evt.stageX;
       playerball.y = evt.stageY;
       stage.addChild(playerball)
+      playerball.on("mousedown", function(evt) {
+        pressmovestarted = true;
+      });
       ballplaced = true;
     }
     else {
       playerball.x = evt.stageX;
       playerball.y = evt.stageY;
     }
-    stage.removeChild(line);
-      pressmovestarted = false;
   });
   stage.addChild(start);
 
