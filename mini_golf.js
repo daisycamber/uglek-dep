@@ -12,10 +12,11 @@ if(window.innerHeight < less){
 }
  scale = container.scale = less/1000;
 stage.canvas.width = window.innerWidth;
-  stage.canvas.height = window.innerHeight-60;
+var canvasHeight = window.innerHeight-60;
+  stage.canvas.height = canvasHeight;
 
 leftbound = (window.innerWidth - less)/2/scale;
-topbound = (window.innerHeight - less)/2/scale;
+topbound = (window.innerHeight-60-less)/2/scale;
 
   green = new createjs.Shape();
   green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
