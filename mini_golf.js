@@ -15,7 +15,7 @@ stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight - 54;
 
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2*scale, 0 + (window.innerHeight - less)/2, 1000+(window.innerWidth - less)/2, 1000+(window.innerHeight - less)/2);
+  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2/scale, 0 + (window.innerHeight - less)/2/scale, 1000+(window.innerWidth - less)/2/scale, 1000+(window.innerHeight - less)/2/scale);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
@@ -31,7 +31,7 @@ stage.canvas.width = window.innerWidth;
   });*/
   
   start = new createjs.Shape();
-  start.graphics.beginFill("grey").drawRect(0, 0, less/10, less/20);
+  start.graphics.beginFill("grey").drawRect(0, 0, 200, 100);
   start.x = 0;
   start.y = 0;
 var ballplaced = false;
@@ -44,9 +44,9 @@ var hity = 0;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
-      playerball.graphics.beginFill("white").drawCircle(0, 0, less/120.0);
-      playerball.x = evt.stageX*scale;
-      playerball.y = evt.stageY*scale;
+      playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
+      playerball.x = evt.stageX/scale;
+      playerball.y = evt.stageY/scale;
       container.addChild(playerball)
       playerball.on("mousedown", function(evt) {
         pressmovestarted = true;
@@ -54,8 +54,8 @@ var hity = 0;
       ballplaced = true;
     }
     else {
-      playerball.x = evt.stageX*scale;
-      playerball.y = evt.stageY*scale;
+      playerball.x = evt.stageX/scale;
+      playerball.y = evt.stageY/scale;
     }
   });
   container.addChild(start);
