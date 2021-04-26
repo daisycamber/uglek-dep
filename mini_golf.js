@@ -8,7 +8,7 @@ background = new createjs.Shape();
 stage.addChild(container);
 less = window.innerWidth;
 if(window.innerHeight < less){
-  less = window.innerHeight - 54;
+  less = window.innerHeight - 60;
 }
  scale = container.scale = less/1000;
 stage.canvas.width = window.innerWidth;
