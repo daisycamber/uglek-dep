@@ -97,8 +97,8 @@ for(var i = 0; i < 10; i++){
   var size = Math.random()*30 + 10;
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
-      obstacles[i].x = leftBound + Math.random() * 1000;
-      obstacles[i].y = topBound + Math.random() * 300 + 300;
+      obstacles[i].x = leftbound + Math.random() * 1000;
+      obstacles[i].y = topbound + Math.random() * 300 + 300;
       container.addChild(obstacles[i])
 }
 
