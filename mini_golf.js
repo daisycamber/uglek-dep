@@ -189,11 +189,16 @@ stage.on("stagemousemove", function(evt) {
       for(var o = 0; o < obstacles.length; o++){
         var obs = obstacles[o];
         if(Math.abs(playerball.x - obstacles[o].x) < obstacleSize[o]){
-          hitx = -hitx;
+          if(Math.abs(playerball.y - obstacles[o].y) < obstacleSize[o]){
+            if(Math.abs(playerball.x - obstacles[o].x) > Math.abs(playerball.y - obstacles[o].y)){
+              hitx = -hitx;
+              }
+            else {
+              hity = -hity;
+            }
+          }
         }
-        if(Math.abs(playerball.y - obstacles[o].y) < obstacleSize[o]){
-          hity = -hity;
-        }
+        
       }
     }
     stage.update();
