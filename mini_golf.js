@@ -213,11 +213,26 @@ stage.on("stagemousemove", function(evt) {
               }
             else {
               hity = -hity * 3/4;
-              
             }
-            obs.hitx = -hitx/2;
-            obs.hity = -hity/2;
+            obs.hitx = -hitx*3/4;
+            obs.hity = -hity*3/4;
           }
+        }
+        
+        for(var o2 = 0; o2 < obstacles.length; o2++){
+        var obs2 = obstacles[o2];
+          if(Math.abs(obs2.x - obstacles[o].x) < obstacleSize[o] + obstacleSize[o2]){
+          if(Math.abs(obs2.y - obstacles[o].y) < obstacleSize[o] + obstacleSize[o2]){
+            if(Math.abs(obs2.x - obstacles[o].x) > Math.abs(obs2.y - obstacles[o].y)){
+              hitx = -hitx * 3/4;
+              }
+            else {
+              hity = -hity * 3/4;
+            }
+            obs.hitx = -hitx*3/4;
+            obs.hity = -hity*3/4;
+          }
+        }
         }
         
       }
