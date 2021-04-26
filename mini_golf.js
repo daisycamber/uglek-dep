@@ -1,7 +1,6 @@
 if(window.innerHeight-navbarHeight < less){
-  less = window.innerHeight-navbarHeight;
+  less = window.innerHeight;
 }
-
 var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
@@ -12,16 +11,11 @@ background = new createjs.Shape();
   stage.addChild(background);
 stage.addChild(container);
 var less = window.innerWidth;
-var navbarHeight = 45;
-container.y = navbarHeight*scale;
-
 stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight;
   stage.canvas.height = canvasHeight;
-
 leftbound = (window.innerWidth - less)/2/scale;
 topbound = ((window.innerHeight - less)/2)/scale;
-
   green = new createjs.Shape();
   green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
@@ -37,7 +31,6 @@ topbound = ((window.innerHeight - less)/2)/scale;
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     xhr.send("put 90 50");
   });*/
-  
   start = new createjs.Shape();
   start.graphics.beginFill("grey").drawRect(leftbound, topbound, 200, 100);
   start.x = 0;
@@ -68,7 +61,6 @@ var ballSize = 10;
     }
   });
   container.addChild(start);
-
 var line;
 function drawLine(x,y,xx,yy){
    // Get a new 'shape' which comes with a 'graphics' property that allows us to draw
@@ -104,9 +96,10 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
+  if(hitx == 0 && hity == 0){
           if(Math.abs(movex) > 5 && Math.abs(movey) > 5){
-            hitx = movex/30;
-            hity = movey/30;
+            hitx = movex/20;
+            hity = movey/20;
             if(hitx > 10) {
               hitx = 10;
             }
@@ -120,6 +113,7 @@ stage.on("stagemouseup", function(evt) {
               hity = -10;
             }
           }
+  }
   container.removeChild(line);
       pressmovestarted = false;
       });
@@ -127,7 +121,9 @@ stage.on("stagemousemove", function(evt) {
   if(pressmovestarted){
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
+        if(hitx == 0 && hity == 0){
           drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
+        }
   }
       });
   
