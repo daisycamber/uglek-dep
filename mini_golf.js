@@ -185,7 +185,7 @@ stage.on("stagemousemove", function(evt) {
       if(playerball.y > topbound+1000-ballSize){
         hity = -hity;
       }
-      if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < ballSize * 2){
+      if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < ballSize * 1.5){
         container.removeChild(playerball);
       }
       for(var o = 0; o < obstacles.length; o++){
@@ -206,7 +206,7 @@ stage.on("stagemousemove", function(evt) {
     if(obs.hity < 0 && obs.hity > -0.1){
       obs.hity = 0;
     }
-        if(pythagorean(Math.abs(playerball.x - obstacles[o].x),Math.abs(playerball.y - obstacles[o].y)) < obstacleSize[o]){
+        if(pythagorean(Math.abs(playerball.x - obstacles[o].x),Math.abs(playerball.y - obstacles[o].y)) < obstacleSize[o] + ballSize){
             if(Math.abs(playerball.x - obstacles[o].x) > Math.abs(playerball.y - obstacles[o].y)){
               hitx = -hitx * 3/4;
               }
