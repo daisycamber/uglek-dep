@@ -89,6 +89,18 @@ hole = new createjs.Shape();
       hole.y = 900;
       container.addChild(hole)
 
+var obstacles = [];
+var obstacleSize = [];
+for(var i = 0; i < 10; i++){
+  obstacles[i] = new createjs.Shape();
+  var size = Math.random()*30;
+  obstacleSize[i] = size;
+      obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
+      obstacles[i].x = Math.random() * 1000;
+      obstacles[i].y = Math.random() * 300 + 300;
+      container.addChild(obstacles[i])
+}
+
 stage.on("stagemousedown", function(evt) {
           if(!pressmovestarted){
           movestartx = evt.stageX;
@@ -172,6 +184,15 @@ stage.on("stagemousemove", function(evt) {
       }
       if(Math.abs(playerball.x - hole.x) < 1 || Math.abs(playerball.y - hole.y) < 1){
         container.removeChild(playerball);
+      }
+      for(var o = 0; o < obstacles.length; o++){
+        var obs = obstacles[o];
+        if(Math.abs(playerball.x - obstacles[o].x) < 3){
+          hitx = -hitx;
+        }
+        if(Math.abs(playerball.y - obstacles[o].y) < 3){
+          hity = -hity;
+        }
       }
     }
     stage.update();
