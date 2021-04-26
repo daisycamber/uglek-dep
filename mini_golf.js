@@ -15,7 +15,7 @@ stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight - 54;
 
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2/scale, 0 + (window.innerHeight - less)/2/scale, 1000+(window.innerWidth - less)/2/scale, 1000+(window.innerHeight - less)/2/scale);
+  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2/scale, 0 + (window.innerHeight - less)/2/scale, 1000, 1000);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
@@ -44,7 +44,7 @@ var hity = 0;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
-      playerball.graphics.beginFill("white").drawCircle(0, 0, 5);
+      playerball.graphics.beginFill("white").drawCircle(0, 0, 20);
       playerball.x = evt.stageX/scale;
       playerball.y = evt.stageY/scale;
       container.addChild(playerball)
@@ -58,7 +58,7 @@ var hity = 0;
       playerball.y = evt.stageY/scale;
     }
   });
-  container.addChild(start);
+  green.addChild(start);
 
 var line;
 function drawLine(x,y,xx,yy){
