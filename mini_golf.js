@@ -12,7 +12,7 @@ if(window.innerHeight < less){
 }
  scale = container.scale = less/1000;
 stage.canvas.width = window.innerWidth;
-  stage.canvas.height = window.innerHeight - 54;
+  stage.canvas.height = window.innerHeight-60;
 
 leftbound = (window.innerWidth - less)/2/scale;
 topbound = (window.innerHeight - less)/2/scale;
