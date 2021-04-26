@@ -34,7 +34,7 @@ topbound = (window.innerHeight - less)/2/scale;
   });*/
   
   start = new createjs.Shape();
-  start.graphics.beginFill("grey").drawRect(leftbound, topbound, leftbound+200, topbound+100);
+  start.graphics.beginFill("grey").drawRect(leftbound, topbound, 200, 100);
   start.x = 0;
   start.y = 0;
 var ballplaced = false;
