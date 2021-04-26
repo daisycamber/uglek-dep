@@ -1,7 +1,7 @@
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
-  less = window.innerHeight;
+  less = window.innerHeight-ADHEIGHT;
 }
 var id = document.getElementById("gameid").innerHTML;
 var last = 0;
@@ -17,7 +17,7 @@ stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight-ADHEIGHT;
 stage.canvas.height = canvasHeight;
 leftbound = (window.innerWidth - less)/2/scale;
-topbound = ((window.innerHeight - less)/2)/scale;
+topbound = ((canvasHeight - less)/2)/scale;
 green = new createjs.Shape();
 green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
