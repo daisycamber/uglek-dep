@@ -9,11 +9,11 @@ stage.addChild(container);
 var less = window.innerWidth;
 var navbarHeight = 60;
 if(window.innerHeight < less){
-  less = window.innerHeight - navbarHeight;
+  less = window.innerHeight;
 }
  scale = container.scale = less/1000;
 stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight-navbarHeight;
+var canvasHeight = window.innerHeight;
   stage.canvas.height = canvasHeight;
 
 leftbound = (window.innerWidth - less)/2/scale;
