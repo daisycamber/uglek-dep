@@ -51,7 +51,7 @@ var ballSize = 10;
       playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
       playerball.x = evt.stageX/scale;
       playerball.y = evt.stageY/scale;
-      container.addChild(playerball)
+      container.addChild(playerball);
       playerball.on("mousedown", function(evt) {
         pressmovestarted = true;
       });
@@ -74,7 +74,7 @@ function drawLine(x,y,xx,yy){
 
             // Set the 'brush stroke' style (basically the thickness of the line)
             //      Then start drawing a black line
-            line.graphics.setStrokeStyle(2).beginStroke("rgba(0,0,0,1)");
+            line.graphics.setStrokeStyle(4).beginStroke("rgba(0,0,0,1)");
 
             // Tell EaselJS where to go to start drawing the line
             line.graphics.moveTo(x, y);
@@ -82,6 +82,12 @@ function drawLine(x,y,xx,yy){
             // Tell EaselJS where to draw the line to
             line.graphics.lineTo(xx, yy);
 }
+
+hole = new createjs.Shape();
+      hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+      hole.x = 800;
+      hole.y = 900;
+      container.addChild(hole)
 
 stage.on("stagemousedown", function(evt) {
           if(!pressmovestarted){
