@@ -16,6 +16,7 @@ background = new createjs.Shape();
 background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
 stage.addChild(background);
 stage.addChild(container);
+var speedfactor = 50;
 
 stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight-ADHEIGHT;
@@ -93,6 +94,8 @@ hole = new createjs.Shape();
       hole.y = 900;
       container.addChild(hole)
 
+var movefactor = 10;
+
 var obstacles = [];
 var obstacleSize = [];
 for(var i = 0; i < 30; i++){
@@ -120,9 +123,9 @@ stage.on("stagemouseup", function(evt) {
               console.log(movex);
             console.log(movey);
   if(hitx == 0 && hity == 0){
-          if(Math.abs(movex) > 5 && Math.abs(movey) > 5){
-            hitx = movex/20;
-            hity = movey/20;
+          if(pythagorean(Math.abs(movex),Math.abs(movey)) > 5){
+            hitx = movex/movefactor;
+            hity = movey/movefactor;
             if(hitx > 10) {
               hitx = 10;
             }
@@ -156,8 +159,8 @@ stage.on("stagemousemove", function(evt) {
   createjs.Ticker.addEventListener("tick", stage);
   createjs.Ticker.addEventListener("tick", handleTick);
   function handleTick(event) {
-    hitx = hitx - hitx/100;
-    hity = hity - hity/100;
+    hitx = hitx - hitx/speedfactor;
+    hity = hity - hity/speedfactor;
     if(hitx > 0 && hitx < 0.1){
       hitx = 0;
     }
@@ -193,7 +196,7 @@ stage.on("stagemousemove", function(evt) {
         obs.x = obs.x + obs.hitx;
         obs.y = obs.y + obs.hity;
         obs.hitx = obs.hitx - obs.hitx/100;
-    obs.hity = obs.hity - obs.hity/100;
+    obs.hity = obs.hity - obs.hity/speedfactor;
     if(obs.hitx > 0 && obs.hitx < 0.1){
       obs.hitx = 0;
     }
