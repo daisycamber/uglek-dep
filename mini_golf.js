@@ -1,3 +1,4 @@
+var less = window.innerWidth;
 if(window.innerHeight < less){
   less = window.innerHeight;
 }
@@ -10,7 +11,7 @@ background = new createjs.Shape();
   background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
   stage.addChild(background);
 stage.addChild(container);
-var less = window.innerWidth;
+
 stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight;
   stage.canvas.height = canvasHeight;
