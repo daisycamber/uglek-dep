@@ -1,4 +1,4 @@
-if(window.innerHeight-navbarHeight < less){
+if(window.innerHeight < less){
   less = window.innerHeight;
 }
 var id = document.getElementById("gameid").innerHTML;
