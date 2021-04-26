@@ -97,7 +97,7 @@ var obstacles = [];
 var obstacleSize = [];
 for(var i = 0; i < 30; i++){
   obstacles[i] = new createjs.Shape();
-  var size = (Math.random()*30 + 20);
+  var size = (Math.random()*30 + 30);
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + Math.random() * 1000;
