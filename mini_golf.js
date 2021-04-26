@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.11
+// By Jasper Camber Holton. V0.0.12
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
@@ -95,7 +95,7 @@ hole = new createjs.Shape();
 
 var obstacles = [];
 var obstacleSize = [];
-for(var i = 0; i < 22; i++){
+for(var i = 0; i < 30; i++){
   obstacles[i] = new createjs.Shape();
   var size = (Math.random()*30 + 20);
   obstacleSize[i] = size;
