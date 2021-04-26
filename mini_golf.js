@@ -148,6 +148,18 @@ stage.on("stagemousemove", function(evt) {
     if(playerball){
     playerball.x = playerball.x + hitx;
     playerball.y = playerball.y + hity;
+      if(playerball.x < leftbound){
+        hitx = -hitx;
+      }
+      if(playerball.y < topbound){
+        hity = -hity;
+      }
+      if(playerball.x > leftbound+1000){
+        hitx = -hitx;
+      }
+      if(playerball.y > topbound+1000){
+        hity = -hity;
+      }
     }
     stage.update();
   }
