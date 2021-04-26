@@ -17,7 +17,7 @@ var canvasHeight = window.innerHeight;
   stage.canvas.height = canvasHeight;
 
 leftbound = (window.innerWidth - less)/2/scale;
-topbound = (window.innerHeight-navbarHeight-less)/2/scale;
+topbound = (window.innerHeight - less)/2/scale;
 
   green = new createjs.Shape();
   green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
