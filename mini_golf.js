@@ -99,6 +99,8 @@ for(var i = 0; i < 10; i++){
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + Math.random() * 1000;
       obstacles[i].y = topbound + Math.random() * 300 + 300;
+    obstacles[i].hitx = 0;
+  obstacles[i].hity = 0;
       container.addChild(obstacles[i])
 }
 
@@ -188,13 +190,33 @@ stage.on("stagemousemove", function(evt) {
       }
       for(var o = 0; o < obstacles.length; o++){
         var obs = obstacles[o];
+        obs.x = obs.x + obs.hitx;
+        obs.y = obs.y + obs.hity;
+        obs.hitx = obs.hitx - obs.hitx/100;
+    obs.hity = obs.hity - obs.hity/100;
+    if(obs.hitx > 0 && obs.hitx < 0.1){
+      obs.hitx = 0;
+    }
+    if(obs.hity > 0 && obs.hity < 0.1){
+      obs.hity = 0;
+    }
+    if(obs.hitx < 0 && obs.hitx > -0.1){
+      obs.hitx = 0;
+    }
+    if(obs.hity < 0 && obs.hity > -0.1){
+      obs.hity = 0;
+    }
         if(Math.abs(playerball.x - obstacles[o].x) < obstacleSize[o]){
           if(Math.abs(playerball.y - obstacles[o].y) < obstacleSize[o]){
             if(Math.abs(playerball.x - obstacles[o].x) > Math.abs(playerball.y - obstacles[o].y)){
-              hitx = -hitx;
+              hitx = -hitx * 3/4;
+              obstacles[o].hitx = -hitx/2;
+              obstacles[o].hity = -hity/2;
               }
             else {
-              hity = -hity;
+              hity = -hity * 3/4;
+              obstacles[o].hitx = -hitx/2;
+              obstacles[o].hity = -hity/2;
             }
           }
         }
