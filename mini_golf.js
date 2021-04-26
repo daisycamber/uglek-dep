@@ -224,10 +224,10 @@ stage.on("stagemousemove", function(evt) {
           if(Math.abs(obs2.x - obstacles[o].x) < obstacleSize[o] + obstacleSize[o2]){
           if(Math.abs(obs2.y - obstacles[o].y) < obstacleSize[o] + obstacleSize[o2]){
             if(Math.abs(obs2.x - obstacles[o].x) > Math.abs(obs2.y - obstacles[o].y)){
-              hitx = -hitx * 3/4;
+              obs2.hitx = -obs2.hitx * 3/4;
               }
             else {
-              hity = -hity * 3/4;
+              obs2.hity = -obs2.hity * 3/4;
             }
             obs.hitx = -hitx*3/4;
             obs.hity = -hity*3/4;
