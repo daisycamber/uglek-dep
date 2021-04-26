@@ -1,3 +1,4 @@
+// By Jasper Camber Holton. V0.0.1
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
@@ -93,11 +94,11 @@ var obstacles = [];
 var obstacleSize = [];
 for(var i = 0; i < 10; i++){
   obstacles[i] = new createjs.Shape();
-  var size = Math.random()*30;
+  var size = Math.random()*30 + 10;
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
-      obstacles[i].x = Math.random() * 1000;
-      obstacles[i].y = Math.random() * 300 + 300;
+      obstacles[i].x = leftBound + Math.random() * 1000;
+      obstacles[i].y = topBound + Math.random() * 300 + 300;
       container.addChild(obstacles[i])
 }
 
@@ -187,10 +188,10 @@ stage.on("stagemousemove", function(evt) {
       }
       for(var o = 0; o < obstacles.length; o++){
         var obs = obstacles[o];
-        if(Math.abs(playerball.x - obstacles[o].x) < 3){
+        if(Math.abs(playerball.x - obstacles[o].x) < obstacleSize[o]){
           hitx = -hitx;
         }
-        if(Math.abs(playerball.y - obstacles[o].y) < 3){
+        if(Math.abs(playerball.y - obstacles[o].y) < obstacleSize[o]){
           hity = -hity;
         }
       }
