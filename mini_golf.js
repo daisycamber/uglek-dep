@@ -15,7 +15,7 @@ stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight - 54;
 
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2, 0 + (window.innerHeight - less)/2, 1000+(window.innerWidth - less)/2, 1000+(window.innerHeight - less)/2);
+  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2*scale, 0 + (window.innerHeight - less)/2, 1000+(window.innerWidth - less)/2, 1000+(window.innerHeight - less)/2);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
