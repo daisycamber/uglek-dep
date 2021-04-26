@@ -229,8 +229,8 @@ stage.on("stagemousemove", function(evt) {
             else {
               obs2.hity = -obs2.hity * 3/4;
             }
-            obs.hitx = -hitx*3/4;
-            obs.hity = -hity*3/4;
+            obs.hitx = -obs2.hitx*3/4;
+            obs.hity = -obs2.hitx*3/4;
           }
         }
         }
