@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.17
+// By Jasper Camber Holton. V0.0.18
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
