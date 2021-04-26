@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.1
+// By Jasper Camber Holton. V0.0.2
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
