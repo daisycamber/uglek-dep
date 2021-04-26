@@ -6,17 +6,18 @@ background = new createjs.Shape();
   background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
   stage.addChild(background);
 stage.addChild(container);
-less = window.innerWidth;
+var less = window.innerWidth;
+var navbarHeight = 60;
 if(window.innerHeight < less){
-  less = window.innerHeight - 60;
+  less = window.innerHeight - navbarHeight;
 }
  scale = container.scale = less/1000;
 stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight-60;
+var canvasHeight = window.innerHeight-navbarHeight;
   stage.canvas.height = canvasHeight;
 
 leftbound = (window.innerWidth - less)/2/scale;
-topbound = (window.innerHeight-60-less)/2/scale;
+topbound = (window.innerHeight-navbarHeight-less)/2/scale;
 
   green = new createjs.Shape();
   green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
