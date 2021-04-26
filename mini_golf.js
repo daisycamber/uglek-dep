@@ -1,24 +1,25 @@
+var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
   less = window.innerHeight;
 }
 var id = document.getElementById("gameid").innerHTML;
-  var last = 0;
-  var stage = new createjs.Stage("game156");
+var last = 0;
+var stage = new createjs.Stage("game156");
 var container = new createjs.Container();
- scale = container.scale = less/1000;  
+scale = container.scale = less/1000;  
 background = new createjs.Shape();
-  background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
-  stage.addChild(background);
+background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
+stage.addChild(background);
 stage.addChild(container);
 
 stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight;
-  stage.canvas.height = canvasHeight;
+var canvasHeight = window.innerHeight-ADHEIGHT;
+stage.canvas.height = canvasHeight;
 leftbound = (window.innerWidth - less)/2/scale;
 topbound = ((window.innerHeight - less)/2)/scale;
-  green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
+green = new createjs.Shape();
+green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
