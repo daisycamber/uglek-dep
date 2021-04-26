@@ -1,4 +1,7 @@
 // By Jasper Camber Holton. V0.0.10
+function pythagorean(sideA, sideB){
+  return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
+}
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
@@ -92,30 +95,27 @@ hole = new createjs.Shape();
 
 var obstacles = [];
 var obstacleSize = [];
-for(var i = 0; i < 10; i++){
+for(var i = 0; i < 22; i++){
   obstacles[i] = new createjs.Shape();
   var size = (Math.random()*30 + 20);
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + Math.random() * 1000;
-      obstacles[i].y = topbound + Math.random() * 300 + 300;
+      obstacles[i].y = topbound + Math.random() * 500 + 200;
     obstacles[i].hitx = 0;
   obstacles[i].hity = 0;
       container.addChild(obstacles[i])
 }
-
 stage.on("stagemousedown", function(evt) {
           if(!pressmovestarted){
           movestartx = evt.stageX;
             movestarty = evt.stageY;
             pressmovestarted = true;
           }
-        
       });
 stage.on("stagemouseup", function(evt) {
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
-  
         console.log("Move:");
               console.log(movex);
             console.log(movey);
@@ -185,7 +185,7 @@ stage.on("stagemousemove", function(evt) {
       if(playerball.y > topbound+1000-ballSize){
         hity = -hity;
       }
-      if(Math.abs(playerball.x - hole.x) < 3 && Math.abs(playerball.y - hole.y) < 3){
+      if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < 3){
         container.removeChild(playerball);
       }
       for(var o = 0; o < obstacles.length; o++){
@@ -206,8 +206,7 @@ stage.on("stagemousemove", function(evt) {
     if(obs.hity < 0 && obs.hity > -0.1){
       obs.hity = 0;
     }
-        if(Math.abs(playerball.x - obstacles[o].x) < obstacleSize[o]){
-          if(Math.abs(playerball.y - obstacles[o].y) < obstacleSize[o]){
+        if(pythagorean(Math.abs(playerball.x - obstacles[o].x),Math.abs(playerball.y - obstacles[o].y)) < obstacleSize[o]){
             if(Math.abs(playerball.x - obstacles[o].x) > Math.abs(playerball.y - obstacles[o].y)){
               hitx = -hitx * 3/4;
               }
@@ -217,24 +216,6 @@ stage.on("stagemousemove", function(evt) {
             obs.hitx = -hitx*3/4;
             obs.hity = -hity*3/4;
           }
-        }
-        
-        for(var o2 = 0; o2 < obstacles.length; o2++){
-        var obs2 = obstacles[o2];
-          if(Math.abs(obs2.x - obstacles[o].x) < obstacleSize[o] + obstacleSize[o2]){
-          if(Math.abs(obs2.y - obstacles[o].y) < obstacleSize[o] + obstacleSize[o2]){
-            if(Math.abs(obs2.x - obstacles[o].x) > Math.abs(obs2.y - obstacles[o].y)){
-              obs2.hitx = -obs2.hitx * 3/4;
-              }
-            else {
-              obs2.hity = -obs2.hity * 3/4;
-            }
-            obs.hitx = -obs2.hitx*3/4;
-            obs.hity = -obs2.hitx*3/4;
-          }
-        }
-        }
-        
       }
     }
     stage.update();
