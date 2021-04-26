@@ -14,8 +14,11 @@ if(window.innerHeight < less){
 stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight - 54;
 
+leftbound = (window.innerWidth - less)/2/scale;
+topbound = (window.innerHeight - less)/2/scale;
+
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2/scale, 0 + (window.innerHeight - less)/2/scale, 1000, 1000);
+  green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
@@ -31,7 +34,7 @@ stage.canvas.width = window.innerWidth;
   });*/
   
   start = new createjs.Shape();
-  start.graphics.beginFill("grey").drawRect(0, 0, 200, 100);
+  start.graphics.beginFill("grey").drawRect(leftbound, topbound, leftbound+200, topbound+100);
   start.x = 0;
   start.y = 0;
 var ballplaced = false;
@@ -58,7 +61,7 @@ var hity = 0;
       playerball.y = evt.stageY/scale;
     }
   });
-  green.addChild(start);
+  container.addChild(start);
 
 var line;
 function drawLine(x,y,xx,yy){
