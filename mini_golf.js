@@ -7,8 +7,8 @@ background = new createjs.Shape();
   stage.addChild(background);
 stage.addChild(container);
 var less = window.innerWidth;
-var navbarHeight = 70;
-container.y = navbarHeight/scale;
+var navbarHeight = 45;
+container.y = navbarHeight;
 if(window.innerHeight-navbarHeight < less){
   less = window.innerHeight-navbarHeight;
 }
