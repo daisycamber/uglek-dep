@@ -170,7 +170,7 @@ stage.on("stagemousemove", function(evt) {
       if(playerball.y > topbound+1000-ballSize){
         hity = -hity;
       }
-      if(Math.abs(playerball.x - hole.x) < 10 || Math.abs(playerball.y - hole.y) < 10){
+      if(Math.abs(playerball.x - hole.x) < 3 || Math.abs(playerball.y - hole.y) < 3){
         container.removeChild(playerball);
       }
     }
