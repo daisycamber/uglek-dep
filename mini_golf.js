@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.13
+// By Jasper Camber Holton. V0.0.14
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
@@ -48,7 +48,7 @@ var movestarty;
 var playerball;
 var hitx = 0;
 var hity = 0;
-var ballSize = 10;
+var ballSize = 20;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
@@ -185,7 +185,7 @@ stage.on("stagemousemove", function(evt) {
       if(playerball.y > topbound+1000-ballSize){
         hity = -hity;
       }
-      if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < 3){
+      if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < ballSize * 2){
         container.removeChild(playerball);
       }
       for(var o = 0; o < obstacles.length; o++){
