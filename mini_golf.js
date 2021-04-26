@@ -116,6 +116,7 @@ stage.on("stagemousedown", function(evt) {
             pressmovestarted = true;
           }
       });
+var maxhit = 15;
 stage.on("stagemouseup", function(evt) {
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
@@ -126,17 +127,17 @@ stage.on("stagemouseup", function(evt) {
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 5){
             hitx = movex/movefactor;
             hity = movey/movefactor;
-            if(hitx > 10) {
-              hitx = 10;
+            if(hitx > maxhit) {
+              hitx = maxhit;
             }
-            if(hity > 10) {
-              hity = 10;
+            if(hity > maxhit) {
+              hity = maxhit;
             }
-            if(hitx < -10) {
-              hitx = -10;
+            if(hitx < -maxhit) {
+              hitx = -maxhit;
             }
-            if(hity < -10) {
-              hity = -10;
+            if(hity < -maxhit) {
+              hity = -maxhit;
             }
           }
   }
