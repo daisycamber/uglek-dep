@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.5
+// By Jasper Camber Holton. V0.0.6
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
@@ -94,9 +94,9 @@ var obstacles = [];
 var obstacleSize = [];
 for(var i = 0; i < 10; i++){
   obstacles[i] = new createjs.Shape();
-  var size = (Math.random()*30 + 10)/4;
+  var size = (Math.random()*30 + 10);
   obstacleSize[i] = size;
-      obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size*4);
+      obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + Math.random() * 1000;
       obstacles[i].y = topbound + Math.random() * 300 + 300;
       container.addChild(obstacles[i])
