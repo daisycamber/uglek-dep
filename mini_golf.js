@@ -1,4 +1,3 @@
-
   var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
@@ -8,16 +7,15 @@ background = new createjs.Shape();
   stage.addChild(background);
 stage.addChild(container);
 less = window.innerWidth;
-if(window.innerWidth > window.innerHeight){
+if(window.innerHeight < less){
   less = window.innerHeight;
-  container.x = (window.innerWidth-window.innerHeight)/16;
-  console.log("Container:");
-  console.log(container.x);
 }
+ scale = container.scale = less/1000;
+stage.canvas.width = window.innerWidth;
   stage.canvas.height = window.innerHeight - 54;
 
   green = new createjs.Shape();
-  green.graphics.beginFill("green").drawRect(0, 0, less/3, less);
+  green.graphics.beginFill("green").drawRect(0 + (window.innerWidth - less)/2, 0 + (window.innerHeight - less)/2, 1000+(window.innerWidth - less)/2, 1000+(window.innerHeight - less)/2);
   container.addChild(green);
   createjs.Touch.enable(stage);
   /*stage.on("stagemousedown", function(evt) {
