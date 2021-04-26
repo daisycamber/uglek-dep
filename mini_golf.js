@@ -8,6 +8,7 @@ background = new createjs.Shape();
 stage.addChild(container);
 var less = window.innerWidth;
 var navbarHeight = 70;
+container.y = navbarHeight;
 if(window.innerHeight-navbarHeight < less){
   less = window.innerHeight-navbarHeight;
 }
@@ -17,7 +18,7 @@ var canvasHeight = window.innerHeight;
   stage.canvas.height = canvasHeight;
 
 leftbound = (window.innerWidth - less)/2/scale;
-topbound = ((window.innerHeight - less)/2 + navbarHeight)/scale;
+topbound = ((window.innerHeight - less)/2)/scale;
 
   green = new createjs.Shape();
   green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
