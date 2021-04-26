@@ -1,18 +1,20 @@
-  var id = document.getElementById("gameid").innerHTML;
+if(window.innerHeight-navbarHeight < less){
+  less = window.innerHeight-navbarHeight;
+}
+
+var id = document.getElementById("gameid").innerHTML;
   var last = 0;
   var stage = new createjs.Stage("game156");
 var container = new createjs.Container();
+ scale = container.scale = less/1000;  
 background = new createjs.Shape();
   background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
   stage.addChild(background);
 stage.addChild(container);
 var less = window.innerWidth;
 var navbarHeight = 45;
-container.y = navbarHeight;
-if(window.innerHeight-navbarHeight < less){
-  less = window.innerHeight-navbarHeight;
-}
- scale = container.scale = less/1000;
+container.y = navbarHeight/scale;
+
 stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight;
   stage.canvas.height = canvasHeight;
