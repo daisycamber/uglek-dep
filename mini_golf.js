@@ -44,10 +44,11 @@ var movestarty;
 var playerball;
 var hitx = 0;
 var hity = 0;
+var ballSize = 10;
   start.on("mousedown", function(evt) {
     if(!ballplaced){
       playerball = new createjs.Shape();
-      playerball.graphics.beginFill("white").drawCircle(0, 0, 20);
+      playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
       playerball.x = evt.stageX/scale;
       playerball.y = evt.stageY/scale;
       container.addChild(playerball)
@@ -148,16 +149,16 @@ stage.on("stagemousemove", function(evt) {
     if(playerball){
     playerball.x = playerball.x + hitx;
     playerball.y = playerball.y + hity;
-      if(playerball.x < leftbound){
+      if(playerball.x < leftbound + ballSize){
         hitx = -hitx;
       }
-      if(playerball.y < topbound){
+      if(playerball.y < topbound + ballSize){
         hity = -hity;
       }
-      if(playerball.x > leftbound+1000){
+      if(playerball.x > leftbound+1000-ballSize){
         hitx = -hitx;
       }
-      if(playerball.y > topbound+1000){
+      if(playerball.y > topbound+1000-ballSize){
         hity = -hity;
       }
     }
