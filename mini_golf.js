@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.7
+// By Jasper Camber Holton. V0.0.8
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
@@ -210,14 +210,13 @@ stage.on("stagemousemove", function(evt) {
           if(Math.abs(playerball.y - obstacles[o].y) < obstacleSize[o]){
             if(Math.abs(playerball.x - obstacles[o].x) > Math.abs(playerball.y - obstacles[o].y)){
               hitx = -hitx * 3/4;
-              obstacles[o].hitx = -hitx/2;
-              obstacles[o].hity = -hity/2;
               }
             else {
               hity = -hity * 3/4;
-              obstacles[o].hitx = -hitx/2;
-              obstacles[o].hity = -hity/2;
+              
             }
+            obs.hitx = -hitx/2;
+            obs.hity = -hity/2;
           }
         }
         
