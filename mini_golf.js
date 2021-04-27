@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.2029
+// By Jasper Camber Holton. V0.0.203
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -152,7 +152,7 @@ var fixedobstacles = [];
 var fixedobstacleSize = [];
 for(var i = 0; i < 15; i++){
   fixedobstacles[i] = new createjs.Shape();
-  var size = (rng.nextFloat()*30 + 30);
+  var size = (rng.nextFloat()*60 + 60);
   fixedobstacleSize[i] = size;
       fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
       fixedobstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
