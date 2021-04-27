@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.394
+// By Jasper Camber Holton. V0.0.395
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -126,8 +126,8 @@ var opponentball;
 function setOpponentBall(x,y){
   opponentball = new createjs.Shape();
         opponentball.graphics.beginFill("yellow").drawCircle(0, 0, ballSize);
-        opponentball.x = x;
-        opponentball.y = y;
+        opponentball.x = x + leftbound;
+        opponentball.y = y + topbound;
         opponentball.vx = 0;
         opponentball.vy = 0;
         container.addChild(opponentball);
@@ -154,7 +154,7 @@ function putOpponentBall(x,y){
       else {
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
-        send("set,"+playerball.x+","+playerball.y);
+        send("set,"+playerball.x-leftbound+","+playerball.y-topbound);
       }
     }
   });
