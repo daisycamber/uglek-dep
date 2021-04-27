@@ -31,14 +31,14 @@ var rng = new RNG(22);
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
-
+var id = document.getElementById("gameid").innerHTML;
 function send(text){
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://uglek.com/game/" + id + "/post/", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     xhr.send(text);
 }
-var id = document.getElementById("gameid").innerHTML;
+
 var gameplay;
 function read(){
   $.get( "https://uglek.com/game/" + id + "/play/", function( data ) {
@@ -107,7 +107,7 @@ class GameWorld {
     init(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.context = this.canvas.getContext('2d');
-        this.context.scale(1000/less,1000/less);
+        this.context.scale(less/1000,less/1000);
 
         this.createWorld();
 
@@ -207,8 +207,14 @@ class GameWorld {
 }
 
 window.onload = function (){
-      var gameWorld = new GameWorld('game156');
+      var gameWorld = new GameWorld("game156");
 }
+
+stage.canvas.width = window.innerWidth;
+var canvasHeight = window.innerHeight-ADHEIGHT;
+stage.canvas.height = canvasHeight;
+leftbound = (window.innerWidth - less)/2/scale;
+topbound = ((canvasHeight - less)/2)/scale;
 
 /*
 var last = 0;
@@ -221,11 +227,6 @@ stage.addChild(background);
 stage.addChild(container);
 var speedfactor = 50;
 
-stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight-ADHEIGHT;
-stage.canvas.height = canvasHeight;
-leftbound = (window.innerWidth - less)/2/scale;
-topbound = ((canvasHeight - less)/2)/scale;
 green = new createjs.Shape();
 green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
