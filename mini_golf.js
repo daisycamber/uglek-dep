@@ -97,9 +97,6 @@ var ballSize = 20;
       playerball.vx = 0;
       playerball.vy = 0;
       container.addChild(playerball);
-      playerball.on("mousedown", function(evt) {
-        pressmovestarted = true;
-      });
       ballplaced = true;
     }
     else {
@@ -176,7 +173,7 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
-  if(hitx == 0 && hity == 0){
+  if(playerball.vx == 0 && playerball.vy == 0){
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 30 && pressmovestarted){
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
