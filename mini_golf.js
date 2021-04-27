@@ -250,44 +250,47 @@ stage.on("stagemousemove", function(evt) {
         obs.y = obs.y + obs.hity;
         obs.hitx = obs.hitx - obs.hitx/speedfactor;
         obs.hity = obs.hity - obs.hity/speedfactor;
-        let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
-        let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
-        let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
-        let vRelativeVelocity = {x: obs.hitx - playerball.hitx, y: obs.hity - playerball.hity};
-        let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
-        playerball.hitx -= (speed * vCollisionNorm.x);
-        playerball.hitx -= (speed * vCollisionNorm.y);
-        obs.hitx += (speed * vCollisionNorm.x);
-        obs.hity += (speed * vCollisionNorm.y);
-        
-    if(obs.hitx > 0 && obs.hitx < 0.1){
-      obs.hitx = 0;
-    }
-    if(obs.hity > 0 && obs.hity < 0.1){
-      obs.hity = 0;
-    }
-    if(obs.hitx < 0 && obs.hitx > -0.1){
-      obs.hitx = 0;
-    }
-    if(obs.hity < 0 && obs.hity > -0.1){
-      obs.hity = 0;
-    }
-        if(obs.x < leftbound + obstacleSize[o]){
-        obs.hitx = -obs.hitx;
+        // If collided
+        if(pythagorean(Math.abs(playerball.x - obstacles[o].x),Math.abs(playerball.y - obstacles[o].y)) < obstacleSize[o] + ballSize){
+          let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
+          let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
+          let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
+          let vRelativeVelocity = {x: obs.hitx - playerball.hitx, y: obs.hity - playerball.hity};
+          let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+          playerball.hitx -= (speed * vCollisionNorm.x);
+          playerball.hity -= (speed * vCollisionNorm.y);
+          obs.hitx += (speed * vCollisionNorm.x);
+          obs.hity += (speed * vCollisionNorm.y);
+
+          if(obs.hitx > 0 && obs.hitx < 0.1){
+            obs.hitx = 0;
+          }
+          if(obs.hity > 0 && obs.hity < 0.1){
+            obs.hity = 0;
+          }
+          if(obs.hitx < 0 && obs.hitx > -0.1){
+            obs.hitx = 0;
+          }
+          if(obs.hity < 0 && obs.hity > -0.1){
+            obs.hity = 0;
+          }
+          if(obs.x < leftbound + obstacleSize[o]){
+            obs.hitx = -obs.hitx;
+          }
+          if(obs.y < topbound + obstacleSize[o]){
+            obs.hity = -obs.hity;
+          }
+          if(obs.x > leftbound+1000-obstacleSize[o]){
+            obs.hitx = -obs.hitx;
+          }
+          if(obs.y > topbound+1000-obstacleSize[o]){
+            obs.hity = -obs.hity;
+          }
+        }
       }
-      if(obs.y < topbound + obstacleSize[o]){
-        obs.hity = -obs.hity;
-      }
-      if(obs.x > leftbound+1000-obstacleSize[o]){
-        obs.hitx = -obs.hitx;
-      }
-      if(obs.y > topbound+1000-obstacleSize[o]){
-        obs.hity = -obs.hity;
-      }
-      }
-      for(var o = 0; o < fixedobstacles.length; o++){
-        var obs = fixedobstacles[o];
-      }
+      //for(var o = 0; o < fixedobstacles.length; o++){
+      //  var obs = fixedobstacles[o];
+      //}
     }
     stage.update();
   }
