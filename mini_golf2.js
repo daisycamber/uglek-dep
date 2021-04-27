@@ -54,6 +54,9 @@ var less = window.innerWidth;
 if(window.innerHeight < less){
   less = window.innerHeight-ADHEIGHT;
 }
+var canvasHeight = window.innerHeight-ADHEIGHT;
+leftbound = (window.innerWidth - less)/2/scale;
+topbound = ((canvasHeight - less)/2)/scale;
 
 // Game Classes
 class GameObject
@@ -108,6 +111,8 @@ class GameWorld {
         this.canvas = document.getElementById(canvasId);
         this.context = this.canvas.getContext('2d');
         this.context.scale(less/1000,less/1000);
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = canvasHeight;
 
         this.createWorld();
 
@@ -210,11 +215,7 @@ window.onload = function (){
       var gameWorld = new GameWorld("game156");
 }
 
-stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight-ADHEIGHT;
-stage.canvas.height = canvasHeight;
-leftbound = (window.innerWidth - less)/2/scale;
-topbound = ((canvasHeight - less)/2)/scale;
+
 
 /*
 var last = 0;
