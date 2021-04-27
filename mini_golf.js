@@ -9,7 +9,6 @@ function send(text){
     xhr.open("POST", "https://uglek.com/game/" + id + "/post/", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     xhr.send(text);
-  });
 }
 var id = document.getElementById("gameid").innerHTML;
 var gameplay;
