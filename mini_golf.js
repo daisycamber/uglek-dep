@@ -285,9 +285,11 @@ stage.on("stagemousemove", function(evt) {
         var obs = fixedobstacles[o];
         if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o] && playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
           hitx = -hitx * 3/4;
+          playerball.x = playerball.x - hitx;
         }
         if(playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o] && playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o]) {
           hity = -hity * 3/4;
+          playerball.y = playerball.y - hity;
         }
         
       }
