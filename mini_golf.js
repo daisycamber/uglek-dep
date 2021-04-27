@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.18
+// By Jasper Camber Holton. V0.0.19
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
@@ -90,8 +90,8 @@ function drawLine(x,y,xx,yy){
 
 hole = new createjs.Shape();
       hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
-      hole.x = 800;
-      hole.y = 900;
+      hole.x = leftbound + 800;
+      hole.y = topbound + 900;
       container.addChild(hole)
 
 var movefactor = 10;
@@ -103,7 +103,7 @@ for(var i = 0; i < 15; i++){
   var size = (Math.random()*30 + 30);
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
-      obstacles[i].x = leftbound + Math.random() * 1000;
+      obstacles[i].x = leftbound + Math.random() * 850 + 75;
       obstacles[i].y = topbound + Math.random() * 500 + 200;
     obstacles[i].hitx = 0;
   obstacles[i].hity = 0;
@@ -216,6 +216,18 @@ stage.on("stagemousemove", function(evt) {
             obs.hitx = -hitx*3/4;
             obs.hity = -hity*3/4;
           }
+        if(obs.x < leftbound + obstacleSize[o]){
+        obs.hitx = -obs.hitx;
+      }
+      if(obs.y < topbound + obstacleSize[o]){
+        obs.hity = -obs.hity;
+      }
+      if(obs.x > leftbound+1000-obstacleSize[o]){
+        obs.hitx = -obs.hitx;
+      }
+      if(obs.y > topbound+1000-obstacleSize[o]){
+        obs.hity = -obs.hity;
+      }
       }
     }
     stage.update();
