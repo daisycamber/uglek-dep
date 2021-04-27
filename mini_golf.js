@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.392
+// By Jasper Camber Holton. V0.0.393
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -46,7 +46,9 @@ function readCallback(){
   gp = gameplay;
   console.log("Read callback");
       for(var i = currentTurn; i < gp.length; i++){
+        console.log(gp[i]);
         sp = gp[i].split(",");
+        
         
         if(sp[0] == "set"){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
@@ -67,7 +69,7 @@ function read(){
   Http.open("GET", url);
   Http.send();
   Http.onreadystatechange = (e) => {
-    gameplay = Http.responseText;
+    gameplay = Http.responseText.split("/");
     readCallback();
   }
 }
