@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.2035
+// By Jasper Camber Holton. V0.0.2036
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -111,7 +111,7 @@ class GameWorld {
     init(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.context = this.canvas.getContext('2d');
-        this.context.scale(scale,scale);
+        //this.context.scale(scale,scale);
         this.canvas.width = window.innerWidth;
         this.canvas.height = canvasHeight;
 
