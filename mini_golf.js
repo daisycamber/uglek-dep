@@ -296,15 +296,16 @@ stage.on("stagemousemove", function(evt) {
         var obs = fixedobstacles[o];
         // If collision
         if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o] && playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
-          let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
-          let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
+          var halfsize = fixedObstacleSize[o]/2;
+          let vCollision = {x: obs.x + halfsize - playerball.x, y: obs.y + halfsize2 - playerball.y};
+          let distance = Math.sqrt((obs.x + halfsize - playerball.x)*(obs.x + halfsize - playerball.x) + (obs.y + halfsize - playerball.y)*(obs.y + halfsize - playerball.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
           let vRelativeVelocity = {x: 0 - playerball.vx, y: 0 - playerball.vy};
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
           playerball.vx += (speed * vCollisionNorm.x);
           playerball.vy += (speed * vCollisionNorm.y);
-          playerball.x = playerball.x + vx
-          playerball.y = playerball.y + vx
+          //playerball.x = playerball.x + vx
+          //playerball.y = playerball.y + vx
         }
       }
     }
