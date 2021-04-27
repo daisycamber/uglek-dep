@@ -88,20 +88,47 @@ var playerball;
 var hitx = 0;
 var hity = 0;
 var ballSize = 20;
+
+var player1 = document.getElementById("player1").innerHTML;
+var user = document.getElementById("user").innerHTML;
+var playerTurn = false;
+if(user == player1){
+  playerTurn = true;
+}
+var opponentball;
+function setOpponentBall(x,y){
+  opponentball = new createjs.Shape();
+        opponentball.graphics.beginFill("yellow").drawCircle(0, 0, ballSize);
+        opponentball.x = x;
+        opponentball.y = y;
+        opponentball.vx = 0;
+        opponentball.vy = 0;
+        container.addChild(opponentball);
+}
+var opponentPlayed = false;
+function putOpponentBall(x,y){
+  opponentball.vx = y;
+  opponentball.vy = y;
+}
+
   start.on("mousedown", function(evt) {
-    if(!ballplaced){
-      playerball = new createjs.Shape();
-      playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
-      playerball.x = evt.stageX/scale;
-      playerball.y = evt.stageY/scale;
-      playerball.vx = 0;
-      playerball.vy = 0;
-      container.addChild(playerball);
-      ballplaced = true;
-    }
-    else {
-      playerball.x = evt.stageX/scale;
-      playerball.y = evt.stageY/scale;
+    if(playerTurn){
+      if(!ballplaced){
+        playerball = new createjs.Shape();
+        playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
+        playerball.x = evt.stageX/scale;
+        playerball.y = evt.stageY/scale;
+        playerball.vx = 0;
+        playerball.vy = 0;
+        container.addChild(playerball);
+        ballplaced = true;
+        send("set,"+playerball.x+","+playerball.y);
+      }
+      else {
+        playerball.x = evt.stageX/scale;
+        playerball.y = evt.stageY/scale;
+        send("set,"+playerball.x+","+playerball.y);
+      }
     }
   });
   container.addChild(start);
@@ -126,10 +153,10 @@ function drawLine(x,y,xx,yy){
 }
 
 hole = new createjs.Shape();
-      hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
-      hole.x = leftbound + 800;
-      hole.y = topbound + 900;
-      container.addChild(hole)
+hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+hole.x = leftbound + 800;
+hole.y = topbound + 900;
+container.addChild(hole)
 
 var movefactor = 10;
 
@@ -173,7 +200,7 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
-  if(playerball.vx == 0 && playerball.vy == 0){
+  if(playerball.vx == 0 && playerball.vy == 0 && playerTurn){
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 30 && pressmovestarted){
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
@@ -189,6 +216,7 @@ stage.on("stagemouseup", function(evt) {
             if(playerball.vy < -maxhit) {
               playerball.vy = -maxhit;
             }
+            send("put,"+playerball.vx+","+playerball.vy);
           }
   }
   container.removeChild(line);
@@ -209,41 +237,43 @@ stage.on("stagemousemove", function(evt) {
   createjs.Ticker.setFPS(60);
   createjs.Ticker.addEventListener("tick", stage);
   createjs.Ticker.addEventListener("tick", handleTick);
-  function handleTick(event) {
-    
-    if(playerball){
-      playerball.x = playerball.x + playerball.vx;
-    playerball.y = playerball.y + playerball.vy;
-       playerball.vx = playerball.vx - playerball.vx/speedfactor;
-    playerball.vy = playerball.vy - playerball.vy/speedfactor;
-    if(playerball.vx > 0 && playerball.vx < 0.1){
-      playerball.vx = 0;
+var ticks = 0;
+var currentTurn = 0;
+
+function checkCollisions(body) {
+  if(body){
+      body.x = body.x + body.vx;
+    body.y = body.y + body.vy;
+       body.vx = body.vx - body.vx/speedfactor;
+    body.vy = body.vy - body.vy/speedfactor;
+    if(body.vx > 0 && body.vx < 0.1){
+      body.vx = 0;
     }
-    if(playerball.vy > 0 && playerball.vy < 0.1){
-      playerball.vy = 0;
+    if(body.vy > 0 && body.vy < 0.1){
+      body.vy = 0;
     }
-    if(playerball.vx < 0 && playerball.vx > -0.1){
+    if(body.vx < 0 && body.vx > -0.1){
       hitx = 0;
     }
-    if(playerball.vy < 0 && playerball.vy > -0.1){
-      playerball.vy = 0;
+    if(body.vy < 0 && body.vy > -0.1){
+      body.vy = 0;
     }
-    
-     
-      if(playerball.x < leftbound + ballSize){
-        playerball.vx = -playerball.vx;
+
+
+      if(body.x < leftbound + ballSize){
+        body.vx = -body.vx;
       }
-      if(playerball.y < topbound + ballSize){
-        playerball.vy = -playerball.vy;
+      if(body.y < topbound + ballSize){
+        body.vy = -body.vy;
       }
-      if(playerball.x > leftbound+1000-ballSize){
-        playerball.vx = -playerball.vx;
+      if(body.x > leftbound+1000-ballSize){
+        body.vx = -body.vx;
       }
-      if(playerball.y > topbound+1000-ballSize){
-        playerball.vy = -playerball.vy;
+      if(body.y > topbound+1000-ballSize){
+        body.vy = -body.vy;
       }
-      if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < ballSize * 1.5){
-        container.removeChild(playerball);
+      if(pythagorean(Math.abs(body.x - hole.x),Math.abs(body.y - hole.y)) < ballSize * 1.5){
+        container.removeChild(body);
       }
       for(var o = 0; o < obstacles.length; o++){
         var obs = obstacles[o];
@@ -252,18 +282,18 @@ stage.on("stagemousemove", function(evt) {
         obs.vx = obs.vx - obs.vx/speedfactor;
         obs.vy = obs.vy - obs.vy/speedfactor;
         // If collided
-        if(pythagorean(Math.abs(playerball.x - obs.x),Math.abs(playerball.y - obs.y)) < obstacleSize[o] + ballSize){
-          let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
-          let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
+        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < obstacleSize[o] + ballSize){
+          let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
+          let distance = Math.sqrt((obs.x-body.x)*(obs.x-body.x) + (obs.y-body.y)*(obs.y-body.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
-          let vRelativeVelocity = {x: obs.vx - playerball.vx, y: obs.vy - playerball.vy};
+          let vRelativeVelocity = {x: obs.vx - body.vx, y: obs.vy - body.vy};
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
-          playerball.vx += (speed * vCollisionNorm.x);
-          playerball.vy += (speed * vCollisionNorm.y);
+          body.vx += (speed * vCollisionNorm.x);
+          body.vy += (speed * vCollisionNorm.y);
           obs.vx -= (speed * vCollisionNorm.x);
           obs.vy -= (speed * vCollisionNorm.y);
 
-          
+
         }
         if(obs.vx > 0 && obs.vx < 0.1){
             obs.vx = 0;
@@ -293,9 +323,9 @@ stage.on("stagemousemove", function(evt) {
       for(var o = 0; o < fixedobstacles.length; o++){
         var obs = fixedobstacles[o];
         // If collision
-        if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o] && playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
-          var dx=(playerball.x)-(obs.x+fixedobstacleSize[o]/2);
-          var dy=(playerball.y)-(obs.y+fixedobstacleSize[o]/2);
+        if(body.x > fixedobstacles[o].x && body.x < fixedobstacles[o].x + fixedobstacleSize[o] && body.y > fixedobstacles[o].y && body.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
+          var dx=(body.x)-(obs.x+fixedobstacleSize[o]/2);
+          var dy=(body.y)-(obs.y+fixedobstacleSize[o]/2);
           var width=(ballSize * 2+fixedobstacleSize[o])/2;
           var height=(ballSize * 2+fixedobstacleSize[o])/2;
           var crossWidth=width*dy;
@@ -309,12 +339,34 @@ stage.on("stagemousemove", function(evt) {
               }
           }
           if(collision == 'bottom' || collision == 'top'){
-            playerball.vy = -playerball.vy;
+            body.vy = -body.vy;
           }
           if(collision == 'right' || collision == 'left'){
-            playerball.vx = -playerball.vx;
+            body.vx = -body.vx;
           }
         }
+}
+
+
+  function handleTick(event) {
+    if(ticks > 3*60 && !playerTurn){
+      ticks = 0;
+      read();
+      gp = gameplay();
+      for(var i = currentTurn; i < gp.length; i++){
+        sp = gp[i].split(",");
+        
+        if(sp[0] == "set"){
+          setOpponentBall(sp[1],sp[2]);
+        } else if(sp[0] == "put"){
+          putOpponentBall(sp[1],sp[2]);
+          playerTurn = true;
+          currentTurn = i+2;
+        }
+      }
+    }
+    checkCollisions(playerball);
+    checkCollisions(opponentball);
       }
     }
     stage.update();
