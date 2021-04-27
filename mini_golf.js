@@ -353,6 +353,7 @@ function checkCollisions(body) {
 
   function handleTick(event) {
     if(ticks > 3*60 && !playerTurn){
+      
       ticks = 0;
       read();
       gp = gameplay();
@@ -372,4 +373,5 @@ function checkCollisions(body) {
     checkCollisions(playerball);
     checkCollisions(opponentball);
     stage.update();
+    ticks = ticks + 1
   }
