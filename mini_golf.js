@@ -136,7 +136,7 @@ var movefactor = 10;
 var obstacles = [];
 var obstacleSize = [];
 
-for(var i = 0; i < 15; i++){
+for(var i = 0; i < 10; i++){
   obstacles[i] = new createjs.Shape();
   var size = (rng.nextFloat()*30 + 30);
   obstacleSize[i] = size;
@@ -150,7 +150,7 @@ for(var i = 0; i < 15; i++){
 
 var fixedobstacles = [];
 var fixedobstacleSize = [];
-for(var i = 0; i < 15; i++){
+for(var i = 0; i < 7; i++){
   fixedobstacles[i] = new createjs.Shape();
   var size = (rng.nextFloat()*60 + 60);
   fixedobstacleSize[i] = size;
