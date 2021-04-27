@@ -283,12 +283,11 @@ stage.on("stagemousemove", function(evt) {
       }
       for(var o = 0; o < fixedobstacles.length; o++){
         var obs = fixedobstacles[o];
-        if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o]) {
-          if(playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
-          hity = -hity * 3/4;
-        } else{
+        if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o] && (playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
           hitx = -hitx * 3/4;
         }
+        if(playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o] && playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o]) {
+          hity = -hity * 3/4;
         }
         
       }
