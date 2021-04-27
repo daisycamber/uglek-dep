@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.213
+// By Jasper Camber Holton. V0.0.214
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -296,7 +296,7 @@ stage.on("stagemousemove", function(evt) {
         var obs = fixedobstacles[o];
         // If collision
         if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o] && playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
-          var halfsize = fixedObstacleSize[o]/2;
+          var halfsize = fixedobstacleSize[o]/2;
           let vCollision = {x: obs.x + halfsize - playerball.x, y: obs.y + halfsize2 - playerball.y};
           let distance = Math.sqrt((obs.x + halfsize - playerball.x)*(obs.x + halfsize - playerball.x) + (obs.y + halfsize - playerball.y)*(obs.y + halfsize - playerball.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
