@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.208
+// By Jasper Camber Holton. V0.0.209
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -291,9 +291,19 @@ stage.on("stagemousemove", function(evt) {
           }
         }
       }
-      //for(var o = 0; o < fixedobstacles.length; o++){
-      //  var obs = fixedobstacles[o];
-      //}
+      for(var o = 0; o < fixedobstacles.length; o++){
+        var obs = fixedobstacles[o];
+        // If collision
+        if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o] && playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
+          let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
+          let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
+          let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
+          let vRelativeVelocity = {x: obs.vx - playerball.vx, y: obs.vy - playerball.vy};
+          let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+          playerball.vx += (speed * vCollisionNorm.x);
+          playerball.vy += (speed * vCollisionNorm.y);
+        }
+      }
     }
     stage.update();
   }
