@@ -26,7 +26,7 @@ RNG.prototype.choice = function(array) {
   return array[this.nextRange(0, array.length)];
 }
 
-var rng = new RNG(20);
+var rng = new RNG(21);
 
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
