@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.206
+// By Jasper Camber Holton. V0.0.207
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -212,7 +212,11 @@ stage.on("stagemousemove", function(evt) {
   createjs.Ticker.addEventListener("tick", stage);
   createjs.Ticker.addEventListener("tick", handleTick);
   function handleTick(event) {
-    playerball.vx = playerball.vx - playerball.vx/speedfactor;
+    
+    if(playerball){
+      playerball.x = playerball.x + playerball.vx;
+    playerball.y = playerball.y + playerball.vy;
+       playerball.vx = playerball.vx - playerball.vx/speedfactor;
     playerball.vy = playerball.vy - playerball.vy/speedfactor;
     if(playerball.vx > 0 && playerball.vx < 0.1){
       playerball.vx = 0;
@@ -226,9 +230,8 @@ stage.on("stagemousemove", function(evt) {
     if(playerball.vy < 0 && playerball.vy > -0.1){
       playerball.vy = 0;
     }
-    if(playerball){
-    playerball.x = playerball.x + playerball.vx;
-    playerball.y = playerball.y + playerball.vy;
+    
+     
       if(playerball.x < leftbound + ballSize){
         playerball.vx = -playerball.vx;
       }
