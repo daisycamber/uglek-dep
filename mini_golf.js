@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.205
+// By Jasper Camber Holton. V0.0.206
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -93,6 +93,8 @@ var ballSize = 20;
       playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
       playerball.x = evt.stageX/scale;
       playerball.y = evt.stageY/scale;
+      playerball.vx = 0;
+      playerball.vy = 0;
       container.addChild(playerball);
       playerball.on("mousedown", function(evt) {
         pressmovestarted = true;
@@ -143,8 +145,8 @@ for(var i = 0; i < 10; i++){
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
       obstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
-    obstacles[i].hitx = 0;
-  obstacles[i].hity = 0;
+    obstacles[i].vx = 0;
+  obstacles[i].vy = 0;
       container.addChild(obstacles[i])
 }
 
@@ -157,8 +159,6 @@ for(var i = 0; i < 7; i++){
       fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
       fixedobstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
       fixedobstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
-    fixedobstacles[i].hitx = 0;
-  fixedobstacles[i].hity = 0;
       container.addChild(fixedobstacles[i])
 }
 stage.on("stagemousedown", function(evt) {
@@ -177,19 +177,19 @@ stage.on("stagemouseup", function(evt) {
             console.log(movey);
   if(hitx == 0 && hity == 0){
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 5){
-            hitx = movex/movefactor;
-            hity = movey/movefactor;
-            if(hitx > maxhit) {
-              hitx = maxhit;
+            playerball.vx = movex/movefactor;
+            playerball.vy = movey/movefactor;
+            if(playerball.vx > maxhit) {
+              playerball.vx = maxhit;
             }
-            if(hity > maxhit) {
-              hity = maxhit;
+            if(playerball.vy > maxhit) {
+              playerball.vy = maxhit;
             }
-            if(hitx < -maxhit) {
-              hitx = -maxhit;
+            if(playerball.vx < -maxhit) {
+              playerball.vx = -maxhit;
             }
-            if(hity < -maxhit) {
-              hity = -maxhit;
+            if(playerball.vy < -maxhit) {
+              playerball.vy = -maxhit;
             }
           }
   }
@@ -212,79 +212,79 @@ stage.on("stagemousemove", function(evt) {
   createjs.Ticker.addEventListener("tick", stage);
   createjs.Ticker.addEventListener("tick", handleTick);
   function handleTick(event) {
-    hitx = hitx - hitx/speedfactor;
-    hity = hity - hity/speedfactor;
-    if(hitx > 0 && hitx < 0.1){
+    playerball.vx = playerball.vx - playerball.vx/speedfactor;
+    playerball.vy = playerball.vy - playerball.vy/speedfactor;
+    if(playerball.vx > 0 && playerball.vx < 0.1){
+      playerball.vx = 0;
+    }
+    if(playerball.vy > 0 && playerball.vy < 0.1){
+      playerball.vy = 0;
+    }
+    if(playerball.vx < 0 && playerball.vx > -0.1){
       hitx = 0;
     }
-    if(hity > 0 && hity < 0.1){
-      hity = 0;
-    }
-    if(hitx < 0 && hitx > -0.1){
-      hitx = 0;
-    }
-    if(hity < 0 && hity > -0.1){
-      hity = 0;
+    if(playerball.vy < 0 && playerball.vy > -0.1){
+      playerball.vy = 0;
     }
     if(playerball){
-    playerball.x = playerball.x + hitx;
-    playerball.y = playerball.y + hity;
+    playerball.x = playerball.x + playerball.vx;
+    playerball.y = playerball.y + playerball.vy;
       if(playerball.x < leftbound + ballSize){
-        hitx = -hitx;
+        playerball.vx = -playerball.vx;
       }
       if(playerball.y < topbound + ballSize){
-        hity = -hity;
+        playerball.vy = -playerball.vy;
       }
       if(playerball.x > leftbound+1000-ballSize){
-        hitx = -hitx;
+        playerball.vx = -playerball.vx;
       }
       if(playerball.y > topbound+1000-ballSize){
-        hity = -hity;
+        playerball.vy = -playerball.vy;
       }
       if(pythagorean(Math.abs(playerball.x - hole.x),Math.abs(playerball.y - hole.y)) < ballSize * 1.5){
         container.removeChild(playerball);
       }
       for(var o = 0; o < obstacles.length; o++){
         var obs = obstacles[o];
-        obs.x = obs.x + obs.hitx;
-        obs.y = obs.y + obs.hity;
-        obs.hitx = obs.hitx - obs.hitx/speedfactor;
-        obs.hity = obs.hity - obs.hity/speedfactor;
+        obs.x = obs.x + obs.vx;
+        obs.y = obs.y + obs.vy;
+        obs.hitx = obs.vx - obs.vx/speedfactor;
+        obs.hity = obs.vx - obs.vx/speedfactor;
         // If collided
         if(pythagorean(Math.abs(playerball.x - obstacles[o].x),Math.abs(playerball.y - obstacles[o].y)) < obstacleSize[o] + ballSize){
           let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
           let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
-          let vRelativeVelocity = {x: obs.hitx - playerball.hitx, y: obs.hity - playerball.hity};
+          let vRelativeVelocity = {x: obs.vx - playerball.vx, y: obs.vy - playerball.vy};
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
-          playerball.hitx -= (speed * vCollisionNorm.x);
-          playerball.hity -= (speed * vCollisionNorm.y);
+          playerball.vx -= (speed * vCollisionNorm.x);
+          playerball.vy -= (speed * vCollisionNorm.y);
           obs.hitx += (speed * vCollisionNorm.x);
           obs.hity += (speed * vCollisionNorm.y);
 
-          if(obs.hitx > 0 && obs.hitx < 0.1){
-            obs.hitx = 0;
+          if(obs.vx > 0 && obs.vx < 0.1){
+            obs.vx = 0;
           }
-          if(obs.hity > 0 && obs.hity < 0.1){
-            obs.hity = 0;
+          if(obs.vy > 0 && obs.vy < 0.1){
+            obs.vy = 0;
           }
-          if(obs.hitx < 0 && obs.hitx > -0.1){
-            obs.hitx = 0;
+          if(obs.vx < 0 && obs.vx > -0.1){
+            obs.vx = 0;
           }
-          if(obs.hity < 0 && obs.hity > -0.1){
-            obs.hity = 0;
+          if(obs.vy < 0 && obs.vy > -0.1){
+            obs.vy = 0;
           }
           if(obs.x < leftbound + obstacleSize[o]){
-            obs.hitx = -obs.hitx;
+            obs.vx = -obs.vx;
           }
           if(obs.y < topbound + obstacleSize[o]){
-            obs.hity = -obs.hity;
+            obs.vy = -obs.vy;
           }
           if(obs.x > leftbound+1000-obstacleSize[o]){
-            obs.hitx = -obs.hitx;
+            obs.vx = -obs.vx;
           }
           if(obs.y > topbound+1000-obstacleSize[o]){
-            obs.hity = -obs.hity;
+            obs.vy = -obs.vy;
           }
         }
       }
