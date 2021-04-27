@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.209
+// By Jasper Camber Holton. V0.0.208
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
