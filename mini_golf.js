@@ -1,5 +1,33 @@
-Math.seed(21);
-// By Jasper Camber Holton. V0.0.201
+// By Jasper Camber Holton. V0.0.202
+function RNG(seed) {
+  // LCG using GCC's constants
+  this.m = 0x80000000; // 2**31;
+  this.a = 1103515245;
+  this.c = 12345;
+
+  this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
+}
+RNG.prototype.nextInt = function() {
+  this.state = (this.a * this.state + this.c) % this.m;
+  return this.state;
+}
+RNG.prototype.nextFloat = function() {
+  // returns in range [0,1]
+  return this.nextInt() / (this.m - 1);
+}
+RNG.prototype.nextRange = function(start, end) {
+  // returns in range [start, end): including start, excluding end
+  // can't modulu nextInt because of weak randomness in lower bits
+  var rangeSize = end - start;
+  var randomUnder1 = this.nextInt() / this.m;
+  return start + Math.floor(randomUnder1 * rangeSize);
+}
+RNG.prototype.choice = function(array) {
+  return array[this.nextRange(0, array.length)];
+}
+
+var rng = new RNG(20);
+
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
@@ -110,11 +138,11 @@ var obstacleSize = [];
 
 for(var i = 0; i < 15; i++){
   obstacles[i] = new createjs.Shape();
-  var size = (Math.random()*30 + 30);
+  var size = (rng.nextFloat()*30 + 30);
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
-      obstacles[i].x = leftbound + Math.random() * 850 + 75;
-      obstacles[i].y = topbound + Math.random() * 400 + 200;
+      obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+      obstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
     obstacles[i].hitx = 0;
   obstacles[i].hity = 0;
       container.addChild(obstacles[i])
@@ -128,8 +156,8 @@ for(var i = 0; i < 15; i++){
   var size = (Math.random()*30 + 30);
   fixedobstacleSize[i] = size;
       fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
-      fixedobstacles[i].x = leftbound + Math.random() * 850 + 75;
-      fixedobstacles[i].y = topbound + Math.random() * 400 + 200;
+      fixedobstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+      fixedobstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
     fixedobstacles[i].hitx = 0;
   fixedobstacles[i].hity = 0;
       container.addChild(fixedobstacles[i])
