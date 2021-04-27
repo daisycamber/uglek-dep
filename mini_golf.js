@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.209
+// By Jasper Camber Holton. V0.0.210
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -251,8 +251,8 @@ stage.on("stagemousemove", function(evt) {
         var obs = obstacles[o];
         obs.x = obs.x + obs.vx;
         obs.y = obs.y + obs.vy;
-        obs.hitx = obs.vx - obs.vx/speedfactor;
-        obs.hity = obs.vx - obs.vx/speedfactor;
+        obs.vx = obs.vx - obs.vx/speedfactor;
+        obs.vy = obs.vy - obs.vy/speedfactor;
         // If collided
         if(pythagorean(Math.abs(playerball.x - obs.x),Math.abs(playerball.y - obs.y)) < obstacleSize[o] + ballSize){
           let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
@@ -265,7 +265,9 @@ stage.on("stagemousemove", function(evt) {
           obs.vx -= (speed * vCollisionNorm.x);
           obs.vy -= (speed * vCollisionNorm.y);
 
-          if(obs.vx > 0 && obs.vx < 0.1){
+          
+        }
+        if(obs.vx > 0 && obs.vx < 0.1){
             obs.vx = 0;
           }
           if(obs.vy > 0 && obs.vy < 0.1){
@@ -289,7 +291,6 @@ stage.on("stagemousemove", function(evt) {
           if(obs.y > topbound+1000-obstacleSize[o]){
             obs.vy = -obs.vy;
           }
-        }
       }
       for(var o = 0; o < fixedobstacles.length; o++){
         var obs = fixedobstacles[o];
