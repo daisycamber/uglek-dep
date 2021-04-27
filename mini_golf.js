@@ -1,13 +1,33 @@
+Math.seed(21);
 // By Jasper Camber Holton. V0.0.19
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
+
+function send(text){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://uglek.com/game/" + id + "/post/", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    xhr.send(text);
+  });
+}
+var id = document.getElementById("gameid").innerHTML;
+var gameplay;
+function read(){
+  $.get( "https://uglek.com/game/" + id + "/play/", function( data ) {
+    gameplay = data;
+  });
+}
+function gameplayArray(){
+  gameplay.split('/');
+}
+
 var ADHEIGHT = 90;
 var less = window.innerWidth;
 if(window.innerHeight < less){
   less = window.innerHeight-ADHEIGHT;
 }
-var id = document.getElementById("gameid").innerHTML;
+
 var last = 0;
 var stage = new createjs.Stage("game156");
 var container = new createjs.Container();
@@ -27,17 +47,7 @@ green = new createjs.Shape();
 green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
   createjs.Touch.enable(stage);
-  /*stage.on("stagemousedown", function(evt) {
-    playerball = new createjs.Shape();
-    playerball.graphics.beginFill("red").drawCircle(0, 0, 20);
-    playerball.x = evt.x
-    
-    console.log("https://uglek.com/game/" + id + "/post/")
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://uglek.com/game/" + id + "/post/", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-    xhr.send("put 90 50");
-  });*/
+  
   start = new createjs.Shape();
   start.graphics.beginFill("grey").drawRect(leftbound, topbound, 200, 100);
   start.x = 0;
@@ -98,16 +108,32 @@ var movefactor = 10;
 
 var obstacles = [];
 var obstacleSize = [];
+
 for(var i = 0; i < 15; i++){
   obstacles[i] = new createjs.Shape();
   var size = (Math.random()*30 + 30);
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + Math.random() * 850 + 75;
-      obstacles[i].y = topbound + Math.random() * 500 + 200;
+      obstacles[i].y = topbound + Math.random() * 400 + 200;
     obstacles[i].hitx = 0;
   obstacles[i].hity = 0;
       container.addChild(obstacles[i])
+}
+
+var fixedobstacles = [];
+var fixedobstacleSize = [];
+Math.seed(21);
+for(var i = 0; i < 15; i++){
+  fixedobstacles[i] = new createjs.Shape();
+  var size = (Math.random()*30 + 30);
+  fixedobstacleSize[i] = size;
+      fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
+      fixedobstacles[i].x = leftbound + Math.random() * 850 + 75;
+      fixedobstacles[i].y = topbound + Math.random() * 400 + 200;
+    fixedobstacles[i].hitx = 0;
+  fixedobstacles[i].hity = 0;
+      container.addChild(fixedobstacles[i])
 }
 stage.on("stagemousedown", function(evt) {
           if(!pressmovestarted){
@@ -228,6 +254,15 @@ stage.on("stagemousemove", function(evt) {
       if(obs.y > topbound+1000-obstacleSize[o]){
         obs.hity = -obs.hity;
       }
+      }
+      for(var o = 0; o < fixedobstacles.length; o++){
+        var obs = fixedobstacles[o];
+        if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedovstacleSize[o]) {
+          hitx = -hitx * 3/4;
+        }
+        if(playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedovstacleSize[o]) {
+          hity = -hity * 3/4;
+        }
       }
     }
     stage.update();
