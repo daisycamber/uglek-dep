@@ -41,10 +41,32 @@ function send(text){
 }
 var id = document.getElementById("gameid").innerHTML;
 var gameplay;
+
+function readCallback(){
+  gp = gameplay();
+      for(var i = currentTurn; i < gp.length; i++){
+        sp = gp[i].split(",");
+        
+        if(sp[0] == "set"){
+          setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
+          currentTurn = i;
+        } else if(sp[0] == "put"){
+          putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
+          playerTurn = true;
+          currentTurn = i+2;
+        }
+      }
+}
+
 function read(){
-  $.get( "https://uglek.com/game/" + id + "/play/", function( data ) {
-    gameplay = data;
-  });
+  const Http = new XMLHttpRequest();
+  const url="https://uglek.com/game/" + id + "/play/";
+  Http.open("GET", url);
+  Http.send();
+  Http.onreadystatechange = (e) => {
+    gameplay = Http.responseText;
+    readCallback();
+  }
 }
 function gameplayArray(){
   gameplay.split('/');
@@ -224,7 +246,7 @@ stage.on("stagemouseup", function(evt) {
       pressmovestarted = false;
       });
 stage.on("stagemousemove", function(evt) {
-  if(pressmovestarted){
+  if(pressmovestarted && playerball){
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
         if(playerball.vx == 0 && playerball.vy == 0){
@@ -356,19 +378,6 @@ function checkCollisions(body) {
       
       ticks = 0;
       read();
-      gp = gameplay();
-      for(var i = currentTurn; i < gp.length; i++){
-        sp = gp[i].split(",");
-        
-        if(sp[0] == "set"){
-          setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
-          currentTurn = i;
-        } else if(sp[0] == "put"){
-          putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
-          playerTurn = true;
-          currentTurn = i+2;
-        }
-      }
     }
     checkCollisions(playerball);
     checkCollisions(opponentball);
