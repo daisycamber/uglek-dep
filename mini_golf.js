@@ -346,7 +346,6 @@ function checkCollisions(body) {
             body.vx = -body.vx;
           }
         }
-      }
   }
 }
 
