@@ -378,9 +378,10 @@ function checkCollisions(body) {
       
       ticks = 0;
       read();
+      console.log("Reading");
     }
     checkCollisions(playerball);
     checkCollisions(opponentball);
     stage.update();
-    ticks = ticks + 1
+    ticks = ticks + 1;
   }
