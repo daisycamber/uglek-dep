@@ -360,7 +360,7 @@ function checkCollisions(body) {
         sp = gp[i].split(",");
         
         if(sp[0] == "set"){
-          setOpponentBall(parseFloat(sp[1])),parseFloat(sp[2]));
+          setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           currentTurn = i;
         } else if(sp[0] == "put"){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
