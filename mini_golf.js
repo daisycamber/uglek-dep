@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.208
+// By Jasper Camber Holton. V0.0.209
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -200,7 +200,7 @@ stage.on("stagemousemove", function(evt) {
   if(pressmovestarted){
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
-        if(hitx == 0 && hity == 0){
+        if(playerball.vx == 0 && playerball.vy == 0){
           drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
         }
   }
@@ -260,10 +260,10 @@ stage.on("stagemousemove", function(evt) {
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
           let vRelativeVelocity = {x: obs.vx - playerball.vx, y: obs.vy - playerball.vy};
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
-          playerball.vx -= (speed * vCollisionNorm.x);
-          playerball.vy -= (speed * vCollisionNorm.y);
-          obs.vx += (speed * vCollisionNorm.x);
-          obs.vy += (speed * vCollisionNorm.y);
+          playerball.vx += (speed * vCollisionNorm.x);
+          playerball.vy += (speed * vCollisionNorm.y);
+          obs.vx -= (speed * vCollisionNorm.x);
+          obs.vy -= (speed * vCollisionNorm.y);
 
           if(obs.vx > 0 && obs.vx < 0.1){
             obs.vx = 0;
