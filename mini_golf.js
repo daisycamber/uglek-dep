@@ -254,7 +254,7 @@ stage.on("stagemousemove", function(evt) {
         obs.hitx = obs.vx - obs.vx/speedfactor;
         obs.hity = obs.vx - obs.vx/speedfactor;
         // If collided
-        if(pythagorean(Math.abs(playerball.x - obstacles[o].x),Math.abs(playerball.y - obstacles[o].y)) < obstacleSize[o] + ballSize){
+        if(pythagorean(Math.abs(playerball.x - obs.x),Math.abs(playerball.y - obs.y)) < obstacleSize[o] + ballSize){
           let vCollision = {x: obs.x - playerball.x, y: obs.y - playerball.y};
           let distance = Math.sqrt((obs.x-playerball.x)*(obs.x-playerball.x) + (obs.y-playerball.y)*(obs.y-playerball.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
@@ -262,8 +262,8 @@ stage.on("stagemousemove", function(evt) {
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
           playerball.vx -= (speed * vCollisionNorm.x);
           playerball.vy -= (speed * vCollisionNorm.y);
-          obs.hitx += (speed * vCollisionNorm.x);
-          obs.hity += (speed * vCollisionNorm.y);
+          obs.vx += (speed * vCollisionNorm.x);
+          obs.vy += (speed * vCollisionNorm.y);
 
           if(obs.vx > 0 && obs.vx < 0.1){
             obs.vx = 0;
