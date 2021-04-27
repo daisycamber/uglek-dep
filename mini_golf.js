@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.37
+// By Jasper Camber Holton. V0.0.38
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -222,7 +222,7 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
-  if(playerball.vx == 0 && playerball.vy == 0 && playerTurn){
+  if(playerTurn && playerball && playerball.vx == 0 && playerball.vy == 0){
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 30 && pressmovestarted){
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
