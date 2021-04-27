@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.211
+// By Jasper Camber Holton. V0.0.212
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -303,8 +303,8 @@ stage.on("stagemousemove", function(evt) {
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
           playerball.vx += (speed * vCollisionNorm.x);
           playerball.vy += (speed * vCollisionNorm.y);
-          //playerball.x = playerball.x + vx
-          //playerball.y = playerball.y + vx
+          playerball.x = playerball.x + vx
+          playerball.y = playerball.y + vx
         }
       }
     }
