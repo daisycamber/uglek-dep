@@ -152,7 +152,7 @@ var fixedobstacles = [];
 var fixedobstacleSize = [];
 for(var i = 0; i < 15; i++){
   fixedobstacles[i] = new createjs.Shape();
-  var size = (Math.random()*30 + 30);
+  var size = (rng.nextFloat()*30 + 30);
   fixedobstacleSize[i] = size;
       fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
       fixedobstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
