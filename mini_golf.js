@@ -217,6 +217,7 @@ stage.on("stagemouseup", function(evt) {
               playerball.vy = -maxhit;
             }
             send("put,"+playerball.vx+","+playerball.vy);
+            playerTurn = false;
           }
   }
   container.removeChild(line);
@@ -253,7 +254,7 @@ function checkCollisions(body) {
       body.vy = 0;
     }
     if(body.vx < 0 && body.vx > -0.1){
-      hitx = 0;
+      body.vx = 0;
     }
     if(body.vy < 0 && body.vy > -0.1){
       body.vy = 0;
@@ -345,6 +346,8 @@ function checkCollisions(body) {
             body.vx = -body.vx;
           }
         }
+      }
+  }
 }
 
 
@@ -368,7 +371,5 @@ function checkCollisions(body) {
     }
     checkCollisions(playerball);
     checkCollisions(opponentball);
-      }
-    }
     stage.update();
   }
