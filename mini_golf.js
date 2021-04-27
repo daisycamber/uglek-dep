@@ -1,4 +1,5 @@
 // By Jasper Camber Holton. V0.0.216
+var seed = 42;
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -26,7 +27,7 @@ RNG.prototype.choice = function(array) {
   return array[this.nextRange(0, array.length)];
 }
 
-var rng = new RNG(22);
+var rng = new RNG(seed);
 
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
