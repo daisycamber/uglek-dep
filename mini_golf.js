@@ -1,5 +1,5 @@
 Math.seed(21);
-// By Jasper Camber Holton. V0.0.20
+// By Jasper Camber Holton. V0.0.201
 function pythagorean(sideA, sideB){
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
