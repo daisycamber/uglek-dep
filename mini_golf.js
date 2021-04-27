@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.2022
+// By Jasper Camber Holton. V0.0.2023
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -284,11 +284,13 @@ stage.on("stagemousemove", function(evt) {
       for(var o = 0; o < fixedobstacles.length; o++){
         var obs = fixedobstacles[o];
         if(playerball.x > fixedobstacles[o].x && playerball.x < fixedobstacles[o].x + fixedobstacleSize[o]) {
+          if(playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
+          hity = -hity * 3/4;
+        } else{
           hitx = -hitx * 3/4;
         }
-        if(playerball.y > fixedobstacles[o].y && playerball.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
-          hity = -hity * 3/4;
         }
+        
       }
     }
     stage.update();
