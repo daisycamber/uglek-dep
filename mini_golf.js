@@ -62,6 +62,8 @@ function readCallback(){
           playerTurn = true;
           currentTurn = i;
           console.log("Opponent hit ball");
+        } else if(sp[3] != user){
+          currentTurn = i;
         }
       }
 }
