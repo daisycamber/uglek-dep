@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.436
+// By Jasper Camber Holton. V0.0.437
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -88,6 +88,8 @@ if(window.innerHeight < less){
 }
 
 var last = 0;
+var movex;
+var movey;
 var stage = new createjs.Stage("game156");
 createjs.Touch.enable(stage, true, false);
 var container = new createjs.Container();
