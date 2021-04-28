@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.441
+// By Jasper Camber Holton. V0.0.442
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -261,9 +261,9 @@ stage.on("stagemouseup", function(evt) {
               greater = playerball.vy;
             }
             if(pythagorean(playerball.vx,playerball.vy) > 15){
-              var angle = Math.atan(playerball.vy/playerball.vx);
-              playerball.vx = Math.sin(angle)/15.0;
-              playerball.vy = Math.tan(angle)/15.0;
+              var angle = Math.atan2(playerball.vy,playerball.vx);
+              playerball.vx = Math.cos(angle)*15.0;
+              playerball.vy = Math.sin(angle)*15.0;
               console.log("Player ball position");
               console.log(playerball.vx);
               console.log(playerball.vy);
