@@ -123,14 +123,20 @@ if(user == player1){
   playerTurn = true;
 }
 var opponentball;
+var opponentbalset = false;
 function setOpponentBall(x,y){
+  if(!opponentballset){
   opponentball = new createjs.Shape();
         opponentball.graphics.beginFill("yellow").drawCircle(0, 0, ballSize);
-        opponentball.x = x + leftbound;
-        opponentball.y = y + topbound;
+        
         opponentball.vx = 0;
         opponentball.vy = 0;
         container.addChild(opponentball);
+    opponentballset = true;
+  } else {
+    opponentball.x = x + leftbound;
+    opponentball.y = y + topbound;
+  }
 }
 var opponentPlayed = false;
 function putOpponentBall(x,y){
