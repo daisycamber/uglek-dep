@@ -267,7 +267,7 @@ stage.on("stagemouseup", function(evt) {
   container.removeChild(line);
       pressmovestarted = false;
       });
-stage.on("pressmove", function(evt) {
+stage.on("stagemousemove", function(evt) {
   if(pressmovestarted && playerball){
           movex = movestartx - evt.stageX;
           movey = movestarty - evt.stageY;
