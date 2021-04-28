@@ -61,7 +61,7 @@ function readCallback(){
           currentTurn = i;
           console.log("Opponent hit ball");
         } else if(sp[3] == user){
-          console.log("Player turn syndicated"
+          console.log("Player turn syndicated");
           currentTurn = i;
         }
       }
