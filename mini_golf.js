@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.399
+// By Jasper Camber Holton. V0.0.3999
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -123,7 +123,7 @@ if(user == player1){
   playerTurn = true;
 }
 var opponentball;
-var opponentbalset = false;
+var opponentballset = false;
 function setOpponentBall(x,y){
   if(!opponentballset){
   opponentball = new createjs.Shape();
