@@ -52,12 +52,12 @@ function readCallback(){
         
         if(sp[0] == "set"){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
-          currentTurn = i;
+          currentTurn = i + 2;
           console.log("Opponent set ball");
         } else if(sp[0] == "put"){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           playerTurn = true;
-          currentTurn = i+2;
+          currentTurn = i;
           console.log("Opponent hit ball");
         }
       }
