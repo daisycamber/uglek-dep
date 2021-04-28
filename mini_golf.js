@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.432
+// By Jasper Camber Holton. V0.0.433
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -417,7 +417,7 @@ var opponentPlayingTicks = 0;
   function handleTick(event) {
     if(opponentPlaying){
       opponentPlayingTicks++;
-      if(opponentPlayingTicks > 3 * 60){
+      if(opponentPlayingTicks > 5 * 60){
        playerTurn = true;
         opponentPlaying = false;
         opponentPlayingTicks = 0;
