@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.417
+// By Jasper Camber Holton. V0.0.418
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -52,17 +52,17 @@ function readCallback(){
         sp = gp[i].split(",");
         if(sp[0] == "set" && sp[3] != user){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
-          currentTurn = i + 1;
+          currentTurn = i;
           console.log("Opponent set ball");
         } else if(sp[0] == "put" && sp[3] != user){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
+          currentTurn = i;
           firstPut = true;
           playerTurn = true;
-          currentTurn = i + 1;
           console.log("Opponent hit ball");
         } else if(sp[3] == user){
+          currentTurn = i;
           console.log("Player turn syndicated");
-          currentTurn = i+1;
         }
       }
 }
