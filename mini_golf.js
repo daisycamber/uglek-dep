@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.403
+// By Jasper Camber Holton. V0.0.404
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -256,7 +256,7 @@ stage.on("stagemouseup", function(evt) {
             if(playerball.vy < -maxhit) {
               playerball.vy = -maxhit;
             }
-            send("put,"+playerball.vx+","+playerball.vy+","+player1);
+            send("put,"+playerball.vx+","+playerball.vy+","+user);
             playerTurn = false;
             firstPut = true;
             putted = true;
