@@ -1,5 +1,5 @@
 // By Jasper Camber Holton. V0.0.417
-var seed = 25;
+var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
