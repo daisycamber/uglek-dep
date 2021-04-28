@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.4
+// By Jasper Camber Holton. V0.0.401
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -50,11 +50,11 @@ function readCallback(){
         sp = gp[i].split(",");
         
         
-        if(sp[0] == "set"){
+        if(sp[0] == "set" && sp[3] == player2){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
-          currentTurn = i + 2;
+          currentTurn = i;
           console.log("Opponent set ball");
-        } else if(sp[0] == "put"){
+        } else if(sp[0] == "put" && sp[3] == player2){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           playerTurn = true;
           currentTurn = i;
@@ -117,6 +117,7 @@ var hity = 0;
 var ballSize = 20;
 
 var player1 = document.getElementById("player1").innerHTML;
+var player2 = document.getElementById("player2").innerHTML;
 var user = document.getElementById("user").innerHTML;
 var playerTurn = false;
 if(user == player1){
@@ -155,12 +156,12 @@ function putOpponentBall(x,y){
         playerball.vy = 0;
         container.addChild(playerball);
         ballplaced = true;
-        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound));
+        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+player1);
       }
       else {
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
-        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound));
+        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+player1);
       }
     }
   });
@@ -249,7 +250,7 @@ stage.on("stagemouseup", function(evt) {
             if(playerball.vy < -maxhit) {
               playerball.vy = -maxhit;
             }
-            send("put,"+playerball.vx+","+playerball.vy);
+            send("put,"+playerball.vx+","+playerball.vy+","+player1);
             playerTurn = false;
           }
   }
