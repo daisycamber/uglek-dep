@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.435
+// By Jasper Camber Holton. V0.0.436
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -439,10 +439,10 @@ var opponentPlayingTicks = 0;
       read();
       console.log("Reading");
     }
-    if(!playerball.inHole){
+    if(playerball && !playerball.inHole){
    checkCollisions(playerball);
     }
-    if(!opponentball.inHole){
+    if(opponentball && !opponentball.inHole){
       checkCollisions(opponentball);
     }
     if(playerball && opponentball && !opponentball.inHole && !playerball.inHole){
