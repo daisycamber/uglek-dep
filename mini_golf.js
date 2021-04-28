@@ -255,18 +255,11 @@ stage.on("stagemouseup", function(evt) {
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 30 && pressmovestarted){
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
-            
-            var greater = playerball.vx;
-            if(playerball.vy > playerball.vx){
-              greater = playerball.vy;
-            }
+            // sin = opposite/hypotenuse cos = adjacent/hypotenuse cos*hypotenuse = adjacent
             if(pythagorean(playerball.vx,playerball.vy) > 15){
               var angle = Math.atan2(playerball.vy,playerball.vx);
               playerball.vx = Math.cos(angle)*15.0;
               playerball.vy = Math.sin(angle)*15.0;
-              console.log("Player ball position");
-              console.log(playerball.vx);
-              console.log(playerball.vy);
             }
             send("put,"+playerball.vx+","+playerball.vy+","+user);
             playerTurn = false;
