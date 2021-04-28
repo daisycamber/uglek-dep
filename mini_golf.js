@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.438
+// By Jasper Camber Holton. V0.0.439
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -242,6 +242,10 @@ stage.on("stagemousedown", function(evt) {
           }
       });
 var maxhit = 15;
+
+Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+  return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 stage.on("stagemouseup", function(evt) {
           //movex = movestartx - evt.stageX;
           //movey = movestarty - evt.stageY;
@@ -252,6 +256,14 @@ stage.on("stagemouseup", function(evt) {
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 30 && pressmovestarted){
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
+            var greater = playerball.vx;
+            if(playerball.vy > playerball.vx){
+              greater = playerball.vy;
+            }
+            if(pythagorean(playerball.vx,playerball.vy) > 15){
+              playerball.vx.map(0,greater,0,15);
+              playerball.vy.map(0,greater,0,15);
+            }
             if(playerball.vx > maxhit) {
               playerball.vx = maxhit;
             }
