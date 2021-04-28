@@ -1,5 +1,7 @@
 // By Jasper Camber Holton. V0.0.442
 var seed = 26;
+
+var maxv = 15;
 function RNG(seed) {
   // LCG using GCC's constants
   this.m = 0x80000000; // 2**31;
@@ -256,10 +258,10 @@ stage.on("stagemouseup", function(evt) {
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
             // sin = opposite/hypotenuse cos = adjacent/hypotenuse cos*hypotenuse = adjacent
-            if(pythagorean(playerball.vx,playerball.vy) > 15){
+            if(pythagorean(playerball.vx,playerball.vy) > maxv){
               var angle = Math.atan2(playerball.vy,playerball.vx);
-              playerball.vx = Math.cos(angle)*15.0;
-              playerball.vy = Math.sin(angle)*15.0;
+              playerball.vx = Math.cos(angle)*maxv;
+              playerball.vy = Math.sin(angle)*maxv;
             }
             send("put,"+playerball.vx+","+playerball.vy+","+user);
             playerTurn = false;
