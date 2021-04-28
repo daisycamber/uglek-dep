@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.425
+// By Jasper Camber Holton. V0.0.426
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -430,7 +430,9 @@ function checkBallCollisions(){
     }
     checkCollisions(playerball);
     checkCollisions(opponentball);
-    checkBallCollisions();
+    if(playerball && opponentball){
+      checkBallCollisions();
+    }
     
     stage.update();
     ticks = ticks + 1;
