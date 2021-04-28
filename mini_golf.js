@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.426
+// By Jasper Camber Holton. V0.0.427
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -398,12 +398,8 @@ function checkCollisions(body) {
 function checkBallCollisions(){
         var body = playerball
         var obs = opponentball;
-        obs.x = obs.x + obs.vx;
-        obs.y = obs.y + obs.vy;
-        obs.vx = obs.vx - obs.vx/speedfactor;
-        obs.vy = obs.vy - obs.vy/speedfactor;
         // If collided
-        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < obstacleSize[o] + ballSize){
+        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < ballSize*2){
           let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
           let distance = Math.sqrt((obs.x-body.x)*(obs.x-body.x) + (obs.y-body.y)*(obs.y-body.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
