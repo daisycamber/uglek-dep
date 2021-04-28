@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.416
+// By Jasper Camber Holton. V0.0.417
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -52,17 +52,17 @@ function readCallback(){
         sp = gp[i].split(",");
         if(sp[0] == "set" && sp[3] != user){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
-          currentTurn = i;
+          currentTurn = i + 1;
           console.log("Opponent set ball");
         } else if(sp[0] == "put" && sp[3] != user){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           firstPut = true;
           playerTurn = true;
-          currentTurn = i;
+          currentTurn = i + 1;
           console.log("Opponent hit ball");
         } else if(sp[3] == user){
           console.log("Player turn syndicated");
-          currentTurn = i;
+          currentTurn = i+1;
         }
       }
 }
@@ -163,13 +163,11 @@ function putOpponentBall(x,y){
         container.addChild(playerball);
         ballplaced = true;
         send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
-        currentTurn = i + 1;
       }
       else {
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
         send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
-        currentTurn = i + 1;
       }
     }
   });
@@ -265,7 +263,6 @@ stage.on("stagemouseup", function(evt) {
             playerTurn = false;
             firstPut = true;
             putted = true;
-            currentTurn = i + 1;
           }
   }
   container.removeChild(line);
@@ -406,7 +403,7 @@ function checkCollisions(body) {
         //playerTurn = false;
       }
     }
-    if(ticks > 3*60 && !playerTurn){
+    if(ticks > 2*60 && !playerTurn){
       ticks = 0;
       read();
       console.log("Reading");
