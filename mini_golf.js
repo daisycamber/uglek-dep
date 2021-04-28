@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.424
+// By Jasper Camber Holton. V0.0.425
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -413,33 +413,7 @@ function checkBallCollisions(){
           body.vy += (speed * vCollisionNorm.y);
           obs.vx -= (speed * vCollisionNorm.x);
           obs.vy -= (speed * vCollisionNorm.y);
-
-
         }
-        if(obs.vx > 0 && obs.vx < 0.1){
-            obs.vx = 0;
-          }
-          if(obs.vy > 0 && obs.vy < 0.1){
-            obs.vy = 0;
-          }
-          if(obs.vx < 0 && obs.vx > -0.1){
-            obs.vx = 0;
-          }
-          if(obs.vy < 0 && obs.vy > -0.1){
-            obs.vy = 0;
-          }
-          if(obs.x < leftbound + obstacleSize[o]){
-            obs.vx = -obs.vx;
-          }
-          if(obs.y < topbound + obstacleSize[o]){
-            obs.vy = -obs.vy;
-          }
-          if(obs.x > leftbound+1000-obstacleSize[o]){
-            obs.vx = -obs.vx;
-          }
-          if(obs.y > topbound+1000-obstacleSize[o]){
-            obs.vy = -obs.vy;
-          }
       }
 
   function handleTick(event) {
