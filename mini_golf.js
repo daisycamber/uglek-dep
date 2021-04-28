@@ -57,7 +57,7 @@ function readCallback(){
         } else if(sp[0] == "put"){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           playerTurn = true;
-          currentTurn = i+1;
+          currentTurn = i+2;
           console.log("Opponent hit ball");
         }
       }
@@ -154,7 +154,7 @@ function putOpponentBall(x,y){
       else {
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
-        send("set,"+playerball.x-leftbound+","+playerball.y-topbound);
+        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound));
       }
     }
   });
@@ -380,7 +380,6 @@ function checkCollisions(body) {
 
   function handleTick(event) {
     if(ticks > 3*60 && !playerTurn){
-      
       ticks = 0;
       read();
       console.log("Reading");
