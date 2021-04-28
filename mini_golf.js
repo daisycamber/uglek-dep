@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.402
+// By Jasper Camber Holton. V0.0.403
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -42,6 +42,8 @@ function send(text){
 var id = document.getElementById("gameid").innerHTML;
 var gameplay;
 
+var firstPut = false;
+
 function readCallback(){
   gp = gameplay;
   console.log("Read callback");
@@ -56,6 +58,7 @@ function readCallback(){
           console.log("Opponent set ball");
         } else if(sp[0] == "put" && sp[3] != user){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
+          firstPut = true;
           playerTurn = true;
           currentTurn = i;
           console.log("Opponent hit ball");
@@ -156,12 +159,12 @@ function putOpponentBall(x,y){
         playerball.vy = 0;
         container.addChild(playerball);
         ballplaced = true;
-        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+player1);
+        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
       }
       else {
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
-        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+player1);
+        send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
       }
     }
   });
@@ -220,6 +223,9 @@ for(var i = 0; i < 7; i++){
       fixedobstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
       container.addChild(fixedobstacles[i])
 }
+
+var putted = false;
+
 stage.on("stagemousedown", function(evt) {
           if(!pressmovestarted){
           movestartx = evt.stageX;
@@ -252,6 +258,8 @@ stage.on("stagemouseup", function(evt) {
             }
             send("put,"+playerball.vx+","+playerball.vy+","+player1);
             playerTurn = false;
+            firstPut = true;
+            putted = true;
           }
   }
   container.removeChild(line);
@@ -386,6 +394,12 @@ function checkCollisions(body) {
 
 
   function handleTick(event) {
+    if(putted){
+      if(playerball.vx == 0 && playerball.vy == 0) {
+        putted = false;
+        //playerTurn = false;
+      }
+    }
     if(ticks > 3*60 && !playerTurn){
       ticks = 0;
       read();
