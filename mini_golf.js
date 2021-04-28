@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.423
+// By Jasper Camber Holton. V0.0.424
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -395,7 +395,52 @@ function checkCollisions(body) {
       }
   }
 }
+function checkBallCollisions(){
+        var body = playerball
+        var obs = opponentball;
+        obs.x = obs.x + obs.vx;
+        obs.y = obs.y + obs.vy;
+        obs.vx = obs.vx - obs.vx/speedfactor;
+        obs.vy = obs.vy - obs.vy/speedfactor;
+        // If collided
+        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < obstacleSize[o] + ballSize){
+          let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
+          let distance = Math.sqrt((obs.x-body.x)*(obs.x-body.x) + (obs.y-body.y)*(obs.y-body.y));
+          let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
+          let vRelativeVelocity = {x: obs.vx - body.vx, y: obs.vy - body.vy};
+          let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+          body.vx += (speed * vCollisionNorm.x);
+          body.vy += (speed * vCollisionNorm.y);
+          obs.vx -= (speed * vCollisionNorm.x);
+          obs.vy -= (speed * vCollisionNorm.y);
 
+
+        }
+        if(obs.vx > 0 && obs.vx < 0.1){
+            obs.vx = 0;
+          }
+          if(obs.vy > 0 && obs.vy < 0.1){
+            obs.vy = 0;
+          }
+          if(obs.vx < 0 && obs.vx > -0.1){
+            obs.vx = 0;
+          }
+          if(obs.vy < 0 && obs.vy > -0.1){
+            obs.vy = 0;
+          }
+          if(obs.x < leftbound + obstacleSize[o]){
+            obs.vx = -obs.vx;
+          }
+          if(obs.y < topbound + obstacleSize[o]){
+            obs.vy = -obs.vy;
+          }
+          if(obs.x > leftbound+1000-obstacleSize[o]){
+            obs.vx = -obs.vx;
+          }
+          if(obs.y > topbound+1000-obstacleSize[o]){
+            obs.vy = -obs.vy;
+          }
+      }
 
   function handleTick(event) {
     if(putted){
@@ -411,6 +456,8 @@ function checkCollisions(body) {
     }
     checkCollisions(playerball);
     checkCollisions(opponentball);
+    checkBallCollisions();
+    
     stage.update();
     ticks = ticks + 1;
   }
