@@ -269,8 +269,8 @@ stage.on("stagemouseup", function(evt) {
       });
 stage.on("pressmove", function(evt) {
   if(pressmovestarted && playerball){
-          movex = movestartx - evt.target.x;
-          movey = movestarty - evt.target.y;
+          movex = movestartx - evt.stageX;
+          movey = movestarty - evt.stageY;
         if(playerball.vx == 0 && playerball.vy == 0){
           drawLine(playerball.x,playerball.y,playerball.x + movex,playerball.y + movey);
         }
