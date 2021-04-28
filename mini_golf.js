@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.434
+// By Jasper Camber Holton. V0.0.435
 var seed = 26;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -138,8 +138,10 @@ function setOpponentBall(x,y){
     opponentball.y = y + topbound;
         opponentball.vx = 0;
         opponentball.vy = 0;
+    opponentball.inHole = false;
         container.addChild(opponentball);
     opponentballset = true;
+    
   } else {
     opponentball.x = x + leftbound;
     opponentball.y = y + topbound;
@@ -161,6 +163,7 @@ function putOpponentBall(x,y){
         playerball.vx = 0;
         playerball.vy = 0;
         container.addChild(playerball);
+        playerball.inHole = false;
         ballplaced = true;
         send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
       }
@@ -198,7 +201,7 @@ hole.x = leftbound + 800;
 hole.y = topbound + 900;
 container.addChild(hole)
 
-var movefactor = 10;
+var movefactor = 10.0;
 
 var obstacles = [];
 var obstacleSize = [];
@@ -238,8 +241,8 @@ stage.on("stagemousedown", function(evt) {
       });
 var maxhit = 15;
 stage.on("stagemouseup", function(evt) {
-          movex = movestartx - evt.stageX;
-          movey = movestarty - evt.stageY;
+          //movex = movestartx - evt.stageX;
+          //movey = movestarty - evt.stageY;
         console.log("Move:");
               console.log(movex);
             console.log(movey);
@@ -320,6 +323,7 @@ function checkCollisions(body) {
         body.vy = -body.vy;
       }
       if(pythagorean(Math.abs(body.x - hole.x),Math.abs(body.y - hole.y)) < ballSize * 1.5){
+        body.inHole = true;
         container.removeChild(body);
       }
       for(var o = 0; o < obstacles.length; o++){
@@ -435,9 +439,13 @@ var opponentPlayingTicks = 0;
       read();
       console.log("Reading");
     }
-    checkCollisions(playerball);
-    checkCollisions(opponentball);
-    if(playerball && opponentball){
+    if(!playerball.inHole){
+   checkCollisions(playerball);
+    }
+    if(!opponentball.inHole){
+      checkCollisions(opponentball);
+    }
+    if(playerball && opponentball && !opponentball.inHole && !playerball.inHole){
       checkBallCollisions();
     }
     
