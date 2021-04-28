@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.414
+// By Jasper Camber Holton. V0.0.415
 var seed = 25;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -62,7 +62,7 @@ function readCallback(){
           console.log("Opponent hit ball");
         } else if(sp[3] == user){
           console.log("Player turn syndicated");
-          currentTurn = i;
+          currentTurn = i + 1;
         }
       }
 }
@@ -163,11 +163,13 @@ function putOpponentBall(x,y){
         container.addChild(playerball);
         ballplaced = true;
         send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
+        currentTurn = i + 1;
       }
       else {
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
         send("set,"+(playerball.x-leftbound)+","+(playerball.y-topbound)+","+user);
+        currentTurn = i + 1;
       }
     }
   });
@@ -263,6 +265,7 @@ stage.on("stagemouseup", function(evt) {
             playerTurn = false;
             firstPut = true;
             putted = true;
+            currentTurn = i + 1;
           }
   }
   container.removeChild(line);
