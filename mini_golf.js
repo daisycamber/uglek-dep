@@ -1,5 +1,5 @@
 // By Jasper Camber Holton. V0.0.443
-var seed = 26;
+var seed = 6;
 
 var maxv = 15;
 function RNG(seed) {
@@ -216,7 +216,7 @@ for(var i = 0; i < 10; i++){
   obstacleSize[i] = size;
       obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
       obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
-      obstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
+      obstacles[i].y = topbound + rng.nextFloat() * 500 + 150;
     obstacles[i].vx = 0;
   obstacles[i].vy = 0;
       container.addChild(obstacles[i])
@@ -230,7 +230,7 @@ for(var i = 0; i < 7; i++){
   fixedobstacleSize[i] = size;
       fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
       fixedobstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
-      fixedobstacles[i].y = topbound + rng.nextFloat() * 400 + 200;
+      fixedobstacles[i].y = topbound + rng.nextFloat() * 500 + 200;
       container.addChild(fixedobstacles[i])
 }
 
