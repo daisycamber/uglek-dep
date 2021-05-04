@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.446
+// By Jasper Camber Holton. V0.0.447
 var seed = 6;
 
 var maxv = 15;
@@ -323,6 +323,7 @@ function checkObstacleCollisions() {
   }
   for(var i = 0; i < obstacles.length; i++){
   for(var o = 0; o < obstacles.length; o++){
+    if(i != o){
         var obs = obstacles[o];
          var body = obstacles[i];
         // If collided
@@ -339,6 +340,7 @@ function checkObstacleCollisions() {
         }
       }
     }
+  }
 }
 
 function checkCollisions(body) {
