@@ -375,7 +375,7 @@ function checkCollisions(body) {
       for(var o = 0; o < fixedobstacles.length; o++){
         var obs = fixedobstacles[o];
         // If collision
-        if(body.x > fixedobstacles[o].x && body.x < fixedobstacles[o].x + fixedobstacleSize[o] && body.y > fixedobstacles[o].y && body.y < fixedobstacles[o].y + fixedobstacleSize[o]) {
+        if(body.x > fixedobstacles[o].x - ballSize && body.x < fixedobstacles[o].x + ballSize + fixedobstacleSize[o] && body.y > fixedobstacles[o].y - ballSize && body.y < fixedobstacles[o].y + fixedobstacleSize[o] + ballSize) {
           var dx=(body.x)-(obs.x+fixedobstacleSize[o]/2);
           var dy=(body.y)-(obs.y+fixedobstacleSize[o]/2);
           var width=(ballSize * 2+fixedobstacleSize[o])/2;
