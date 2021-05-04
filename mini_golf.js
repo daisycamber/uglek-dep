@@ -291,6 +291,56 @@ stage.on("stagemousemove", function(evt) {
 var ticks = 0;
 var currentTurn = 0;
 
+function checkObstacleCollisions() {
+  for(var i = 0; i < obstacles.length; i++){
+  for(var o = 0; o < fixedobstacles.length; o++){
+        var obs = fixedobstacles[o];
+      var body = obstacles[i];
+        // If collision
+        if(body.x > fixedobstacles[o].x - obstacleSize[i] && body.x < fixedobstacles[o].x + obstacleSize[i] + fixedobstacleSize[o] && body.y > fixedobstacles[o].y - obstacleSize[i] && body.y < fixedobstacles[o].y + fixedobstacleSize[o] + obstacleSize[i]) {
+          var dx=(body.x)-(obs.x+fixedobstacleSize[o]/2);
+          var dy=(body.y)-(obs.y+fixedobstacleSize[o]/2);
+          var width=(obstacleSize[i] * 2+fixedobstacleSize[o])/2;
+          var height=(obstacleSize[i] * 2+fixedobstacleSize[o])/2;
+          var crossWidth=width*dy;
+          var crossHeight=height*dx;
+          var collision='none';
+          if(Math.abs(dx)<=width && Math.abs(dy)<=height){
+              if(crossWidth>crossHeight){
+                  collision=(crossWidth>(-crossHeight))?'bottom':'left';
+              }else{
+                  collision=(crossWidth>-(crossHeight))?'right':'top';
+              }
+          }
+          if(collision == 'bottom' || collision == 'top'){
+            body.vy = -body.vy;
+          }
+          if(collision == 'right' || collision == 'left'){
+            body.vx = -body.vx;
+          }
+        }
+      }
+  }
+  for(var i = 0; i < obstacles.length; i++){
+  for(var o = 0; o < obstacles.length; o++){
+        var obs = obstacles[o];
+         var body = obstacles[i];
+        // If collided
+        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < obstacleSize[o] + obstacleSize[i]){
+          let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
+          let distance = Math.sqrt((obs.x-body.x)*(obs.x-body.x) + (obs.y-body.y)*(obs.y-body.y));
+          let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
+          let vRelativeVelocity = {x: obs.vx - body.vx, y: obs.vy - body.vy};
+          let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+          body.vx += (speed * vCollisionNorm.x);
+          body.vy += (speed * vCollisionNorm.y);
+          obs.vx -= (speed * vCollisionNorm.x);
+          obs.vy -= (speed * vCollisionNorm.y);
+        }
+      }
+    }
+}
+
 function checkCollisions(body) {
   if(body){
       body.x = body.x + body.vx;
@@ -440,6 +490,7 @@ var opponentPlayingTicks = 0;
       read();
       console.log("Reading");
     }
+    
     if(playerball && !playerball.inHole){
    checkCollisions(playerball);
     }
@@ -449,6 +500,7 @@ var opponentPlayingTicks = 0;
     if(playerball && opponentball && !opponentball.inHole && !playerball.inHole){
       checkBallCollisions();
     }
+    checkObstacleCollisons();
     
     stage.update();
     ticks = ticks + 1;
