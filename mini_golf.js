@@ -500,7 +500,7 @@ var opponentPlayingTicks = 0;
     if(playerball && opponentball && !opponentball.inHole && !playerball.inHole){
       checkBallCollisions();
     }
-    checkObstacleCollisons();
+    checkObstacleCollisions();
     
     stage.update();
     ticks = ticks + 1;
