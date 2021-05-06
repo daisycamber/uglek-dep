@@ -1,5 +1,5 @@
-// By Jasper Camber Holton. V0.0.448
-var seed = 6;
+// By Jasper Camber Holton. V0.0.449
+var seed = 7;
 
 var maxv = 15;
 function RNG(seed) {
@@ -324,8 +324,8 @@ function checkObstacleCollisions() {
   for(var i = 0; i < obstacles.length; i++){
   for(var o = 0; o < obstacles.length; o++){
     if(i != o){
-        var obs = obstacles[o];
-         var body = obstacles[i];
+        var body = obstacles[o];
+         var obs = obstacles[i];
         // If collided
         if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < (obstacleSize[o] + obstacleSize[i])/2){
           let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
