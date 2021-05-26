@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.91
+// By Jasper Camber Holton. V1.1.92
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -406,8 +406,9 @@ function print_sudoku_to_webpage(sudoku_object) {
         for ( let col = 0; col <= 8; col++ ) {
             if ( board[row][col] != 0 ) {
                 let input = balls[col][row];
-              input.graphics.beginFill("white").drawCircle(0, 0, ballSize);
                 input.graphics.beginFill(colors[board[row][col]-1]).drawCircle(0, 0, ballSize);
+            } else {
+              input.graphics.beginFill("white").drawCircle(0, 0, ballSize);
             }
         }
     }
