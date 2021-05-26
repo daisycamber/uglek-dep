@@ -40,7 +40,7 @@ if(window.innerHeight < less){
 }
 
 var last = 0;
-var stage = new createjs.Stage("game");
+var stage = new createjs.Stage("game197");
 var container = new createjs.Container();
 scale = container.scale = less/1000;
 background = new createjs.Shape();
