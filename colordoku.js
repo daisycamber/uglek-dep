@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.6
+// By Jasper Camber Holton. V1.0.7
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -32,15 +32,19 @@ var rng = new RNG(seed);
 function pythagorean(sideA, sideB) {
   return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
 }
+var canvasid = "game197";
+var canvas = document.getElementById(canvasid);
+var width = canvas.width;
+var height = canvas.height;
 
 var ADHEIGHT = 90;
-var less = window.innerWidth;
-if(window.innerHeight < less){
-  less = window.innerHeight-ADHEIGHT;
+var less = width;
+if(height < less){
+  less = height-ADHEIGHT;
 }
 
 var last = 0;
-var stage = new createjs.Stage("game197");
+var stage = new createjs.Stage(canvasid);
 var container = new createjs.Container();
 scale = container.scale = less/1000;
 background = new createjs.Shape();
@@ -49,11 +53,11 @@ stage.addChild(background);
 stage.addChild(container);
 var speedfactor = 50;
 
-stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight-ADHEIGHT;
-stage.canvas.height = canvasHeight;
-leftbound = (window.innerWidth - less)/2/scale;
-topbound = ((canvasHeight - less)/2)/scale;
+//stage.canvas.width = window.innerWidth;
+//var canvasHeight = window.innerHeight-ADHEIGHT;
+//stage.canvas.height = canvasHeight;
+leftbound = (width - less)/2/scale;
+topbound = ((height - less)/2)/scale;
 
 // rad, orange, yellow, dark green, light green, dark blue, light blue, dark purple, punk
 var colors = ["#f50521","#fa8907","#fafa07","#2e8008","#33f707","#214bcc","#07eef2","#9b5bf0","#ed05c3","white"];
