@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.8
+// By Jasper Camber Holton. V1.0.9
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -43,6 +43,7 @@ if(height < less){
   less = height-ADHEIGHT;
 }
 
+var TEXTTYPE = "bold " + 18 * 0.8 + "px Arial";
 var last = 0;
 var stage = new createjs.Stage(canvasid);
 var container = new createjs.Container();
@@ -76,6 +77,7 @@ var selectorBall = new createjs.Shape();
 
 selectedBall = 0;
 var selectorBalls = [];
+var text;
 for(var i = 0; i < 10; i++){
       selectorBalls[i] = new createjs.Shape();
       selectorBalls[i].graphics.beginFill(colors[i]).drawCircle(0, 0, ballSize);
@@ -86,8 +88,15 @@ for(var i = 0; i < 10; i++){
         selectorBall.x = event.target.x;
         selectedBall = event.target.index
       });
+  if(i == 9){
+    text =  new createjs.Text("\u21bb", TEXTTYPE, "#000000")
+    text.x = selectorBalls[i].x - 10;
+    text.y = selectorBalls[i].y - 10;
+    
+  }
       container.addChild(selectorBalls[i])
 }
+container.addChild(text);
 
 // Sudoku game class
 class Sudoku {
