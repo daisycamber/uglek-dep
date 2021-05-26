@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.1
+// By Jasper Camber Holton. V1.0.3
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -85,17 +85,7 @@ for(var i = 0; i < 10; i++){
       container.addChild(selectorBalls[i])
 }
 
-
-stage.on("stagemousedown", function(evt) {
-      });
-stage.on("stagemouseup", function(evt) {
-      });
-stage.on("stagemousemove", function(evt) {
-      });
-
-
-
-
+// Sudoku game class
 class Sudoku {
   constructor() {
         this.board = this.blank_board_array();
@@ -142,6 +132,30 @@ class Sudoku {
     get_board_array() {
         return this.board;
     }
+  
+  get_cell(row,col){
+    return this.board[row][col];
+  }
+  
+  get_available_balls(){
+    let balls = [];
+    var ballCounts = [];
+      for(let i = 0; i < 10; i++){
+        ballCounts[i] = 0;
+      }
+        for(let x = 0; x < 9; x++){
+          for(let y = 0; y < 9; y++) {
+            ballCounts[this.board[x][y]]++;
+          }
+        }
+    for(let i = 1; i < 10; i++){
+        balls[i] = true;
+        if(ballCounts[i] == 9){
+          balls[i] = false;
+        }
+      }
+    return balls;
+  }
 
     make_move(row, col, value) {
       if(value == 10){
@@ -329,7 +343,7 @@ for(var i = 0; i < 9; i++){
         if (!game1.is_legal_move(evt.target.row, evt.target.col, selectedBall + 1)) {
           evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
           if(game1.get_board_array()[evt.target.row][evt.target.col] > 0){
-            setTimeout(() => {  evt.target.graphics.beginFill(colors[game1.get_board_array()[evt.target.row][evt.target.col] - 1]).drawCircle(0, 0, ballSize); }, 2000);
+            setTimeout(() => {  evt.target.graphics.beginFill(colors[game1.get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize); }, 2000);
           } else {
             setTimeout(() => {  evt.target.graphics.beginFill("white").drawCircle(0, 0, ballSize); }, 1000);
           }
@@ -337,6 +351,15 @@ for(var i = 0; i < 9; i++){
         } else {
             game1.make_move(evt.target.row, evt.target.col, selectedBall + 1);
             evt.target.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
+          var balls = game1.get_available_balls();
+          for(var i = 1; i < 10; i++){
+            if(!balls[i]){
+              selectorBalls[i-1].graphics.beginFill("grey").drawCircle(0,0,ballSize);
+            }
+            else {
+              selectorBalls[i-1].graphics.beginFill(colors[i-1]).drawCircle(0,0,ballSize);
+            }
+          }
         }
       });
       container.addChild(balls[i][j])
