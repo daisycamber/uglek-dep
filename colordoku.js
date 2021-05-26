@@ -107,8 +107,8 @@ function wonGame(){
   wonDialog.y = topbound + 1000 + 900;
   wonDialog.x = leftbound + 500;
   var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
-  wonText.x = leftbound + 400;
-  wonText.y = topbound + 900;
+  wonText.x = leftbound + 375;
+  wonText.y = topbound + 925;
   
   wonDialog.on("mousedown", function(event) {
     // New game
