@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.4
+// By Jasper Camber Holton. V1.0.5
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -354,7 +354,7 @@ for(var i = 0; i < 9; i++){
           var balls = game1.get_available_balls();
           for(var i = 1; i < 10; i++){
             if(!balls[i]){
-              selectorBalls[i-1].alpha = 0.5;//graphics.beginFill("grey").drawCircle(0,0,ballSize);
+              selectorBalls[i-1].alpha = 0.3;//graphics.beginFill("grey").drawCircle(0,0,ballSize);
             }
             else {
               selectorBalls[i-1].alpha = 1;
