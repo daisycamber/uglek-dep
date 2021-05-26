@@ -118,7 +118,16 @@ function wonGame(){
     container.removeChild(wonContainer);
     let import_string = games[rng.nextRange(0,49)];
     game1.set_board(import_string);
-    print_sudoku_to_webpage(game1)
+    print_sudoku_to_webpage(game1);
+    var balls = game1.get_available_balls();
+          for(var i = 1; i < 10; i++){
+            if(!balls[i]){
+              selectorBalls[i-1].alpha = 0.3;//graphics.beginFill("grey").drawCircle(0,0,ballSize);
+            }
+            else {
+              selectorBalls[i-1].alpha = 1;
+            }
+          }
       });
   wonContainer.addChild(wonDialog);
   wonContainer.addChild(wonText);
