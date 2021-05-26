@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.96
+// By Jasper Camber Holton. V1.1.97
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -99,11 +99,12 @@ for(var i = 0; i < 10; i++){
 container.addChild(text);
 
 var wonContainer;
+var wonDialog;
 // Draw a dialog to create a new game
 function wonGame(){
   
   wonContainer = new createjs.Container();
-  var wonDialog = new createjs.Shape();
+  wonDialog = new createjs.Shape();
   wonDialog.graphics.beginFill(colors[0]).drawCircle(0, 0, 1000);
   wonDialog.y = topbound + 1000 + 900;
   wonDialog.x = leftbound + 500;
@@ -112,6 +113,7 @@ function wonGame(){
   wonText.y = topbound + 925;
   
   wonDialog.on("mousedown", function(event) {
+    console.log("New Game");
     // New game
     container.removeChild(wonContainer);
     let import_string = games[rng.nextRange(0,49)];
