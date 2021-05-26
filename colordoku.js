@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.1
+// By Jasper Camber Holton. V1.1.2
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -98,6 +98,30 @@ for(var i = 0; i < 10; i++){
 }
 container.addChild(text);
 
+// Draw a dialog to create a new game
+function wonGame(){
+  
+  var wonContainer = new createjs.Container();
+  var wonDialog = new createjs.Shape();
+  wonDialog.graphics.beginFill(colors[0]).drawCircle(0, 0, 1000);
+  wonDialog.y = topbound + 1000 + 850;
+  wonDialog.x = leftbound + 500;
+  var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
+  wonText.x = leftbound + 475;
+  wonText.y = topbound + 950;
+  
+  wonDialog.on("mousedown", function(event) {
+    // New game
+    container.removeChild(wonContainer);
+    let import_string = games[rng.nextRange(0,49)];
+    game1.set_board(import_string);
+    print_sudoku_to_webpage(game1)
+      });
+  wonContainer.addChild(wonDialog);
+  wonContainer.addChild(wonText);
+  container.addChild(wonContainer);
+}
+
 // Sudoku game class
 class Sudoku {
   constructor() {
@@ -184,6 +208,7 @@ class Sudoku {
           }
         }
         if(willDropConfetti){
+           wonGame();
           dropConfetti();
         }
     }
@@ -390,7 +415,6 @@ function print_sudoku_to_webpage(sudoku_object) {
         }
     }
 }
-
 print_sudoku_to_webpage(game1)
 
 // This code is borrowed from another website. Thanks google.
@@ -474,3 +498,4 @@ stage.update();
 stage.update();
 
 dropConfetti();
+wonGame();
