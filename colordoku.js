@@ -406,8 +406,8 @@ var confettiCount = 60;
 var confetti = [];
 var confettivx = [];
 var confettivy = [];
-var confettiv = 3;
-var confettimin = -1000;
+var confettiv = 4;
+var confettimin = -600;
 function drawConfetti(){
   for(i = 0; i < confettiCount; i++){
     confetti[i] = new createjs.Shape();
@@ -415,7 +415,7 @@ function drawConfetti(){
     confetti[i].x = rng.nextRange(0,window.innerWidth);
     confetti[i].y = rng.nextRange(window.innerHeight + 30);
     confetti[i].visible = false;
-    confettivx[i] = rng.nextRange(-1,1)
+    confettivx[i] = rng.nextRange(-1,1)/5.0;
     confettivy[i] = rng.nextRange(-1,1)/5.0;
     stage.addChild(confetti[i]);
   }
