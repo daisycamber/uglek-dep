@@ -56,7 +56,7 @@ leftbound = (window.innerWidth - less)/2/scale;
 topbound = ((canvasHeight - less)/2)/scale;
 
 // rad, orange, yellow, dark green, light green, dark blue, light blue, dark purple, punk
-var colors = ["#a61005","#fa8907","#fafa07","#2e8008","#33f707","#214bcc","#07eef2","#9b5bf0","#ed05c3","white"];
+var colors = ["#f50521","#fa8907","#fafa07","#2e8008","#33f707","#214bcc","#07eef2","#9b5bf0","#ed05c3","white"];
 
 
 var ballSize = 37;
