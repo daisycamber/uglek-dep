@@ -43,7 +43,7 @@ if(height < less){
   less = height-ADHEIGHT;
 }
 
-var TEXTTYPE = "bold " + 18 * 0.8 + "px Arial";
+var TEXTTYPE = "bold " + 34 + "px Arial";
 var last = 0;
 var stage = new createjs.Stage(canvasid);
 var container = new createjs.Container();
