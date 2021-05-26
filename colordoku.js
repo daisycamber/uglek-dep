@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.92
+// By Jasper Camber Holton. V1.1.93
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -276,8 +276,6 @@ line4.graphics.beginFill("grey").drawRect(0, 0, 5, 800);
 line4.x = leftbound + 630;
 line4.y = topbound + 50;
 container.addChild(line4)
-
-
 line5 = new createjs.Shape();
 line5.graphics.beginFill("grey").drawRect(0, 0, 5, 800);
 line5.x = leftbound + 100 * 1;
@@ -404,8 +402,8 @@ function print_sudoku_to_webpage(sudoku_object) {
     let board = sudoku_object.get_board_array();
     for ( let row = 0; row <= 8; row++ ) {
         for ( let col = 0; col <= 8; col++ ) {
+          let input = balls[col][row];
             if ( board[row][col] != 0 ) {
-                let input = balls[col][row];
                 input.graphics.beginFill(colors[board[row][col]-1]).drawCircle(0, 0, ballSize);
             } else {
               input.graphics.beginFill("white").drawCircle(0, 0, ballSize);
@@ -424,13 +422,8 @@ function createArray(length) {
         var args = Array.prototype.slice.call(arguments, 1);
         while(i--) arr[length-1 - i] = createArray.apply(this, args);
     }
-
     return arr;
 }
-
-
-
-
 
 COLORS = ["Red","Orange","Yellow","Green","Blue","Purple"];
 var confettiCount = 60;
