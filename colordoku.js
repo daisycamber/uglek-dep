@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.2
+// By Jasper Camber Holton. V1.1.3
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -104,11 +104,11 @@ function wonGame(){
   var wonContainer = new createjs.Container();
   var wonDialog = new createjs.Shape();
   wonDialog.graphics.beginFill(colors[0]).drawCircle(0, 0, 1000);
-  wonDialog.y = topbound + 1000 + 850;
+  wonDialog.y = topbound + 1000 + 900;
   wonDialog.x = leftbound + 500;
   var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
-  wonText.x = leftbound + 475;
-  wonText.y = topbound + 950;
+  wonText.x = leftbound + 400;
+  wonText.y = topbound + 900;
   
   wonDialog.on("mousedown", function(event) {
     // New game
