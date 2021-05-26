@@ -488,5 +488,5 @@ stage.update();
 
 stage.update();
 
-dropConfetti();
-wonGame();
+//dropConfetti();
+//wonGame();
