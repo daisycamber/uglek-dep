@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.5
+// By Jasper Camber Holton. V1.1.6
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -444,7 +444,7 @@ var confettimin = -600;
 function drawConfetti(){
   for(i = 0; i < confettiCount; i++){
     confetti[i] = new createjs.Shape();
-    confetti[i].graphics.beginFill(COLORS[0,rng.nextRange(0,COLORS.length)]).drawCircle(0, 0, rng.nextRange(10,20));
+    confetti[i].graphics.beginFill(COLORS[0,rng.nextRange(0,COLORS.length)]).drawCircle(0, 0, rng.nextRange(7,15));
     confetti[i].x = rng.nextRange(0,window.innerWidth);
     confetti[i].y = rng.nextRange(window.innerHeight + 30);
     confetti[i].visible = false;
