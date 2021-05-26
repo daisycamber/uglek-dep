@@ -59,7 +59,7 @@ var speedfactor = 50;
 leftbound = (width - less)/2/scale;
 topbound = ((height - less)/2)/scale;
 
-// rad, orange, yellow, dark green, light green, dark blue, light blue, dark purple, punk
+// red, orange, yellow, dark green, light green, dark blue, light blue, dark purple, punk
 var colors = ["#f50521","#fa8907","#fafa07","#2e8008","#33f707","#214bcc","#07eef2","#9b5bf0","#ed05c3","white"];
 
 
@@ -406,7 +406,7 @@ var confettiCount = 60;
 var confetti = [];
 var confettivx = [];
 var confettivy = [];
-var confettiv = 10;
+var confettiv = 3;
 var confettimin = -1000;
 function drawConfetti(){
   for(i = 0; i < confettiCount; i++){
@@ -463,3 +463,5 @@ stage.update();
 }
 
 stage.update();
+
+dropConfetti();
