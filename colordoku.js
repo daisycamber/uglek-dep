@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.0
+// By Jasper Camber Holton. V1.1.1
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -43,7 +43,7 @@ if(height < less){
   less = height-ADHEIGHT;
 }
 
-var TEXTTYPE = "bold " + 34 + "px Arial";
+var TEXTTYPE = "bold " + 42 + "px Arial";
 var last = 0;
 var stage = new createjs.Stage(canvasid);
 var container = new createjs.Container();
@@ -89,9 +89,9 @@ for(var i = 0; i < 10; i++){
         selectedBall = event.target.index
       });
   if(i == 9){
-    text =  new createjs.Text("\u21bb", TEXTTYPE, "#000000")
-    text.x = selectorBalls[i].x - 10;
-    text.y = selectorBalls[i].y - 10;
+    text =  new createjs.Text("\u21ba", TEXTTYPE, "#000000")
+    text.x = selectorBalls[i].x - 20;
+    text.y = selectorBalls[i].y - 20;
     
   }
       container.addChild(selectorBalls[i])
