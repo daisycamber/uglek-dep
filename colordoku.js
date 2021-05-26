@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.94
+// By Jasper Camber Holton. V1.1.95
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -366,12 +366,6 @@ for(var i = 0; i < 9; i++){
       balls[i][j].row = j;
       balls[i][j].col = i;
       balls[i][j].on("mousedown", function(evt) {
-        console.log("Click")
-        console.log("Row:" + evt.target.row)
-        console.log("Col:" + evt.target.col)
-        console.log(game1.get_board_array()[evt.target.row][evt.target.col])
-        console.log("Selected ball: " + selectedBall)
-        console.log("Value: " + (selectedBall + 1))
         if (!game1.is_legal_move(evt.target.row, evt.target.col, selectedBall + 1)) {
           evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
           if(game1.get_board_array()[evt.target.row][evt.target.col] > 0){
