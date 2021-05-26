@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.1.4
+// By Jasper Camber Holton. V1.1.5
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -107,7 +107,7 @@ function wonGame(){
   wonDialog.y = topbound + 1000 + 900;
   wonDialog.x = leftbound + 500;
   var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
-  wonText.x = leftbound + 375;
+  wonText.x = leftbound + 360;
   wonText.y = topbound + 925;
   
   wonDialog.on("mousedown", function(event) {
@@ -459,8 +459,8 @@ function dropConfetti(){
   for(i = 0; i < confettiCount; i++){
     confetti[i].visible = true;
     confetti[i].y = rng.nextRange(confettimin,-20);
-    confetti[i].x = rng.nextRange(0,window.innerWidth);
-    confettivx[i] = rng.nextRange(-3,3)
+    confetti[i].x = rng.nextRange(0,width);
+    confettivx[i] = rng.nextRange(-3,3)/7.0;
     confettivy[i] = rng.nextRange(-3,3)/3.0;
   }
 }
