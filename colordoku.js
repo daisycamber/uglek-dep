@@ -145,13 +145,9 @@ class Sudoku {
 
   // I can't figure out how to get this working with the "set" keyword, so making a method for now
     set_board(board_string) {
-        if ( ! board_string.match(/^\d{81}$/m) ) {
-            this.board = this.blank_board_array();
-            return;
-        }
-        this.ogboard = []
+        this.board = this.blank_board_array();
+        this.ogboard = this.blank_board_array();
         for ( let row = 0; row <= 8; row++ ) {
-          this.ogboard[row] = []
             for ( let column = 0; column <= 8; column++ ) {
                 this.board[row][column] = board_string.charAt(row*9+column);
                 this.ogboard[row][column] = board_string.charAt(row*9+column);
