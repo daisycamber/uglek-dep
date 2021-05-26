@@ -329,7 +329,7 @@ for(var i = 0; i < 9; i++){
         if (!game1.is_legal_move(evt.target.row, evt.target.col, selectedBall + 1)) {
           evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
           if(game1.get_board_array()[evt.target.row][evt.target.col] > 0){
-            setTimeout(() => {  evt.target.graphics.beginFill(colors[game1.get_board_array()[evt.target.row][evt.target.col] - 1]).drawCircle(0, 0, 30); }, 2000);
+            setTimeout(() => {  evt.target.graphics.beginFill(colors[game1.get_board_array()[evt.target.row][evt.target.col] - 1]).drawCircle(0, 0, ballSize); }, 2000);
           } else {
             setTimeout(() => {  evt.target.graphics.beginFill("white").drawCircle(0, 0, ballSize); }, 1000);
           }
