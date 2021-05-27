@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.2.4
+// By Jasper Camber Holton. V1.2.5
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -483,7 +483,7 @@ function newGame(difficulty){
 }
 
 var difficultyColors = ["#bafa25","#e4f218","#faa537","#8a0503"];
-var difficultyNames = ["Simple", "Easy", "Intermed.", "Expert"];
+var difficultyNames = ["Easy","Medium","Difficult","Expert"];//["Simple", "Easy", "Intermed.", "Expert"];
 
 var difficultyContainer;
 function drawDifficultySelector(){
