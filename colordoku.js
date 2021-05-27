@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.2.5
+// By Jasper Camber Holton. V1.2.6
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
@@ -482,7 +482,7 @@ function newGame(difficulty){
           }
 }
 
-var difficultyColors = ["#bafa25","#e4f218","#faa537","#8a0503"];
+var difficultyColors = ["#bafa25","#e4f218","#faa537","#c70808"];
 var difficultyNames = ["Easy","Medium","Difficult","Expert"];//["Simple", "Easy", "Intermed.", "Expert"];
 
 var difficultyContainer;
@@ -493,12 +493,13 @@ function drawDifficultySelector(){
   for(var i = 0; i < difficultyColors.length; i++){
     difficulties[i] = new createjs.Shape();
     difficulties[i].graphics.beginFill(difficultyColors[i]).drawCircle(0, 0, 110);
-    difficulties[i].x = topbound + 1000/4.0 * (i) + 130;
+    difficulties[i].x = topbound + 1000/4.0 * (i) + 125;
     difficulties[i].y = leftbound + 1000/2.0;
     difficulties[i].diff = i;
     diffText[i] =  new createjs.Text(difficultyNames[i], TEXTTYPE, "#000000")
-    diffText[i].x = leftbound + 1000/4.0 * (i) + 130 - 90;
-    diffText[i].y = topbound + 1000/2.0 - 30;
+    diffText[i].x = leftbound + 1000/4.0 * (i) + 125;
+    diffText[i].y = topbound + 1000/2.0 - 20;
+    diffText[i].textAlign = 'center';
     difficultyContainer.addChild(difficulties[i]);
     difficultyContainer.addChild(diffText[i]);
     difficulties[i].on("mousedown", function(event) {
