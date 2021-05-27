@@ -535,3 +535,5 @@ stage.update();
 
 //dropConfetti();
 //wonGame();
+
+drawDifficultySelector();
