@@ -98,41 +98,6 @@ for(var i = 0; i < 10; i++){
 }
 container.addChild(text);
 
-var wonContainer;
-var wonDialog;
-// Draw a dialog to create a new game
-function wonGame(){
-  
-  wonContainer = new createjs.Container();
-  wonDialog = new createjs.Shape();
-  wonDialog.graphics.beginFill(colors[0]).drawCircle(0, 0, 1000);
-  wonDialog.y = topbound + 1000 + 900;
-  wonDialog.x = leftbound + 500;
-  var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
-  wonText.x = leftbound + 360;
-  wonText.y = topbound + 925;
-  
-  wonDialog.on("mousedown", function(event) {
-    console.log("New Game");
-    // New game
-    container.removeChild(wonContainer);
-    let import_string = games[rng.nextRange(0,49)];
-    game1.set_board(import_string);
-    print_sudoku_to_webpage(game1);
-    var balls = game1.get_available_balls();
-          for(var i = 1; i < 10; i++){
-            if(!balls[i]){
-              selectorBalls[i-1].alpha = 0.3;//graphics.beginFill("grey").drawCircle(0,0,ballSize);
-            }
-            else {
-              selectorBalls[i-1].alpha = 1;
-            }
-          }
-      });
-  wonContainer.addChild(wonDialog);
-  wonContainer.addChild(wonText);
-  container.addChild(wonContainer);
-}
 
 // Sudoku game class
 class Sudoku {
@@ -492,7 +457,43 @@ if(!droppedConfetti){
 stage.update();
 }
 
+
+var wonContainer;
+var wonDialog;
+// Draw a dialog to create a new game
+function wonGame(){
+  wonContainer = new createjs.Container();
+  wonDialog = new createjs.Shape();
+  wonDialog.graphics.beginFill(colors[0]).drawCircle(0, 0, 1000);
+  wonDialog.y = topbound + 1000 + 900;
+  wonDialog.x = leftbound + 500;
+  var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
+  wonText.x = leftbound + 360;
+  wonText.y = topbound + 925;
+  
+  wonContainer.on("mousedown", function(event) {
+    console.log("New Game");
+    // New game
+    container.removeChild(wonContainer);
+    let import_string = games[rng.nextRange(0,49)];
+    game1.set_board(import_string);
+    print_sudoku_to_webpage(game1);
+    var balls = game1.get_available_balls();
+          for(var i = 1; i < 10; i++){
+            if(!balls[i]){
+              selectorBalls[i-1].alpha = 0.3;//graphics.beginFill("grey").drawCircle(0,0,ballSize);
+            }
+            else {
+              selectorBalls[i-1].alpha = 1;
+            }
+          }
+      });
+  wonContainer.addChild(wonDialog);
+  wonContainer.addChild(wonText);
+  container.addChild(wonContainer);
+}
+
 stage.update();
 
 //dropConfetti();
-wonGame();
+//wonGame();
