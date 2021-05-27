@@ -92,7 +92,7 @@ for(var i = 0; i < 10; i++){
     text =  new createjs.Text("\u21ba", TEXTTYPE, "#000000")
     text.x = selectorBalls[i].x - 20;
     text.y = selectorBalls[i].y - 20;
-    
+
   }
       container.addChild(selectorBalls[i])
 }
@@ -142,11 +142,11 @@ class Sudoku {
     get_board_array() {
         return this.board;
     }
-  
+
   get_cell(row,col){
     return this.board[row][col];
   }
-  
+
   get_available_balls(){
     let balls = [];
     var ballCounts = [];
@@ -465,10 +465,10 @@ stage.update();
 
 
 function newGame(difficulty){
-  console.log("New Game");
     // New game
     var d = difficulty * 100 + 100;
-    let import_string = games[rng.nextRange(d-100,d)];
+    var rand = rng.nextRange(d-100,d);
+    let import_string = games[rand];
     game1.set_board(import_string);
     print_sudoku_to_webpage(game1);
     var balls = game1.get_available_balls();
@@ -482,23 +482,22 @@ function newGame(difficulty){
           }
 }
 
-var difficultyColors = ["#bafa25","e4f218","#faa537","#8a0503"];
-var difficultyNames = ["Simple", "Easy", "Intermediate", "Expert"];
+var difficultyColors = ["#bafa25","#e4f218","#faa537","#8a0503"];
+var difficultyNames = ["Simple", "Easy", "Intermed.", "Expert"];
 
 var difficultyContainer;
 function drawDifficultySelector(){
-  newGame();
   difficultyContainer = new createjs.Container();
   var difficulties = [];
   var diffText = [];
-  for(var i = 0; i < difficultycolors.length; i++){
+  for(var i = 0; i < difficultyColors.length; i++){
     difficulties[i] = new createjs.Shape();
     difficulties[i].graphics.beginFill(difficultyColors[i]).drawCircle(0, 0, 110);
-    difficulties[i].y = topbound + 1000/4.0;
-    difficulties[i].x = leftbound + 1000/2.0;
+    difficulties[i].x = topbound + 1000/4.0 * (i) + 130;
+    difficulties[i].y = leftbound + 1000/2.0;
     difficulties[i].diff = i;
     diffText[i] =  new createjs.Text(difficultyNames[i], TEXTTYPE, "#000000")
-    diffText[i].x = leftbound + 1000/4.0 - 90;
+    diffText[i].x = leftbound + 1000/4.0 * (i) + 130 - 90;
     diffText[i].y = topbound + 1000/2.0 - 30;
     difficultyContainer.addChild(difficulties[i]);
     difficultyContainer.addChild(diffText[i]);
@@ -508,7 +507,7 @@ function drawDifficultySelector(){
       });
   }
   container.addChild(difficultyContainer);
-  
+
 }
 
 var wonContainer;
@@ -523,7 +522,7 @@ function wonGame(){
   var wonText =  new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
   wonText.x = leftbound + 360;
   wonText.y = topbound + 925;
-  
+
   wonContainer.on("mousedown", function(event) {
     container.removeChild(wonContainer);
     drawDifficultySelector();
@@ -533,9 +532,9 @@ function wonGame(){
   container.addChild(wonContainer);
 }
 
+drawDifficultySelector();
+
 stage.update();
 
 //dropConfetti();
 //wonGame();
-
-drawDifficultySelector();
