@@ -504,8 +504,10 @@ function drawDifficultySelector(){
     difficultyContainer.addChild(diffText[i]);
     difficulties[i].on("mousedown", function(event) {
          newGame(event.target.diff);
+         container.removeChild(difficultyContainer);
       });
   }
+  container.addChild(difficultyContainer);
   
 }
 
