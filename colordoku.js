@@ -464,11 +464,11 @@ stage.update();
 }
 
 
-function newGame(){
+function newGame(difficulty){
   console.log("New Game");
     // New game
-    container.removeChild(wonContainer);
-    let import_string = games[rng.nextRange(0,49)];
+    var d = difficulty * 100 + 100;
+    let import_string = games[rng.nextRange(d-100,d)];
     game1.set_board(import_string);
     print_sudoku_to_webpage(game1);
     var balls = game1.get_available_balls();
@@ -496,13 +496,14 @@ function drawDifficultySelector(){
     difficulties[i].graphics.beginFill(difficultyColors[i]).drawCircle(0, 0, 110);
     difficulties[i].y = topbound + 1000/4.0;
     difficulties[i].x = leftbound + 1000/2.0;
+    difficulties[i].diff = i;
     diffText[i] =  new createjs.Text(difficultyNames[i], TEXTTYPE, "#000000")
     diffText[i].x = leftbound + 1000/4.0 - 90;
     diffText[i].y = topbound + 1000/2.0 - 30;
     difficultyContainer.addChild(difficulties[i]);
     difficultyContainer.addChild(diffText[i]);
-    wonContainer.on("mousedown", function(event) {
-         
+    difficulties[i].on("mousedown", function(event) {
+         newGame(event.target.diff);
       });
   }
   
@@ -522,6 +523,7 @@ function wonGame(){
   wonText.y = topbound + 925;
   
   wonContainer.on("mousedown", function(event) {
+    container.removeChild(wonContainer);
     drawDifficultySelector();
       });
   wonContainer.addChild(wonDialog);
