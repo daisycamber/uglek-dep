@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.2.1
+// By Jasper Camber Holton. V1.2.3
 var seed = Math.floor(Math.random() * 100);
 function RNG(seed) {
   // LCG using GCC's constants
