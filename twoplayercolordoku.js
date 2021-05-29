@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.5
+// By Jasper Camber Holton. V0.0.51
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -115,12 +115,12 @@ function readCallback(){
           //console.log("Player turn syndicated");
         //} else
         if(sp[0] == "start"){
-          newGame(int(sp[1]));
+          newGame(parseInt(sp[1]));
           //container.removeChild(difficultyContainer);
           currentTurn = i+1;
           console.log("Start command");
         } else if(sp[0] == "set"){
-          playTurn(int(sp[1]),int(sp[2]), int(sp[3]))
+          playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
           currentTurn = i+1;
           console.log("Set command");
         }
