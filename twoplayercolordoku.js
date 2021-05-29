@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.1
+// By Jasper Camber Holton. V0.0.11
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -28,7 +28,15 @@ RNG.prototype.choice = function(array) {
 }
 var rng = new RNG(seed);
 
-var id = document.getElementById("gameid").innerHTML;
+try {
+  var id = document.getElementById("gameid").innerHTML;
+  var player1 = document.getElementById("player1").innerHTML;
+  var player2 = document.getElementById("player2").innerHTML;
+  var user = document.getElementById("user").innerHTML;
+} catch {
+  console.log("No game")
+}
+
 var gameplay;
 
 function send(text){
@@ -114,9 +122,7 @@ function readCallback(){
       }
 }
 
-var player1 = document.getElementById("player1").innerHTML;
-var player2 = document.getElementById("player2").innerHTML;
-var user = document.getElementById("user").innerHTML;
+
 var playerTurn = false;
 
 
