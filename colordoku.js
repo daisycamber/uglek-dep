@@ -1,5 +1,5 @@
-// By Jasper Camber Holton. V1.2.7
-var seed = Math.floor(Math.random() * 100);
+// By Jasper Camber Holton. V1.2.8
+var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
   // LCG using GCC's constants
@@ -68,8 +68,11 @@ for (var i = 0; i < 10; i++) {
   selectorBalls[i].y = topbound + 900 + 800 / 18 / 2;
   selectorBalls[i].index = i
   selectorBalls[i].on("mousedown", function(event) {
-    selectorBall.x = event.target.x;
-    selectedBall = event.target.index
+    var balls = game1.get_available_balls();
+    if(balls[event.target.index + 1] || (hints > 0 && event.target.index == 9)){
+      selectorBall.x = event.target.x;
+      selectedBall = event.target.index
+    }
   });
   if (i == 9) {
     //text = new createjs.Text("\u21ba", TEXTTYPE, "#000000")
@@ -295,6 +298,16 @@ for (var i = 0; i < 9; i++) {
           hints = hints - 1;
           if (hints == 0) {
             selectorBalls[selectedBall].alpha = 0.3;
+            var balls = game1.get_available_balls();
+            if(!balls[selectedBall+1]){
+              for (var i = 1; i < 10; i++) {
+                if(balls[i]){
+                  selectedBall = i-1
+                  selectorBall.x = selectorBalls[selectedBall].x
+                  break;
+                }
+              }
+            }
           }
         } else if (hints == 0) {
           evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
@@ -308,13 +321,21 @@ for (var i = 0; i < 9; i++) {
             }, 1000);
           }
         }
-
-        var balls = game1.get_available_balls();
+      }
+      var balls = game1.get_available_balls();
+      for (var i = 1; i < 10; i++) {
+        if (!balls[i]) {
+          selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
+        } else {
+          selectorBalls[i - 1].alpha = 1;
+        }
+      }
+      if(selectedBall < 9 && !balls[selectedBall+1]){
         for (var i = 1; i < 10; i++) {
-          if (!balls[i]) {
-            selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
-          } else {
-            selectorBalls[i - 1].alpha = 1;
+          if(balls[i]){
+            selectedBall = i-1
+            selectorBall.x = selectorBalls[selectedBall].x
+            break;
           }
         }
       }
@@ -415,6 +436,8 @@ function handleTick(event) {
 var gamesfactor = 4*2; // gamesFactor is number of games / 400 (1600 games gamesFactor is 4)
 function newGame(difficulty) {
   // New game
+  selectedBall = 0
+  selectorBall.x = selectorBalls[selectedBall].x
   var d = difficulty * gamesfactor * 100 + 100*gamesfactor;
   var rand = rng.nextRange(d - 100*gamesfactor, d);
   let import_string = games[rand * 2];
@@ -429,6 +452,15 @@ function newGame(difficulty) {
       selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
       selectorBalls[i - 1].alpha = 1;
+    }
+  }
+  if(!balls[selectedBall+1]){
+    for (var i = 1; i < 10; i++) {
+      if(balls[i]){
+        selectedBall = i-1
+        selectorBall.x = selectorBalls[selectedBall].x
+        break;
+      }
     }
   }
 }
