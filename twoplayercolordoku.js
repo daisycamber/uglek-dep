@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.111
+// By Jasper Camber Holton. V0.0.112
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -616,7 +616,7 @@ function drawDifficultySelector() {
     difficultyContainer.addChild(difficulties[i]);
     difficultyContainer.addChild(diffText[i]);
     difficulties[i].on("mousedown", function(event) {
-      var d = difficulty * gamesfactor * 100 + 100*gamesfactor;
+      var d = event.target.diff * gamesfactor * 100 + 100*gamesfactor;
       var rand = rng.nextRange(d - 100*gamesfactor, d);
       newGame(rand);
       send("start,"+rand);
