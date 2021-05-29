@@ -117,7 +117,7 @@ function readCallback(){
         //} else
         if(sp[0] == "start"){
           newGame(int(sp[1]));
-          container.removeChild(difficultyContainer);
+          //container.removeChild(difficultyContainer);
           currentTurn = i+1;
           console.log("Start command");
         } else if(sp[0] == "set"){
