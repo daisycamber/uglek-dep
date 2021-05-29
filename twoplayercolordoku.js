@@ -140,11 +140,18 @@ var canvasid = "game198";
 var canvas = document.getElementById(canvasid);
 var width = canvas.width;
 var height = canvas.height;
+
+var ADHEIGHT = 90;
+var less = window.innerWidth;
+if(window.innerHeight < less){
+  less = window.innerHeight-ADHEIGHT;
+}
+/*
 var ADHEIGHT = 90;
 var less = width;
 if (height < less) {
   less = height - ADHEIGHT;
-}
+}*/
 var TEXTTYPE = "bold " + 42 + "px Arial";
 var last = 0;
 var stage = new createjs.Stage(canvasid);
@@ -154,8 +161,15 @@ background = new createjs.Shape();
 background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
 stage.addChild(background);
 stage.addChild(container);
-leftbound = (width - less) / 2 / scale;
-topbound = ((height - less) / 2) / scale;
+
+stage.canvas.width = window.innerWidth;
+var canvasHeight = window.innerHeight-ADHEIGHT;
+stage.canvas.height = canvasHeight;
+leftbound = (window.innerWidth - less)/2/scale;
+topbound = ((canvasHeight - less)/2)/scale;
+
+//leftbound = (width - less) / 2 / scale;
+//topbound = ((height - less) / 2) / scale;
 // red, orange, yellow, dark green, light green, dark blue, light blue, dark purple, pink
 var colors = ["#f50521", "#fa8907", "#fafa07", "#2e8008", "#33f707", "#214bcc", "#07eef2", "#9b5bf0", "#fa75e6", "grey"];
 var selectorBallOffset = 5;
