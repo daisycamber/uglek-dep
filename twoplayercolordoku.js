@@ -234,7 +234,6 @@ class Sudoku {
   }
 
   make_move(row, col, value) {
-    print("Pos: "+ row + " / " + col)
     this.board[row][col] = value;
     let willDropConfetti = true;
     for (let x = 0; x < 9; x++) {
