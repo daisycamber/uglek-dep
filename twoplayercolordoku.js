@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.2.8
+// By Jasper Camber Holton. V0.0.2
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -28,11 +28,15 @@ RNG.prototype.choice = function(array) {
 }
 var rng = new RNG(seed);
 
+var id;
+var player1;
+var player2;
+var user;
 try {
-  var id = document.getElementById("gameid").innerHTML;
-  var player1 = document.getElementById("player1").innerHTML;
-  var player2 = document.getElementById("player2").innerHTML;
-  var user = document.getElementById("user").innerHTML;
+  id = document.getElementById("gameid").innerHTML;
+  player1 = document.getElementById("player1").innerHTML;
+  player2 = document.getElementById("player2").innerHTML;
+  user = document.getElementById("user").innerHTML;
 } catch {
   console.log("No game")
 }
@@ -112,7 +116,8 @@ function readCallback(){
           console.log("Player turn syndicated");
         //} else
         if(sp[0] == "start"){
-          newGame(int(sp[1]))
+          newGame(int(sp[1]));
+          container.removeChild(difficultyContainer);
           currentTurn = i+1;
           console.log("Start command");
         } else if(sp[0] == "set"){
@@ -146,11 +151,7 @@ var canvas = document.getElementById(canvasid);
 var width = canvas.width;
 var height = canvas.height;
 
-var ADHEIGHT = 90;
-var less = window.innerWidth;
-if(window.innerHeight < less){
-  less = window.innerHeight-ADHEIGHT;
-}
+
 /*
 var ADHEIGHT = 90;
 var less = width;
@@ -166,6 +167,12 @@ background = new createjs.Shape();
 background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
 stage.addChild(background);
 stage.addChild(container);
+
+var ADHEIGHT = 90;
+var less = window.innerWidth;
+if(window.innerHeight < less){
+  less = window.innerHeight-ADHEIGHT;
+}
 
 stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight-ADHEIGHT;
@@ -420,6 +427,7 @@ for (var i = 0; i < 9; i++) {
         if (selectedBall != 9) {
           game1.make_move(evt.target.row, evt.target.col, selectedBall + 1);
           evt.target.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
+          send("set,"+evt.target.row+","+event.target.col+","+selectedBall)
         } else if (hints > 0) {
           game1.make_move(evt.target.row, evt.target.col, game1.get_completed_cell(evt.target.row, evt.target.col));
           evt.target.graphics.beginFill(colors[game1.get_completed_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
