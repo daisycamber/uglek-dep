@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.2
+// By Jasper Camber Holton. V0.0.3
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -162,7 +162,7 @@ var TEXTTYPE = "bold " + 42 + "px Arial";
 var last = 0;
 var stage = new createjs.Stage(canvasid);
 var container = new createjs.Container();
-scale = container.scale = less / 1000;
+
 background = new createjs.Shape();
 background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
 stage.addChild(background);
@@ -173,6 +173,7 @@ var less = window.innerWidth;
 if(window.innerHeight < less){
   less = window.innerHeight-ADHEIGHT;
 }
+scale = container.scale = less / 1000;
 
 stage.canvas.width = window.innerWidth;
 var canvasHeight = window.innerHeight-ADHEIGHT;
@@ -614,8 +615,8 @@ function drawDifficultySelector() {
   for (var i = 0; i < difficultyColors.length; i++) {
     difficulties[i] = new createjs.Shape();
     difficulties[i].graphics.beginFill(difficultyColors[i]).drawCircle(0, 0, 110);
-    difficulties[i].x = topbound + 1000 / 4.0 * (i) + 125;
-    difficulties[i].y = leftbound + 1000 / 2.0;
+    difficulties[i].x = leftbound + 1000 / 4.0 * (i) + 125;
+    difficulties[i].y = topbound + 1000 / 2.0;
     difficulties[i].diff = i;
     diffText[i] = new createjs.Text(difficultyNames[i], TEXTTYPE, "#000000")
     diffText[i].x = leftbound + 1000 / 4.0 * (i) + 125;
@@ -649,7 +650,9 @@ function wonGame() {
   wonText.y = topbound + 925;
   wonContainer.on("mousedown", function(event) {
     container.removeChild(wonContainer);
-    drawDifficultySelector();
+    if(user == player1){
+      drawDifficultySelector();
+    }
     isFinished = false;
   });
   wonContainer.addChild(wonDialog);
@@ -666,7 +669,7 @@ createjs.Ticker.addEventListener("tick", handleTick);
 var ticks = 0;
 
 function handleTick(event) {
-  if(ticks > 5*60 && !playerTurn){
+  if(ticks > 5*60){
     ticks = 0;
     read();
     console.log("Reading");
