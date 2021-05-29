@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.4
+// By Jasper Camber Holton. V0.0.5
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -109,11 +109,10 @@ function readCallback(){
   gp = gameplay;
   console.log("Read callback");
       for(var i = currentTurn; i < gp.length; i++){
-        console.log(gp[i]);
         sp = gp[i].split(",");
         //if(sp[3] == user){
-          currentTurn = i+1;
-          console.log("Player turn syndicated");
+          //currentTurn = i+1;
+          //console.log("Player turn syndicated");
         //} else
         if(sp[0] == "start"){
           newGame(int(sp[1]));
@@ -677,7 +676,7 @@ var ticks = 0;
 const interval = setInterval(function() {
     read();
     console.log("Reading");
-  stage.update();
+    stage.update();
  }, 5000);
 
 //createjs.Ticker.addEventListener("tick", handleTick);
