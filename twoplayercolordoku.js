@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.53
+// By Jasper Camber Holton. V0.0.54
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -432,7 +432,7 @@ for (var i = 0; i < 9; i++) {
 }
 
 function playTurn(col,row,selBall){
-  target = balls[col][row];
+  target = balls[row][col];
   if (selBall != 9) {
     game1.make_move(row, col, selBall + 1);
     target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
