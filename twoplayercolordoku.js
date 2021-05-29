@@ -152,8 +152,8 @@ for (var i = 0; i < 10; i++) {
   selectorBalls[i].y = topbound + 900 + 800 / 18 / 2;
   selectorBalls[i].index = i
   selectorBalls[i].on("mousedown", function(event) {
-    var balls = game1.get_available_balls();
-    if(balls[event.target.index + 1] || (hints > 0 && event.target.index == 9)){
+    var availableBalls = game1.get_available_balls();
+    if(availableBalls[event.target.index + 1] || (hints > 0 && event.target.index == 9)){
       selectorBall.x = event.target.x;
       selectedBall = event.target.index
     }
@@ -384,10 +384,10 @@ for (var i = 0; i < 9; i++) {
           hints = hints - 1;
           if (hints == 0) {
             selectorBalls[selectedBall].alpha = 0.3;
-            var balls = game1.get_available_balls();
-            if(!balls[selectedBall+1]){
+            var availableBalls = game1.get_available_balls();
+            if(!availableBalls[selectedBall+1]){
               for (var i = 1; i < 10; i++) {
-                if(balls[i]){
+                if(availableBalls[i]){
                   selectedBall = i-1
                   selectorBall.x = selectorBalls[selectedBall].x
                   break;
@@ -408,17 +408,17 @@ for (var i = 0; i < 9; i++) {
           }
         }
       }
-      var balls = game1.get_available_balls();
+      var availableBalls = game1.get_available_balls();
       for (var i = 1; i < 10; i++) {
-        if (!balls[i]) {
+        if (!availableBalls[i]) {
           selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
         } else {
           selectorBalls[i - 1].alpha = 1;
         }
       }
-      if(selectedBall < 9 && !balls[selectedBall+1]){
+      if(selectedBall < 9 && !availableBalls[selectedBall+1]){
         for (var i = 1; i < 10; i++) {
-          if(balls[i]){
+          if(availableBalls[i]){
             selectedBall = i-1
             selectorBall.x = selectorBalls[selectedBall].x
             break;
@@ -442,10 +442,10 @@ function playTurn(col,row,selBall){
     hints = hints - 1;
     if (hints == 0) {
       selectorBalls[selBall].alpha = 0.3;
-      var balls = game1.get_available_balls();
-      if(!balls[selBall+1]){
+      var availableBalls = game1.get_available_balls();
+      if(!availableBalls[selBall+1]){
         for (var i = 1; i < 10; i++) {
-          if(balls[i]){
+          if(availableBalls[i]){
             selBall = i-1
             selectorBall.x = selectorBalls[selBall].x
             break;
@@ -465,17 +465,17 @@ function playTurn(col,row,selBall){
       }, 1000);
     }
   }
-  var balls = game1.get_available_balls();
+  var availableBalls = game1.get_available_balls();
   for (var i = 1; i < 10; i++) {
-    if (!balls[i]) {
+    if (!availableBalls[i]) {
       selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
       selectorBalls[i - 1].alpha = 1;
     }
   }
-  if(selBall < 9 && !balls[selBall+1]){
+  if(selBall < 9 && !availableBalls[selBall+1]){
     for (var i = 1; i < 10; i++) {
-      if(balls[i]){
+      if(availableBalls[i]){
         selectedBall = i-1
         selectorBall.x = selectorBalls[selectedBall].x
         break;
@@ -583,19 +583,19 @@ function newGame(difficulty) {
   let completed_import_string = games[difficulty * 2 + 1];
   game1.set_board(import_string, completed_import_string);
   print_sudoku_to_webpage(game1);
-  var balls = game1.get_available_balls();
+  var availableBalls = game1.get_available_balls();
   selectorBalls[9].alpha = 1;
   hints = 3;
   for (var i = 1; i < 10; i++) {
-    if (!balls[i]) {
+    if (!availableBalls[i]) {
       selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
       selectorBalls[i - 1].alpha = 1;
     }
   }
-  if(!balls[selectedBall+1]){
+  if(!availableBalls[selectedBall+1]){
     for (var i = 1; i < 10; i++) {
-      if(balls[i]){
+      if(availableBalls[i]){
         selectedBall = i-1
         selectorBall.x = selectorBalls[selectedBall].x
         break;
