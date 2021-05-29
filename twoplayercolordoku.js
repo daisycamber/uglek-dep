@@ -91,8 +91,6 @@ if(selBall < 9 && !balls[selBall+1]){
   }
 }
 
-}
-
 var currentTurn = 0;
 function readCallback(){
   gp = gameplay;
