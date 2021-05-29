@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.51
+// By Jasper Camber Holton. V0.0.52
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -50,58 +50,7 @@ function send(text){
     xhr.send(text);
 }
 
-function playTurn(col,row,selBall){
-  target = balls[col][row];
-  if (selBall != 9) {
-    game1.make_move(row, col, selBall + 1);
-    target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
-  } else if (hints > 0) {
-    game1.make_move(row, col, game1.get_completed_cell(row, col));
-    target.graphics.beginFill(colors[game1.get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
-    hints = hints - 1;
-    if (hints == 0) {
-      selectorBalls[selBall].alpha = 0.3;
-      var balls = game1.get_available_balls();
-      if(!balls[selBall+1]){
-        for (var i = 1; i < 10; i++) {
-          if(balls[i]){
-            selBall = i-1
-            selectorBall.x = selectorBalls[selBall].x
-            break;
-          }
-        }
-      }
-    }
-  } else if (hints == 0) {
-    target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-    if (game1.get_board_array()[row][col] > 0) {
-      setTimeout(() => {
-        target.graphics.beginFill(colors[game1.get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        target.graphics.beginFill("white").drawCircle(0, 0, ballSize);
-      }, 1000);
-    }
-  }
-  var balls = game1.get_available_balls();
-  for (var i = 1; i < 10; i++) {
-    if (!balls[i]) {
-      selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
-    } else {
-      selectorBalls[i - 1].alpha = 1;
-    }
-  }
-  if(selBall < 9 && !balls[selBall+1]){
-    for (var i = 1; i < 10; i++) {
-      if(balls[i]){
-        selectedBall = i-1
-        selectorBall.x = selectorBalls[selectedBall].x
-        break;
-      }
-    }
-  }
-}
+
 
 
 var currentTurn = 0;
@@ -479,6 +428,59 @@ for (var i = 0; i < 9; i++) {
     });
     container.addChild(balls[i][j])
 
+  }
+}
+
+function playTurn(col,row,selBall){
+  target = balls[col][row];
+  if (selBall != 9) {
+    game1.make_move(row, col, selBall + 1);
+    target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
+  } else if (hints > 0) {
+    game1.make_move(row, col, game1.get_completed_cell(row, col));
+    target.graphics.beginFill(colors[game1.get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+    hints = hints - 1;
+    if (hints == 0) {
+      selectorBalls[selBall].alpha = 0.3;
+      var balls = game1.get_available_balls();
+      if(!balls[selBall+1]){
+        for (var i = 1; i < 10; i++) {
+          if(balls[i]){
+            selBall = i-1
+            selectorBall.x = selectorBalls[selBall].x
+            break;
+          }
+        }
+      }
+    }
+  } else if (hints == 0) {
+    target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
+    if (game1.get_board_array()[row][col] > 0) {
+      setTimeout(() => {
+        target.graphics.beginFill(colors[game1.get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        target.graphics.beginFill("white").drawCircle(0, 0, ballSize);
+      }, 1000);
+    }
+  }
+  var balls = game1.get_available_balls();
+  for (var i = 1; i < 10; i++) {
+    if (!balls[i]) {
+      selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
+    } else {
+      selectorBalls[i - 1].alpha = 1;
+    }
+  }
+  if(selBall < 9 && !balls[selBall+1]){
+    for (var i = 1; i < 10; i++) {
+      if(balls[i]){
+        selectedBall = i-1
+        selectorBall.x = selectorBalls[selectedBall].x
+        break;
+      }
+    }
   }
 }
 
