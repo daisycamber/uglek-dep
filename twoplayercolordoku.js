@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.11
+// By Jasper Camber Holton. V0.0.111
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -80,24 +80,25 @@ function playTurn(col,row,selBall){
       }, 1000);
     }
   }
-}
-var balls = game1.get_available_balls();
-for (var i = 1; i < 10; i++) {
-  if (!balls[i]) {
-    selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
-  } else {
-    selectorBalls[i - 1].alpha = 1;
-  }
-}
-if(selBall < 9 && !balls[selBall+1]){
+  var balls = game1.get_available_balls();
   for (var i = 1; i < 10; i++) {
-    if(balls[i]){
-      selectedBall = i-1
-      selectorBall.x = selectorBalls[selectedBall].x
-      break;
+    if (!balls[i]) {
+      selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
+    } else {
+      selectorBalls[i - 1].alpha = 1;
+    }
+  }
+  if(selBall < 9 && !balls[selBall+1]){
+    for (var i = 1; i < 10; i++) {
+      if(balls[i]){
+        selectedBall = i-1
+        selectorBall.x = selectorBalls[selectedBall].x
+        break;
+      }
     }
   }
 }
+
 
 var currentTurn = 0;
 function readCallback(){
