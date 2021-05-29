@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.112
+// By Jasper Camber Holton. V1.2.8
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -651,6 +651,18 @@ function wonGame() {
 }
 if(user == player1){
   drawDifficultySelector();
+}
+createjs.Ticker.setFPS(60);
+createjs.Ticker.addEventListener("tick", stage);
+createjs.Ticker.addEventListener("tick", handleTick);
+var ticks = 0;
+
+function handleTick(event) {
+  if(ticks > 5*60 && !playerTurn){
+    ticks = 0;
+    read();
+    console.log("Reading");
+  }
 }
 
 
