@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.52
+// By Jasper Camber Holton. V0.0.53
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -234,6 +234,7 @@ class Sudoku {
   }
 
   make_move(row, col, value) {
+    print("Pos: "+ row + " / " + col)
     this.board[row][col] = value;
     let willDropConfetti = true;
     for (let x = 0; x < 9; x++) {
@@ -376,11 +377,11 @@ for (var i = 0; i < 9; i++) {
         if (selectedBall != 9) {
           game1.make_move(evt.target.row, evt.target.col, selectedBall + 1);
           evt.target.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
-          send("set,"+evt.target.row+","+event.target.col+","+selectedBall)
+          send("set,"+evt.target.row+","+evt.target.col+","+selectedBall)
         } else if (hints > 0) {
           game1.make_move(evt.target.row, evt.target.col, game1.get_completed_cell(evt.target.row, evt.target.col));
           evt.target.graphics.beginFill(colors[game1.get_completed_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
-          send("set,"+evt.target.row+","+event.target.col+","+selectedBall)
+          send("set,"+evt.target.row+","+evt.target.col+","+selectedBall)
           hints = hints - 1;
           if (hints == 0) {
             selectorBalls[selectedBall].alpha = 0.3;
