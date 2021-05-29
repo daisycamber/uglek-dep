@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.2.8
+// By Jasper Camber Holton. V0.0.1
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
