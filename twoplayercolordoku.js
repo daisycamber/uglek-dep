@@ -663,18 +663,25 @@ function wonGame() {
 if(user == player1){
   drawDifficultySelector();
 }
-createjs.Ticker.setFPS(60);
-createjs.Ticker.addEventListener("tick", stage);
-createjs.Ticker.addEventListener("tick", handleTick);
 var ticks = 0;
 
-function handleTick(event) {
+/*function handleTick(event) {
   if(ticks > 5*60){
     ticks = 0;
     read();
     console.log("Reading");
   }
-}
+  stage.update();
+}*/
+
+const interval = setInterval(function() {
+    read();
+    console.log("Reading");
+  stage.update();
+ }, 5000);
+
+//createjs.Ticker.addEventListener("tick", handleTick);
+
 
 
 stage.update();
