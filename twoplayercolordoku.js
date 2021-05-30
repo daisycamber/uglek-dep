@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.55
+// By Jasper Camber Holton. V0.0.56
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -362,8 +362,8 @@ function updateSelectorBalls(){
 }
 
 let rand = rng.nextRange(0, 399);
-let import_string = games[rand * 2];
-let completed_import_string = games[rand * 2 + 1];
+let import_string = games2[rand * 2];
+let completed_import_string = games2[rand * 2 + 1];
 game1.set_board(completed_import_string, completed_import_string);
 let sudoku_squares = createArray(9, 9);
 var balls = [];
@@ -579,8 +579,8 @@ function newGame(difficulty) {
   selectorBall.x = selectorBalls[selectedBall].x
   //var d = difficulty * gamesfactor * 100 + 100*gamesfactor;
   //var rand = rng.nextRange(d - 100*gamesfactor, d);
-  let import_string = games[difficulty * 2];
-  let completed_import_string = games[difficulty * 2 + 1];
+  let import_string = games2[difficulty * 2];
+  let completed_import_string = games2[difficulty * 2 + 1];
   game1.set_board(import_string, completed_import_string);
   print_sudoku_to_webpage(game1);
   var availableBalls = game1.get_available_balls();
