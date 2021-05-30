@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.59
+// By Jasper Camber Holton. V0.0.6
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -427,15 +427,15 @@
   function playTurn(col,row,selBall){
     target = balls[row][col];
     if (selBall != 9) {
-      game1.make_move(row, col, selBall);
-      console.log("Made move with ball: " + selBall)
+      game1.make_move(row, col, selBal+1l);
+      console.log("Made move with ball: " + selBall+1)
       target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
       game1.make_move(row, col, game1.get_completed_cell(row, col));
       target.graphics.beginFill(colors[game1.get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
       hints = hints - 1;
       if (hints == 0) {
-        selectorBalls[selBall-1].alpha = 0.3;
+        selectorBalls[selBall].alpha = 0.3;
         updateSelectorBalls();
       }
     } else if (hints == 0) {
