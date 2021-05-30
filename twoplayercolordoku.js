@@ -427,7 +427,7 @@
   function playTurn(col,row,selBall){
     target = balls[row][col];
     if (selBall != 9) {
-      game1.make_move(row, col, selBal+1l);
+      game1.make_move(row, col, selBal+1);
       console.log("Made move with ball: " + selBall+1)
       target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
