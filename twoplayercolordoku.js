@@ -76,10 +76,6 @@ function readCallback(){
       }
 }
 
-
-var playerTurn = false;
-
-
 function read(){
   const Http = new XMLHttpRequest();
   const url="https://uglek.com/game/" + id + "/play/";
@@ -468,7 +464,7 @@ function playTurn(col,row,selBall){
   var availableBalls = game1.get_available_balls();
   for (var i = 1; i < 10; i++) {
     if (!availableBalls[i]) {
-      selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
+      selectorBalls[i - 1].alpha = 0.3; // graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
       selectorBalls[i - 1].alpha = 1;
     }
