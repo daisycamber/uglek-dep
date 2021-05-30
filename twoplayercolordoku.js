@@ -1,5 +1,5 @@
-// By Jasper Camber Holton. V0.0.56
-var seed = Math.floor(Math.random() * 5000);
+// By Jasper Camber Holton. V0.0.561
+let seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
   // LCG using GCC's constants
@@ -19,19 +19,19 @@ RNG.prototype.nextFloat = function() {
 RNG.prototype.nextRange = function(start, end) {
   // returns in range [start, end): including start, excluding end
   // can't modulu nextInt because of weak randomness in lower bits
-  var rangeSize = end - start;
-  var randomUnder1 = this.nextInt() / this.m;
+  let rangeSize = end - start;
+  let randomUnder1 = this.nextInt() / this.m;
   return start + Math.floor(randomUnder1 * rangeSize);
 }
 RNG.prototype.choice = function(array) {
   return array[this.nextRange(0, array.length)];
 }
-var rng = new RNG(seed);
+let rng = new RNG(seed);
 
-var id;
-var player1;
-var player2;
-var user;
+let id;
+let player1;
+let player2;
+let user;
 try {
   id = document.getElementById("gameid").innerHTML;
   player1 = document.getElementById("player1").innerHTML;
@@ -41,10 +41,10 @@ try {
   console.log("No game")
 }
 
-var gameplay;
+let gameplay;
 
 function send(text){
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "https://uglek.com/game/" + id + "/post/", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     xhr.send(text);
@@ -53,11 +53,11 @@ function send(text){
 
 
 
-var currentTurn = 0;
+let currentTurn = 0;
 function readCallback(){
   gp = gameplay;
   console.log("Read callback");
-      for(var i = currentTurn; i < gp.length; i++){
+      for(let i = currentTurn; i < gp.length; i++){
         sp = gp[i].split(",");
         //if(sp[3] == user){
           //currentTurn = i+1;
@@ -90,37 +90,37 @@ function gameplayArray(){
   gameplay.split('/');
 }
 
-var canvasid = "game198";
-var canvas = document.getElementById(canvasid);
-var width = canvas.width;
-var height = canvas.height;
+let canvasid = "game198";
+let canvas = document.getElementById(canvasid);
+let width = canvas.width;
+let height = canvas.height;
 
 
 /*
-var ADHEIGHT = 90;
-var less = width;
+let ADHEIGHT = 90;
+let less = width;
 if (height < less) {
   less = height - ADHEIGHT;
 }*/
-var TEXTTYPE = "bold " + 42 + "px Arial";
-var last = 0;
-var stage = new createjs.Stage(canvasid);
-var container = new createjs.Container();
+let TEXTTYPE = "bold " + 42 + "px Arial";
+let last = 0;
+let stage = new createjs.Stage(canvasid);
+let container = new createjs.Container();
 
 background = new createjs.Shape();
 background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
 stage.addChild(background);
 stage.addChild(container);
 
-var ADHEIGHT = 90;
-var less = window.innerWidth;
+let ADHEIGHT = 90;
+let less = window.innerWidth;
 if(window.innerHeight < less){
   less = window.innerHeight-ADHEIGHT;
 }
 scale = container.scale = less / 1000;
 
 stage.canvas.width = window.innerWidth;
-var canvasHeight = window.innerHeight-ADHEIGHT;
+let canvasHeight = window.innerHeight-ADHEIGHT;
 stage.canvas.height = canvasHeight;
 leftbound = (window.innerWidth - less)/2/scale;
 topbound = ((canvasHeight - less)/2)/scale;
@@ -128,27 +128,27 @@ topbound = ((canvasHeight - less)/2)/scale;
 //leftbound = (width - less) / 2 / scale;
 //topbound = ((height - less) / 2) / scale;
 // red, orange, yellow, dark green, light green, dark blue, light blue, dark purple, pink
-var colors = ["#f50521", "#fa8907", "#fafa07", "#2e8008", "#33f707", "#214bcc", "#07eef2", "#9b5bf0", "#fa75e6", "grey"];
-var selectorBallOffset = 5;
-var ballSize = 37;
-var selectorBall = new createjs.Shape();
+let colors = ["#f50521", "#fa8907", "#fafa07", "#2e8008", "#33f707", "#214bcc", "#07eef2", "#9b5bf0", "#fa75e6", "grey"];
+let selectorBallOffset = 5;
+let ballSize = 37;
+let selectorBall = new createjs.Shape();
 selectorBall.graphics.beginFill("white").drawCircle(0, 0, ballSize + 7);
 selectorBall.x = leftbound + 100 + 800 / 20 + selectorBallOffset;
 selectorBall.y = topbound + 900 + 800 / 18 / 2;
 container.addChild(selectorBall)
-var selectedBall = 0;
-var selectorBalls = [];
-var text;
-var text2;
-var hints = 0;
-for (var i = 0; i < 10; i++) {
+let selectedBall = 0;
+let selectorBalls = [];
+let text;
+let text2;
+let hints = 0;
+for (let i = 0; i < 10; i++) {
   selectorBalls[i] = new createjs.Shape();
   selectorBalls[i].graphics.beginFill(colors[i]).drawCircle(0, 0, ballSize);
   selectorBalls[i].x = leftbound + 100 + 800 / 10 * i + 800 / 20 + selectorBallOffset;
   selectorBalls[i].y = topbound + 900 + 800 / 18 / 2;
   selectorBalls[i].index = i
   selectorBalls[i].on("mousedown", function(event) {
-    var availableBalls = game1.get_available_balls();
+    let availableBalls = game1.get_available_balls();
     if(availableBalls[event.target.index + 1] || (hints > 0 && event.target.index == 9)){
       selectorBall.x = event.target.x;
       selectedBall = event.target.index
@@ -211,7 +211,7 @@ class MultiplayerSudoku {
 
   get_available_balls() {
     let balls = [];
-    var ballCounts = [];
+    let ballCounts = [];
     for (let i = 0; i < 10; i++) {
       ballCounts[i] = 0;
     }
@@ -342,8 +342,8 @@ container.addChild(line7)
 let game1 = new MultiplayerSudoku();
 
 function updateSelectorBalls(){
-  var availableBalls = game1.get_available_balls();
-  for (var i = 1; i < 10; i++) {
+  let availableBalls = game1.get_available_balls();
+  for (let i = 1; i < 10; i++) {
     if (!availableBalls[i]) {
       selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
@@ -351,7 +351,7 @@ function updateSelectorBalls(){
     }
   }
   if(selectedBall < 9 && !availableBalls[selectedBall+1]){
-    for (var i = 1; i < 10; i++) {
+    for (let i = 1; i < 10; i++) {
       if(availableBalls[i]){
         selectedBall = i-1
         selectorBall.x = selectorBalls[selectedBall].x
@@ -366,10 +366,10 @@ let import_string = games2[rand * 2];
 let completed_import_string = games2[rand * 2 + 1];
 game1.set_board(completed_import_string, completed_import_string);
 let sudoku_squares = createArray(9, 9);
-var balls = [];
-for (var i = 0; i < 9; i++) {
+let balls = [];
+for (let i = 0; i < 9; i++) {
   balls[i] = [];
-  for (var j = 0; j < 9; j++) {
+  for (let j = 0; j < 9; j++) {
     balls[i][j] = new createjs.Shape();
     balls[i][j].graphics.beginFill("white").drawCircle(0, 0, ballSize); //
     balls[i][j].x = leftbound + 100 + 800 / 9 * i + 800 / 18;
@@ -400,9 +400,9 @@ for (var i = 0; i < 9; i++) {
           hints = hints - 1;
           if (hints == 0) {
             selectorBalls[selectedBall].alpha = 0.3;
-            var availableBalls = game1.get_available_balls();
+            let availableBalls = game1.get_available_balls();
             if(!availableBalls[selectedBall+1]){
-              for (var i = 1; i < 10; i++) {
+              for (let i = 1; i < 10; i++) {
                 if(availableBalls[i]){
                   selectedBall = i-1
                   selectorBall.x = selectorBalls[selectedBall].x
@@ -442,9 +442,9 @@ function playTurn(col,row,selBall){
     hints = hints - 1;
     if (hints == 0) {
       selectorBalls[selBall].alpha = 0.3;
-      var availableBalls = game1.get_available_balls();
+      let availableBalls = game1.get_available_balls();
       if(!availableBalls[selBall+1]){
-        for (var i = 1; i < 10; i++) {
+        for (let i = 1; i < 10; i++) {
           if(availableBalls[i]){
             selBall = i-1
             selectorBall.x = selectorBalls[selBall].x
@@ -465,8 +465,8 @@ function playTurn(col,row,selBall){
       }, 1000);
     }
   }
-  var availableBalls = game1.get_available_balls();
-  for (var i = 1; i < 10; i++) {
+  let availableBalls = game1.get_available_balls();
+  for (let i = 1; i < 10; i++) {
     if (!availableBalls[i]) {
       selectorBalls[i - 1].alpha = 0.3; // graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
@@ -474,7 +474,7 @@ function playTurn(col,row,selBall){
     }
   }
   if(selBall < 9 && !availableBalls[selBall+1]){
-    for (var i = 1; i < 10; i++) {
+    for (let i = 1; i < 10; i++) {
       if(availableBalls[i]){
         selectedBall = i-1
         selectorBall.x = selectorBalls[selectedBall].x
@@ -501,23 +501,23 @@ print_sudoku_to_webpage(game1)
 
 // This code is borrowed from another website. Thanks google.
 function createArray(length) {
-  var arr = new Array(length || 0),
+  let arr = new Array(length || 0),
     i = length;
 
   if (arguments.length > 1) {
-    var args = Array.prototype.slice.call(arguments, 1);
+    let args = Array.prototype.slice.call(arguments, 1);
     while (i--) arr[length - 1 - i] = createArray.apply(this, args);
   }
   return arr;
 }
 
 COLORS = ["Red", "Orange", "Yellow", "Green", "Blue", "Purple"];
-var confettiCount = 60;
-var confetti = [];
-var confettivx = [];
-var confettivy = [];
-var confettiv = 4;
-var confettimin = -600;
+let confettiCount = 60;
+let confetti = [];
+let confettivx = [];
+let confettivy = [];
+let confettiv = 4;
+let confettimin = -600;
 
 function drawConfetti() {
   for (i = 0; i < confettiCount; i++) {
@@ -551,7 +551,7 @@ createjs.Ticker.setFPS(60);
 createjs.Ticker.addEventListener("tick", stage);
 createjs.Ticker.addEventListener("tick", handleTick);
 
-var droppedConfetti = false;
+let droppedConfetti = false;
 
 function handleTick(event) {
   if (!droppedConfetti) {
@@ -572,21 +572,21 @@ function handleTick(event) {
   stage.update();
 }
 
-var gamesfactor = 4*2; // gamesFactor is number of games / 400 (1600 games gamesFactor is 4)
+let gamesfactor = 4*2; // gamesFactor is number of games / 400 (1600 games gamesFactor is 4)
 function newGame(difficulty) {
   // New game
   selectedBall = 0
   selectorBall.x = selectorBalls[selectedBall].x
-  //var d = difficulty * gamesfactor * 100 + 100*gamesfactor;
-  //var rand = rng.nextRange(d - 100*gamesfactor, d);
+  //let d = difficulty * gamesfactor * 100 + 100*gamesfactor;
+  //let rand = rng.nextRange(d - 100*gamesfactor, d);
   let import_string = games2[difficulty * 2];
   let completed_import_string = games2[difficulty * 2 + 1];
   game1.set_board(import_string, completed_import_string);
   print_sudoku_to_webpage(game1);
-  var availableBalls = game1.get_available_balls();
+  let availableBalls = game1.get_available_balls();
   selectorBalls[9].alpha = 1;
   hints = 3;
-  for (var i = 1; i < 10; i++) {
+  for (let i = 1; i < 10; i++) {
     if (!availableBalls[i]) {
       selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
     } else {
@@ -594,7 +594,7 @@ function newGame(difficulty) {
     }
   }
   if(!availableBalls[selectedBall+1]){
-    for (var i = 1; i < 10; i++) {
+    for (let i = 1; i < 10; i++) {
       if(availableBalls[i]){
         selectedBall = i-1
         selectorBall.x = selectorBalls[selectedBall].x
@@ -604,16 +604,16 @@ function newGame(difficulty) {
   }
 }
 
-var difficultyColors = ["#bafa25", "#e4f218", "#faa537", "#c70808"];
-var difficultyNames = ["Easy", "Medium", "Difficult", "Expert"]; //["Simple", "Easy", "Intermed.", "Expert"];
+let difficultyColors = ["#bafa25", "#e4f218", "#faa537", "#c70808"];
+let difficultyNames = ["Easy", "Medium", "Difficult", "Expert"]; //["Simple", "Easy", "Intermed.", "Expert"];
 
-var difficultyContainer;
+let difficultyContainer;
 
 function drawDifficultySelector() {
   difficultyContainer = new createjs.Container();
-  var difficulties = [];
-  var diffText = [];
-  for (var i = 0; i < difficultyColors.length; i++) {
+  let difficulties = [];
+  let diffText = [];
+  for (let i = 0; i < difficultyColors.length; i++) {
     difficulties[i] = new createjs.Shape();
     difficulties[i].graphics.beginFill(difficultyColors[i]).drawCircle(0, 0, 110);
     difficulties[i].x = leftbound + 1000 / 4.0 * (i) + 125;
@@ -626,8 +626,8 @@ function drawDifficultySelector() {
     difficultyContainer.addChild(difficulties[i]);
     difficultyContainer.addChild(diffText[i]);
     difficulties[i].on("mousedown", function(event) {
-      var d = event.target.diff * gamesfactor * 100 + 100*gamesfactor;
-      var rand = rng.nextRange(d - 100*gamesfactor, d);
+      let d = event.target.diff * gamesfactor * 100 + 100*gamesfactor;
+      let rand = rng.nextRange(d - 100*gamesfactor, d);
       newGame(rand);
       send("start,"+rand);
       container.removeChild(difficultyContainer);
@@ -636,9 +636,9 @@ function drawDifficultySelector() {
   container.addChild(difficultyContainer);
 }
 
-var wonContainer;
-var wonDialog;
-var isFinished = false;
+let wonContainer;
+let wonDialog;
+let isFinished = false;
 // Draw a dialog to create a new game
 function wonGame() {
   wonContainer = new createjs.Container();
@@ -646,7 +646,7 @@ function wonGame() {
   wonDialog.graphics.beginFill(colors[0]).drawCircle(0, 0, 1000);
   wonDialog.y = topbound + 1000 + 900;
   wonDialog.x = leftbound + 500;
-  var wonText = new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
+  let wonText = new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
   wonText.x = leftbound + 360;
   wonText.y = topbound + 925;
   wonContainer.on("mousedown", function(event) {
@@ -664,7 +664,7 @@ function wonGame() {
 if(user == player1){
   drawDifficultySelector();
 }
-var ticks = 0;
+let ticks = 0;
 
 /*function handleTick(event) {
   if(ticks > 5*60){
