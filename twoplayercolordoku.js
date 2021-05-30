@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.57
+// By Jasper Camber Holton. V0.0.58
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -344,6 +344,7 @@
 
   function updateSelectorBalls(){
     let availableBalls = game1.get_available_balls();
+    console.log("Available balls: " + availableBalls)
     for (let i = 1; i < 10; i++) {
       if (!availableBalls[i]) {
         selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
