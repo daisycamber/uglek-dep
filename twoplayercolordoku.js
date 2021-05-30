@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.56112
+// By Jasper Camber Holton. V0.0.57
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -401,16 +401,7 @@
             hints = hints - 1;
             if (hints == 0) {
               selectorBalls[selectedBall].alpha = 0.3;
-              let availableBalls = game1.get_available_balls();
-              if(!availableBalls[selectedBall+1]){
-                for (let i = 1; i < 10; i++) {
-                  if(availableBalls[i]){
-                    selectedBall = i-1
-                    selectorBall.x = selectorBalls[selectedBall].x
-                    break;
-                  }
-                }
-              }
+              updateSelectorBalls();
             }
           } else if (hints == 0) {
             evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
@@ -466,23 +457,7 @@
         }, 1000);
       }
     }
-    let availableBalls = game1.get_available_balls();
-    for (let i = 1; i < 10; i++) {
-      if (!availableBalls[i]) {
-        selectorBalls[i - 1].alpha = 0.3; // graphics.beginFill("grey").drawCircle(0,0,ballSize);
-      } else {
-        selectorBalls[i - 1].alpha = 1;
-      }
-    }
-    if(selBall < 9 && !availableBalls[selectedBall+1]){
-      for (let i = 1; i < 10; i++) {
-        if(availableBalls[i]){
-          selectedBall = i-1
-          selectorBall.x = selectorBalls[selectedBall].x
-          break;
-        }
-      }
-    }
+    updateSelectorBalls();
   }
 
   function print_sudoku_to_webpage(sudoku_object) {
@@ -587,22 +562,7 @@
     let availableBalls = game1.get_available_balls();
     selectorBalls[9].alpha = 1;
     hints = 3;
-    for (let i = 1; i < 10; i++) {
-      if (!availableBalls[i]) {
-        selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
-      } else {
-        selectorBalls[i - 1].alpha = 1;
-      }
-    }
-    if(!availableBalls[selectedBall+1]){
-      for (let i = 1; i < 10; i++) {
-        if(availableBalls[i]){
-          selectedBall = i-1
-          selectorBall.x = selectorBalls[selectedBall].x
-          break;
-        }
-      }
-    }
+    updateSelectorBalls();
   }
 
   let difficultyColors = ["#bafa25", "#e4f218", "#faa537", "#c70808"];
