@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.5611
+// By Jasper Camber Holton. V0.0.56112
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -474,7 +474,7 @@
         selectorBalls[i - 1].alpha = 1;
       }
     }
-    if(selBall < 9 && !availableBalls[selBall+1]){
+    if(selBall < 9 && !availableBalls[selectedBall+1]){
       for (let i = 1; i < 10; i++) {
         if(availableBalls[i]){
           selectedBall = i-1
