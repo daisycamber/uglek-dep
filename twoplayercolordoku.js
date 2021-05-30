@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.54
+// By Jasper Camber Holton. V0.0.55
 var seed = Math.floor(Math.random() * 5000);
 
 function RNG(seed) {
@@ -165,7 +165,7 @@ for (var i = 0; i < 10; i++) {
 container.addChild(text2)
 
 // Sudoku game class
-class Sudoku {
+class MultiplayerSudoku {
   constructor() {
     this.board = this.blank_board_array();
     this.ogboard = this.blank_board_array();
@@ -339,7 +339,27 @@ line7.x = leftbound + 100;
 line7.y = topbound + 50 + 800;
 container.addChild(line7)
 
-let game1 = new Sudoku();
+let game1 = new MultiplayerSudoku();
+
+function updateSelectorBalls(){
+  var availableBalls = game1.get_available_balls();
+  for (var i = 1; i < 10; i++) {
+    if (!availableBalls[i]) {
+      selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
+    } else {
+      selectorBalls[i - 1].alpha = 1;
+    }
+  }
+  if(selectedBall < 9 && !availableBalls[selectedBall+1]){
+    for (var i = 1; i < 10; i++) {
+      if(availableBalls[i]){
+        selectedBall = i-1
+        selectorBall.x = selectorBalls[selectedBall].x
+        break;
+      }
+    }
+  }
+}
 
 let rand = rng.nextRange(0, 399);
 let import_string = games[rand * 2];
@@ -404,23 +424,7 @@ for (var i = 0; i < 9; i++) {
           }
         }
       }
-      var availableBalls = game1.get_available_balls();
-      for (var i = 1; i < 10; i++) {
-        if (!availableBalls[i]) {
-          selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
-        } else {
-          selectorBalls[i - 1].alpha = 1;
-        }
-      }
-      if(selectedBall < 9 && !availableBalls[selectedBall+1]){
-        for (var i = 1; i < 10; i++) {
-          if(availableBalls[i]){
-            selectedBall = i-1
-            selectorBall.x = selectorBalls[selectedBall].x
-            break;
-          }
-        }
-      }
+      updateSelectorBalls();
     });
     container.addChild(balls[i][j])
 
