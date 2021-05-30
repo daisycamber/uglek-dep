@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.71
+// By Jasper Camber Holton. V0.0.712
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -340,7 +340,7 @@
   line7.y = topbound + 50 + 800;
   container.addChild(line7)
 
-  let game1 = new MultiplayerSudoku();
+  var game1 = new MultiplayerSudoku();
 
   function updateSelectorBalls(){
     let availableBalls = game1.get_available_balls();
