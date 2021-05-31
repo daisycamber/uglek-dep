@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.715
+// By Jasper Camber Holton. V0.0.716
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -197,7 +197,7 @@
 
     make_move(row, col, value) {
       console.log("Made move at " + row + "," + col + " with ball " + value)
-      this.board[row][col] = value;
+      this.board[row][col] = this.completedboard[row][col];
       let willDropConfetti = true;
       for (let x = 0; x < 9; x++) {
         for (let y = 0; y < 9; y++) {
