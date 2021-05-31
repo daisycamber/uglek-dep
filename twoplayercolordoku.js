@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.713
+// By Jasper Camber Holton. V0.0.714
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -388,28 +388,16 @@
   }
 
   function playTurn(col,row,selBall){
+    console.log("Made move with ball: " + selBall+1)
     target = balls[row][col];
+    game1.make_move(row, col, game1.get_completed_cell(row, col));
     if (selBall != 9) {
-      game1.make_move(row, col, game1.get_completed_cell(row, col));
-      console.log("Made move with ball: " + selBall+1)
       target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
-      game1.make_move(row, col, game1.get_completed_cell(row, col));
       target.graphics.beginFill(colors[game1.get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
       hints = hints - 1;
       if (hints == 0) {
-        selectorBalls[selBall].alpha = 0.3;
-      }
-    } else if (hints == 0) {
-      target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-      if (game1.get_board_array()[row][col] > 0) {
-        setTimeout(() => {
-          target.graphics.beginFill(colors[game1.get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
-        }, 2000);
-      } else {
-        setTimeout(() => {
-          target.graphics.beginFill("white").drawCircle(0, 0, ballSize);
-        }, 1000);
+        selectorBalls[9].alpha = 0.3;
       }
     }
     updateSelectorBalls();
@@ -464,7 +452,7 @@
     }
   }
   function gameplayArray(){
-    gameplay.split('/');
+    return gameplay.split('/');
   }
 
   // This code is borrowed from another website. Thanks google.
@@ -630,6 +618,7 @@
 
   const interval = setInterval(function() {
       read();
+      updateSelectorBalls();
       console.log("Reading");
       stage.update();
    }, 5000);
