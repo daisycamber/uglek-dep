@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.712
+// By Jasper Camber Holton. V0.0.713
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -54,42 +54,7 @@
 
 
 
-  let currentTurn = 0;
-  function readCallback(){
-    gp = gameplay;
-    console.log("Read callback");
-        for(let i = currentTurn; i < gp.length; i++){
-          sp = gp[i].split(",");
-          //if(sp[3] == user){
-            //currentTurn = i+1;
-            //console.log("Player turn syndicated");
-          //} else
-          if(sp[0] == "start"){
-            newGame(parseInt(sp[1]));
-            //container.removeChild(difficultyContainer);
-            currentTurn = i+1;
-            console.log("Start command");
-          } else if(sp[0] == "set"){
-            playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
-            currentTurn = i+1;
-            console.log("Set command");
-          }
-        }
-  }
 
-  function read(){
-    const Http = new XMLHttpRequest();
-    const url="https://uglek.com/game/" + id + "/play/";
-    Http.open("GET", url);
-    Http.send();
-    Http.onreadystatechange = (e) => {
-      gameplay = Http.responseText.split("/");
-      readCallback();
-    }
-  }
-  function gameplayArray(){
-    gameplay.split('/');
-  }
 
   let canvasid = "game198";
   let canvas = document.getElementById(canvasid);
@@ -287,8 +252,6 @@
           }
         }
       }
-
-
       return true;
     }
   };
@@ -466,6 +429,43 @@
     }
   }
   print_sudoku_to_webpage(game1)
+
+  let currentTurn = 0;
+  function readCallback(){
+    gp = gameplay;
+    console.log("Read callback");
+        for(let i = currentTurn; i < gp.length; i++){
+          sp = gp[i].split(",");
+          //if(sp[3] == user){
+            //currentTurn = i+1;
+            //console.log("Player turn syndicated");
+          //} else
+          if(sp[0] == "start"){
+            newGame(parseInt(sp[1]));
+            //container.removeChild(difficultyContainer);
+            currentTurn = i+1;
+            console.log("Start command");
+          } else if(sp[0] == "set"){
+            playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
+            currentTurn = i+1;
+            console.log("Set command");
+          }
+        }
+  }
+
+  function read(){
+    const Http = new XMLHttpRequest();
+    const url="https://uglek.com/game/" + id + "/play/";
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange = (e) => {
+      gameplay = Http.responseText.split("/");
+      readCallback();
+    }
+  }
+  function gameplayArray(){
+    gameplay.split('/');
+  }
 
   // This code is borrowed from another website. Thanks google.
   function createArray(length) {
