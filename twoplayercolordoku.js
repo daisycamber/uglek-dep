@@ -1,11 +1,13 @@
-// By Jasper Camber Holton. V0.0.72
-// Sudoku game class
-  class MultiplayerSudoku {
-    constructor() {
-      this.board = this.blank_board_array();
-      this.ogboard = this.blank_board_array();
+// By Jasper Camber Holton. V0.0.73
+(function twoplayercolordoku(){
+  var board = blank_board_array();
+var ogboard = blank_board_array();
+var completedboard = blank_board_array();
+function get_completed_cell(row, col) {
+      return completedboard[row][col];
     }
-    blank_board_array() {
+
+function blank_board_array() {
       return [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,33 +20,22 @@
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
       ];
     }
-    // I can't figure out how to get this working with the "set" keyword, so making a method for now
-    set_board(board_string, completed_board_string) {
-      this.board = this.blank_board_array();
-      this.completedboard = this.blank_board_array();
-      this.ogboard = this.blank_board_array();
+
+
+function set_board(board_string, completed_board_string) {
       for (let row = 0; row <= 8; row++) {
         for (let column = 0; column <= 8; column++) {
-          this.completedboard[row][column] = completed_board_string.charAt(row * 9 + column);
-          this.board[row][column] = board_string.charAt(row * 9 + column);
-          this.ogboard[row][column] = board_string.charAt(row * 9 + column);
+          completedboard[row][column] = completed_board_string.charAt(row * 9 + column);
+          board[row][column] = board_string.charAt(row * 9 + column);
+          ogboard[row][column] = board_string.charAt(row * 9 + column);
         }
       }
     }
-
-    get_board_array() {
-      return this.board;
+function get_cell(row, col) {
+      return board[row][col];
     }
 
-    get_cell(row, col) {
-      return this.board[row][col];
-    }
-
-    get_completed_cell(row, col) {
-      return this.completedboard[row][col];
-    }
-
-    get_available_balls() {
+function get_available_balls() {
       let availableBalls = [];
       let ballCounts = [];
       for (let i = 0; i < 10; i++) {
@@ -52,7 +43,7 @@
       }
       for (let x = 0; x < 9; x++) {
         for (let y = 0; y < 9; y++) {
-          ballCounts[this.board[x][y]]++;
+          ballCounts[board[x][y]]++;
         }
       }
       for (let i = 1; i < 10; i++) {
@@ -64,13 +55,13 @@
       return availableBalls;
     }
 
-    make_move(row, col, value) {
+function make_move(row, col, value) {
       console.log("Made move at " + row + "," + col + " with ball " + value)
-      this.board[row][col] = value;
+      board[row][col] = value;
       let willDropConfetti = true;
       for (let x = 0; x < 9; x++) {
         for (let y = 0; y < 9; y++) {
-          if (this.board[x][y] == 0) {
+          if (board[x][y] == 0) {
             willDropConfetti = false;
           }
         }
@@ -82,53 +73,20 @@
       }
     }
 
-    is_legal_move(row, col, value) {
+function is_legal_move(row, col, value) {
 
-      if (this.ogboard[row][col] > 0) {
+      if (ogboard[row][col] > 0) {
         return false;
       }
       if (value == 10) {
         return true;
       }
 
-      if (this.completedboard[row][col] == value) {
+      if (completedboard[row][col] == value) {
         return true;
       }
       return false;
-
-      // check for non numbers
-      // weird that JS match function doesn't put quotes around regex
-      // check row
-
-      for (let i = 0; i <= 8; i++) {
-        if (value == this.board[row][i]) {
-          return false;
-        }
-      }
-
-      // check column
-      for (let i = 0; i <= 8; i++) {
-        if (value == this.board[i][col]) {
-          return false;
-        }
-      }
-      // check 3x3 grid
-      let row_offset = Math.floor(row / 3) * 3;
-      let col_offset = Math.floor(col / 3) * 3;
-      for (let i = 0 + row_offset; i <= 2 + row_offset; i++) {
-        for (let j = 0 + col_offset; j <= 2 + col_offset; j++) {
-          if (value == this.board[i][j]) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-  };
-  
-  
-  var game1 = new MultiplayerSudoku();
-(function twoplayercolordoku(){
+}
   let seed = Math.floor(Math.random() * 5000);
 
   function RNG(seed) {
@@ -179,11 +137,6 @@
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
       xhr.send(text);
   }
-
-
-
-
-
 
   let canvasid = "game198";
   let canvas = document.getElementById(canvasid);
@@ -243,7 +196,7 @@
     selectorBalls[i].y = topbound + 900 + 800 / 18 / 2;
     selectorBalls[i].index = i
     selectorBalls[i].on("mousedown", function(event) {
-      let availableBalls = game1.get_available_balls();
+      let availableBalls = get_available_balls();
       if(availableBalls[event.target.index + 1] || (hints > 0 && event.target.index == 9)){
         selectorBall.x = event.target.x;
         selectedBall = event.target.index
@@ -311,7 +264,7 @@
 
 
   function updateSelectorBalls(){
-    let availableBalls = game1.get_available_balls();
+    let availableBalls = get_available_balls();
     console.log("Available balls: " + availableBalls)
     for (let i = 1; i < 10; i++) {
       if (!availableBalls[i]) {
@@ -334,7 +287,7 @@
   let rand = rng.nextRange(0, 399);
   let import_string = games2[rand * 2];
   let completed_import_string = games2[rand * 2 + 1];
-  game1.set_board(completed_import_string, completed_import_string);
+  set_board(completed_import_string, completed_import_string);
   let sudoku_squares = createArray(9, 9);
   let balls = [];
   for (let i = 0; i < 9; i++) {
@@ -347,11 +300,11 @@
       balls[i][j].row = j;
       balls[i][j].col = i;
       balls[i][j].on("mousedown", function(evt) {
-        if (!game1.is_legal_move(evt.target.row, evt.target.col, selectedBall + 1)) {
+        if (!is_legal_move(evt.target.row, evt.target.col, selectedBall + 1)) {
           evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-          if (game1.get_board_array()[evt.target.row][evt.target.col] > 0) {
+          if (get_board_array()[evt.target.row][evt.target.col] > 0) {
             setTimeout(() => {
-              evt.target.graphics.beginFill(colors[game1.get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
+              evt.target.graphics.beginFill(colors[get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
             }, 2000);
           } else {
             setTimeout(() => {
@@ -360,12 +313,12 @@
           }
         } else {
           if (selectedBall != 9) {
-            game1.make_move(evt.target.row, evt.target.col, selectedBall + 1);
+            make_move(evt.target.row, evt.target.col, selectedBall + 1);
             evt.target.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
             send("set,"+evt.target.row+","+evt.target.col+","+selectedBall)
           } else if (hints > 0) {
-            game1.make_move(evt.target.row, evt.target.col, game1.get_completed_cell(evt.target.row, evt.target.col));
-            evt.target.graphics.beginFill(colors[game1.get_completed_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
+            make_move(evt.target.row, evt.target.col, get_completed_cell(evt.target.row, evt.target.col));
+            evt.target.graphics.beginFill(colors[get_completed_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
             send("set,"+evt.target.row+","+evt.target.col+","+selectedBall)
             hints = hints - 1;
             if (hints == 0) {
@@ -374,9 +327,9 @@
             }
           } else if (hints == 0) {
             evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-            if (game1.get_board_array()[evt.target.row][evt.target.col] > 0) {
+            if (get_board_array()[evt.target.row][evt.target.col] > 0) {
               setTimeout(() => {
-                evt.target.graphics.beginFill(colors[game1.get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
+                evt.target.graphics.beginFill(colors[get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
               }, 2000);
             } else {
               setTimeout(() => {
@@ -395,26 +348,26 @@
   function playTurn(col,row,selBall){
     console.log("Made move with ball: " + selBall+1)
     target = balls[row][col];
-    var aballs = game1.get_available_balls();
+    var aballs = get_available_balls();
     console.log("Balls before: " + aballs);
     if (selBall != 9) {
-      game1.make_move(row, col, selBall + 1);
+      make_move(row, col, selBall + 1);
       target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
-      game1.make_move(row, col, game1.get_completed_cell(row, col));
-      target.graphics.beginFill(colors[game1.get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+      make_move(row, col, get_completed_cell(row, col));
+      target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
       hints = hints - 1;
       if (hints == 0) {
         selectorBalls[9].alpha = 0.3;
       }
     }
-    aballs = game1.get_available_balls();
+    aballs = get_available_balls();
     console.log("Balls after: " + aballs);
     updateSelectorBalls();
   }
 
-  function print_sudoku_to_webpage(sudoku_object) {
-    let board = sudoku_object.get_board_array();
+  function print_sudoku_to_webpage() {
+    let board = get_board_array();
     for (let row = 0; row <= 8; row++) {
       for (let col = 0; col <= 8; col++) {
         let input = balls[col][row];
@@ -426,7 +379,7 @@
       }
     }
   }
-  print_sudoku_to_webpage(game1)
+  print_sudoku_to_webpage()
 
   let currentTurn = 0;
   function readCallback(){
@@ -547,9 +500,9 @@
     //let rand = rng.nextRange(d - 100*gamesfactor, d);
     let import_string = games2[difficulty * 2];
     let completed_import_string = games2[difficulty * 2 + 1];
-    game1.set_board(import_string, completed_import_string);
-    print_sudoku_to_webpage(game1);
-    let availableBalls = game1.get_available_balls();
+    set_board(import_string, completed_import_string);
+    print_sudoku_to_webpage();
+    let availableBalls = get_available_balls();
     selectorBalls[9].alpha = 1;
     hints = 3;
     updateSelectorBalls();
