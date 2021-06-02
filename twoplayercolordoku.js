@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.91
+// By Jasper Camber Holton. V0.0.92
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -287,6 +287,15 @@ function is_legal_move(col, row, value) {
         selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
       } else {
         selectorBalls[i - 1].alpha = 1;
+      }
+    }
+    if(selectedBall == 9 && hints == 0){
+      for (let i = 1; i < 10; i++) {
+        if(availableBalls[i]){
+          selectedBall = i-1
+          selectorBall.x = selectorBalls[selectedBall].x
+          break;
+        }
       }
     }
     if(selectedBall < 9 && !availableBalls[selectedBall+1]){
