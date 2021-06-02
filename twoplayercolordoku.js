@@ -290,7 +290,7 @@ function is_legal_move(row, col, value) {
   }
   
   function makeMove(row,col,num){
-    var ball = balls[row][col]
+    var ball = balls[col][row]
     if (!is_legal_move(row,col,ball)) {
           ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
           if (get_board_array()[row][col] > 0) {
