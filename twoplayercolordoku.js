@@ -291,7 +291,7 @@ function is_legal_move(row, col, value) {
   
   function makeMove(row,col,num){
     var ball = balls[col][row]
-    if (!is_legal_move(col,row,num)) {
+    if (!is_legal_move(row,col,num)) {
           ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
           if (get_board_array()[col][row] > 0) {
             setTimeout(() => {
@@ -304,7 +304,7 @@ function is_legal_move(row, col, value) {
           }
         } else {
           if (num != 10) {
-            make_move(col, row, num);
+            make_move(row, col, num);
             ball.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
             send("set,"+row+","+col+","+selectedBall)
           } else if (hints > 0) {
