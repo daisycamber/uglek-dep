@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.86
+// By Jasper Camber Holton. V0.0.87
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -373,8 +373,8 @@ function is_legal_move(row, col, value) {
     var aballs = get_available_balls();
     console.log("Balls before: " + aballs);
     if (selBall != 10) {
-      make_move(row, col, selBall);
-      target.graphics.beginFill(colors[selBall-1]).drawCircle(0, 0, ballSize);
+      make_move(row, col, get_completed_cell(row, col));
+      target.graphics.beginFill(colors[colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
       make_move(row, col, get_completed_cell(row, col));
       target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
