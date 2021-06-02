@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.77
+// By Jasper Camber Holton. V0.0.78
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -291,9 +291,9 @@ function is_legal_move(row, col, value) {
   
   function makeMove(row,col,num){
     var ball = balls[col][row]
-    if (!is_legal_move(row,col,ball)) {
+    if (!is_legal_move(col,row,ball)) {
           ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-          if (get_board_array()[row][col] > 0) {
+          if (get_board_array()[col][row] > 0) {
             setTimeout(() => {
               ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
             }, 2000);
@@ -304,11 +304,11 @@ function is_legal_move(row, col, value) {
           }
         } else {
           if (num != 10) {
-            make_move(row, col, num);
+            make_move(col, row, num);
             ball.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
             send("set,"+row+","+col+","+selectedBall)
           } else if (hints > 0) {
-            make_move(row, col, get_completed_cell(row, col));
+            make_move(col, row, get_completed_cell(row, col));
             ball.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
             send("set,"+row+","+col+","+selectedBall)
             hints = hints - 1;
@@ -320,7 +320,7 @@ function is_legal_move(row, col, value) {
             ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
             if (get_board_array()[row][col] > 0) {
               setTimeout(() => {
-                ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+                ball.graphics.beginFill(colors[get_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
               }, 2000);
             } else {
               setTimeout(() => {
