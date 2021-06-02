@@ -288,7 +288,50 @@ function is_legal_move(row, col, value) {
       }
     }
   }
-
+  
+  function makeMove(row,col,num){
+    var ball = balls[row][col]
+    if (!is_legal_move(row,col,ball)) {
+          ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
+          if (get_board_array()[row][col] > 0) {
+            setTimeout(() => {
+              ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+            }, 2000);
+          } else {
+            setTimeout(() => {
+              ball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
+            }, 1000);
+          }
+        } else {
+          if (num != 10) {
+            make_move(row, col, num);
+            ball.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
+            send("set,"+row+","+col+","+selectedBall)
+          } else if (hints > 0) {
+            make_move(row, col, get_completed_cell(row, col));
+            ball.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+            send("set,"+row+","+col+","+selectedBall)
+            hints = hints - 1;
+            if (hints == 0) {
+              selectorBalls[selectedBall].alpha = 0.3;
+              updateSelectorBalls();
+            }
+          } else if (hints == 0) {
+            ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
+            if (get_board_array()[row][col] > 0) {
+              setTimeout(() => {
+                ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+              }, 2000);
+            } else {
+              setTimeout(() => {
+                ball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
+              }, 1000);
+            }
+          }
+        }
+        updateSelectorBalls();
+  }
+  
   let rand = rng.nextRange(0, 399);
   let import_string = games2[rand * 2];
   let completed_import_string = games2[rand * 2 + 1];
@@ -305,45 +348,7 @@ function is_legal_move(row, col, value) {
       balls[i][j].row = j;
       balls[i][j].col = i;
       balls[i][j].on("mousedown", function(evt) {
-        if (!is_legal_move(evt.target.row, evt.target.col, selectedBall + 1)) {
-          evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-          if (get_board_array()[evt.target.row][evt.target.col] > 0) {
-            setTimeout(() => {
-              evt.target.graphics.beginFill(colors[get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
-            }, 2000);
-          } else {
-            setTimeout(() => {
-              evt.target.graphics.beginFill("white").drawCircle(0, 0, ballSize);
-            }, 1000);
-          }
-        } else {
-          if (selectedBall != 9) {
-            make_move(evt.target.row, evt.target.col, selectedBall + 1);
-            evt.target.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
-            send("set,"+evt.target.row+","+evt.target.col+","+selectedBall)
-          } else if (hints > 0) {
-            make_move(evt.target.row, evt.target.col, get_completed_cell(evt.target.row, evt.target.col));
-            evt.target.graphics.beginFill(colors[get_completed_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
-            send("set,"+evt.target.row+","+evt.target.col+","+selectedBall)
-            hints = hints - 1;
-            if (hints == 0) {
-              selectorBalls[selectedBall].alpha = 0.3;
-              updateSelectorBalls();
-            }
-          } else if (hints == 0) {
-            evt.target.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-            if (get_board_array()[evt.target.row][evt.target.col] > 0) {
-              setTimeout(() => {
-                evt.target.graphics.beginFill(colors[get_cell(evt.target.row, evt.target.col) - 1]).drawCircle(0, 0, ballSize);
-              }, 2000);
-            } else {
-              setTimeout(() => {
-                evt.target.graphics.beginFill("white").drawCircle(0, 0, ballSize);
-              }, 1000);
-            }
-          }
-        }
-        updateSelectorBalls();
+        makeMove(evt.target.row, evt.target.col, selectedBall + 1);
       });
       container.addChild(balls[i][j])
 
