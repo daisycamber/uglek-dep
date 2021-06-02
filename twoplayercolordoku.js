@@ -71,9 +71,9 @@ function get_available_balls() {
       return availableBalls;
     }
 
-function make_move(row, col, value) {
-      console.log("Made move at " + row + "," + col + " with ball " + value)
-      board[row][col] = value;
+function make_move(row, col) {
+      console.log("Made move at " + row + "," + col + " with ball " + completedboard[row][col])
+      board[row][col] = completedboard[row][col];
       let willDropConfetti = true;
       for (let x = 0; x < 9; x++) {
         for (let y = 0; y < 9; y++) {
@@ -315,11 +315,11 @@ function is_legal_move(row, col, value) {
           }
         } else {
           if (num != 10) {
-            make_move(row, col, num);
+            make_move(row, col);
             ball.graphics.beginFill(colors[num-1]).drawCircle(0, 0, ballSize);
             send("set,"+row+","+col+","+num)
           } else if (hints > 0) {
-            make_move(row, col, get_completed_cell(row, col));
+            make_move(row, col);
             ball.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
             send("set,"+row+","+col+","+num)
             hints = hints - 1;
@@ -373,10 +373,10 @@ function is_legal_move(row, col, value) {
     var aballs = get_available_balls();
     console.log("Balls before: " + aballs);
     if (selBall != 10) {
-      make_move(row, col, get_completed_cell(row, col));
+      make_move(row, col);
       target.graphics.beginFill(colors[colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
-      make_move(row, col, get_completed_cell(row, col));
+      make_move(row, col);
       target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
       hints = hints - 1;
       if (hints == 0) {
