@@ -1,5 +1,133 @@
-// By Jasper Camber Holton. V0.0.7199
+// By Jasper Camber Holton. V0.0.72
+// Sudoku game class
+  class MultiplayerSudoku {
+    constructor() {
+      this.board = this.blank_board_array();
+      this.ogboard = this.blank_board_array();
+    }
+    blank_board_array() {
+      return [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+      ];
+    }
+    // I can't figure out how to get this working with the "set" keyword, so making a method for now
+    set_board(board_string, completed_board_string) {
+      this.board = this.blank_board_array();
+      this.completedboard = this.blank_board_array();
+      this.ogboard = this.blank_board_array();
+      for (let row = 0; row <= 8; row++) {
+        for (let column = 0; column <= 8; column++) {
+          this.completedboard[row][column] = completed_board_string.charAt(row * 9 + column);
+          this.board[row][column] = board_string.charAt(row * 9 + column);
+          this.ogboard[row][column] = board_string.charAt(row * 9 + column);
+        }
+      }
+    }
 
+    get_board_array() {
+      return this.board;
+    }
+
+    get_cell(row, col) {
+      return this.board[row][col];
+    }
+
+    get_completed_cell(row, col) {
+      return this.completedboard[row][col];
+    }
+
+    get_available_balls() {
+      let availableBalls = [];
+      let ballCounts = [];
+      for (let i = 0; i < 10; i++) {
+        ballCounts[i] = 0;
+      }
+      for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+          ballCounts[this.board[x][y]]++;
+        }
+      }
+      for (let i = 1; i < 10; i++) {
+        availableBalls[i] = true;
+        if (ballCounts[i] == 9) {
+          availableBalls[i] = false;
+        }
+      }
+      return availableBalls;
+    }
+
+    make_move(row, col, value) {
+      console.log("Made move at " + row + "," + col + " with ball " + value)
+      this.board[row][col] = value;
+      let willDropConfetti = true;
+      for (let x = 0; x < 9; x++) {
+        for (let y = 0; y < 9; y++) {
+          if (this.board[x][y] == 0) {
+            willDropConfetti = false;
+          }
+        }
+      }
+      if (willDropConfetti && !isFinished) {
+        isFinished = true;
+        wonGame();
+        dropConfetti();
+      }
+    }
+
+    is_legal_move(row, col, value) {
+
+      if (this.ogboard[row][col] > 0) {
+        return false;
+      }
+      if (value == 10) {
+        return true;
+      }
+
+      if (this.completedboard[row][col] == value) {
+        return true;
+      }
+      return false;
+
+      // check for non numbers
+      // weird that JS match function doesn't put quotes around regex
+      // check row
+
+      for (let i = 0; i <= 8; i++) {
+        if (value == this.board[row][i]) {
+          return false;
+        }
+      }
+
+      // check column
+      for (let i = 0; i <= 8; i++) {
+        if (value == this.board[i][col]) {
+          return false;
+        }
+      }
+      // check 3x3 grid
+      let row_offset = Math.floor(row / 3) * 3;
+      let col_offset = Math.floor(col / 3) * 3;
+      for (let i = 0 + row_offset; i <= 2 + row_offset; i++) {
+        for (let j = 0 + col_offset; j <= 2 + col_offset; j++) {
+          if (value == this.board[i][j]) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+  };
+  
+  
+  var game1 = new MultiplayerSudoku();
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -131,135 +259,7 @@
   }
   container.addChild(text2)
 
-  // Sudoku game class
-  class MultiplayerSudoku {
-    constructor() {
-      this.board = this.blank_board_array();
-      this.ogboard = this.blank_board_array();
-    }
-    blank_board_array() {
-      return [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-      ];
-    }
-    // I can't figure out how to get this working with the "set" keyword, so making a method for now
-    set_board(board_string, completed_board_string) {
-      this.board = this.blank_board_array();
-      this.completedboard = this.blank_board_array();
-      this.ogboard = this.blank_board_array();
-      for (let row = 0; row <= 8; row++) {
-        for (let column = 0; column <= 8; column++) {
-          this.completedboard[row][column] = completed_board_string.charAt(row * 9 + column);
-          this.board[row][column] = board_string.charAt(row * 9 + column);
-          this.ogboard[row][column] = board_string.charAt(row * 9 + column);
-        }
-      }
-    }
-
-    get_board_array() {
-      return this.board;
-    }
-
-    get_cell(row, col) {
-      return this.board[row][col];
-    }
-
-    get_completed_cell(row, col) {
-      return this.completedboard[row][col];
-    }
-
-    get_available_balls() {
-      let availableBalls = [];
-      let ballCounts = [];
-      for (let i = 0; i < 10; i++) {
-        ballCounts[i] = 0;
-      }
-      for (let x = 0; x < 9; x++) {
-        for (let y = 0; y < 9; y++) {
-          ballCounts[this.board[x][y]]++;
-        }
-      }
-      for (let i = 1; i < 10; i++) {
-        availableBalls[i] = true;
-        if (ballCounts[i] == 9) {
-          availableBalls[i] = false;
-        }
-      }
-      return availableBalls;
-    }
-
-    make_move(row, col, value) {
-      console.log("Made move at " + row + "," + col + " with ball " + value)
-      this.board[row][col] = value;
-      let willDropConfetti = true;
-      for (let x = 0; x < 9; x++) {
-        for (let y = 0; y < 9; y++) {
-          if (this.board[x][y] == 0) {
-            willDropConfetti = false;
-          }
-        }
-      }
-      if (willDropConfetti && !isFinished) {
-        isFinished = true;
-        wonGame();
-        dropConfetti();
-      }
-    }
-
-    is_legal_move(row, col, value) {
-
-      if (this.ogboard[row][col] > 0) {
-        return false;
-      }
-      if (value == 10) {
-        return true;
-      }
-
-      if (this.completedboard[row][col] == value) {
-        return true;
-      }
-      return false;
-
-      // check for non numbers
-      // weird that JS match function doesn't put quotes around regex
-      // check row
-
-      for (let i = 0; i <= 8; i++) {
-        if (value == this.board[row][i]) {
-          return false;
-        }
-      }
-
-      // check column
-      for (let i = 0; i <= 8; i++) {
-        if (value == this.board[i][col]) {
-          return false;
-        }
-      }
-      // check 3x3 grid
-      let row_offset = Math.floor(row / 3) * 3;
-      let col_offset = Math.floor(col / 3) * 3;
-      for (let i = 0 + row_offset; i <= 2 + row_offset; i++) {
-        for (let j = 0 + col_offset; j <= 2 + col_offset; j++) {
-          if (value == this.board[i][j]) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-  };
   
-  
-  var game1 = new MultiplayerSudoku();
 
   line1 = new createjs.Shape();
   line1.graphics.beginFill("grey").drawRect(0, 0, 800, 5);
