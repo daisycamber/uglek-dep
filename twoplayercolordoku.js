@@ -197,7 +197,7 @@
 
     make_move(row, col, value) {
       console.log("Made move at " + row + "," + col + " with ball " + value)
-      this.board[row][col] = this.completedboard[row][col];
+      this.board[row][col] = value;
       let willDropConfetti = true;
       for (let x = 0; x < 9; x++) {
         for (let y = 0; y < 9; y++) {
