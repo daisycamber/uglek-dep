@@ -20,6 +20,11 @@ function blank_board_array() {
         [0, 0, 0, 0, 0, 0, 0, 0, 0]
       ];
     }
+  
+  
+function get_board_array() {
+      return board;
+    }
 
 
 function set_board(board_string, completed_board_string) {
