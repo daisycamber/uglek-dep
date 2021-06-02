@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.88
+// By Jasper Camber Holton. V0.0.89
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
