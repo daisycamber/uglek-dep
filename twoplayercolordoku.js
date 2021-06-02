@@ -1,10 +1,10 @@
-// By Jasper Camber Holton. V0.0.89
+// By Jasper Camber Holton. V0.0.9
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
 var completedboard = blank_board_array();
-function get_completed_cell(row, col) {
-      return completedboard[row][col];
+function get_completed_cell(col, row) {
+      return completedboard[col][row];
     }
 
   
@@ -39,16 +39,16 @@ function get_board_array() {
 
 
 function set_board(board_string, completed_board_string) {
-      for (let row = 0; row <= 8; row++) {
-        for (let column = 0; column <= 8; column++) {
-          completedboard[row][column] = completed_board_string.charAt(row * 9 + column);
-          board[row][column] = board_string.charAt(row * 9 + column);
-          ogboard[row][column] = board_string.charAt(row * 9 + column);
+      for (let col = 0; col <= 8; col++) {
+        for (let row = 0; row <= 8; row++) {
+          completedboard[col][row] = completed_board_string.charAt(row * 9 + col);
+          board[col][row] = board_string.charAt(row * 9 + col);
+          ogboard[col][row] = board_string.charAt(row * 9 + col);
         }
       }
     }
-function get_cell(row, col) {
-      return board[row][col];
+function get_cell(col, row) {
+      return board[col][row];
     }
 
 function get_available_balls() {
@@ -71,9 +71,9 @@ function get_available_balls() {
       return availableBalls;
     }
 
-function make_move(row, col) {
-      console.log("Made move at " + row + "," + col + " with ball " + completedboard[row][col])
-      board[row][col] = completedboard[row][col];
+function make_move(col, row) {
+      console.log("Made move at " + col + "," + row + " with ball " + completedboard[col][row])
+      board[col][row] = completedboard[col][row];
       let willDropConfetti = true;
       for (let x = 0; x < 9; x++) {
         for (let y = 0; y < 9; y++) {
@@ -89,16 +89,16 @@ function make_move(row, col) {
       }
     }
 
-function is_legal_move(row, col, value) {
+function is_legal_move(col, row, value) {
 
-      if (ogboard[row][col] > 0) {
+      if (ogboard[col][row] > 0) {
         return false;
       }
       if (value == 10) {
         return true;
       }
 
-      if (completedboard[row][col] == value) {
+      if (completedboard[col][row] == value) {
         return true;
       }
       return false;
@@ -300,13 +300,13 @@ function is_legal_move(row, col, value) {
     }
   }
   
-  function makeMove(row,col,num){
+  function makeMove(col,row,num){
     var ball = balls[col][row]
-    if (!is_legal_move(row,col,num)) {
+    if (!is_legal_move(col,row,num)) {
           ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-          if (get_board_array()[row][col] > 0) {
+          if (get_board_array()[col][row] > 0) {
             setTimeout(() => {
-              ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+              ball.graphics.beginFill(colors[get_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
             }, 2000);
           } else {
             setTimeout(() => {
@@ -315,13 +315,13 @@ function is_legal_move(row, col, value) {
           }
         } else {
           if (num != 10) {
-            make_move(row, col);
+            make_move(col, row);
             ball.graphics.beginFill(colors[num-1]).drawCircle(0, 0, ballSize);
-            send("set,"+row+","+col+","+num)
+            send("set,"+col+","+row+","+num)
           } else if (hints > 0) {
-            make_move(row, col);
-            ball.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
-            send("set,"+row+","+col+","+num)
+            make_move(col, row);
+            ball.graphics.beginFill(colors[get_completed_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
+            send("set,"+col+","+row+","+num)
             hints = hints - 1;
             if (hints == 0) {
               selectorBalls[num-1].alpha = 0.3;
@@ -329,9 +329,9 @@ function is_legal_move(row, col, value) {
             }
           } else if (hints == 0) {
             ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-            if (get_board_array()[row][col] > 0) {
+            if (get_board_array()[col][row] > 0) {
               setTimeout(() => {
-                ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+                ball.graphics.beginFill(colors[get_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
               }, 2000);
             } else {
               setTimeout(() => {
@@ -359,7 +359,7 @@ function is_legal_move(row, col, value) {
       balls[i][j].row = j;
       balls[i][j].col = i;
       balls[i][j].on("mousedown", function(evt) {
-        makeMove(evt.target.row, evt.target.col, selectedBall + 1);
+        makeMove(evt.target.col, evt.target.row, selectedBall + 1);
         
       });
       container.addChild(balls[i][j])
@@ -369,15 +369,15 @@ function is_legal_move(row, col, value) {
 
   function playTurn(col,row,selBall){
     console.log("Made move with ball: " + selBall+1)
-    target = balls[row][col];
+    target = balls[col][row];
     var aballs = get_available_balls();
     console.log("Balls before: " + aballs);
     if (selBall != 10) {
-      make_move(row, col);
-      target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+      make_move(col, row);
+      target.graphics.beginFill(colors[get_completed_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
-      make_move(row, col);
-      target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+      make_move(col, row);
+      target.graphics.beginFill(colors[get_completed_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
       hints = hints - 1;
       if (hints == 0) {
         selectorBalls[9].alpha = 0.3;
@@ -393,8 +393,8 @@ function is_legal_move(row, col, value) {
     for (let row = 0; row <= 8; row++) {
       for (let col = 0; col <= 8; col++) {
         let input = balls[col][row];
-        if (board[row][col] != 0) {
-          input.graphics.beginFill(colors[board[row][col] - 1]).drawCircle(0, 0, ballSize);
+        if (board[col][row] != 0) {
+          input.graphics.beginFill(colors[board[col][row] - 1]).drawCircle(0, 0, ballSize);
         } else {
           input.graphics.beginFill("white").drawCircle(0, 0, ballSize);
         }
