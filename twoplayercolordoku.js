@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.79
+// By Jasper Camber Holton. V0.0.8
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -293,7 +293,7 @@ function is_legal_move(row, col, value) {
     var ball = balls[col][row]
     if (!is_legal_move(row,col,num)) {
           ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
-          if (get_board_array()[col][row] > 0) {
+          if (get_board_array()[row][col] > 0) {
             setTimeout(() => {
               ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
             }, 2000);
@@ -305,22 +305,22 @@ function is_legal_move(row, col, value) {
         } else {
           if (num != 10) {
             make_move(row, col, num);
-            ball.graphics.beginFill(colors[selectedBall]).drawCircle(0, 0, ballSize);
-            send("set,"+row+","+col+","+selectedBall)
+            ball.graphics.beginFill(colors[num-1]).drawCircle(0, 0, ballSize);
+            send("set,"+row+","+col+","+num)
           } else if (hints > 0) {
-            make_move(col, row, get_completed_cell(row, col));
+            make_move(row, col, get_completed_cell(row, col));
             ball.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
-            send("set,"+row+","+col+","+selectedBall)
+            send("set,"+row+","+col+","+num)
             hints = hints - 1;
             if (hints == 0) {
-              selectorBalls[selectedBall].alpha = 0.3;
+              selectorBalls[num-1].alpha = 0.3;
               updateSelectorBalls();
             }
           } else if (hints == 0) {
             ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
             if (get_board_array()[row][col] > 0) {
               setTimeout(() => {
-                ball.graphics.beginFill(colors[get_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
+                ball.graphics.beginFill(colors[get_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
               }, 2000);
             } else {
               setTimeout(() => {
