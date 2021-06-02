@@ -374,7 +374,7 @@ function is_legal_move(row, col, value) {
     console.log("Balls before: " + aballs);
     if (selBall != 10) {
       make_move(row, col);
-      target.graphics.beginFill(colors[colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
+      target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
     } else if (hints > 0) {
       make_move(row, col);
       target.graphics.beginFill(colors[get_completed_cell(row, col) - 1]).drawCircle(0, 0, ballSize);
