@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.9
+// By Jasper Camber Holton. V0.0.91
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -457,14 +457,14 @@ function is_legal_move(col, row, value) {
   let confetti = [];
   let confettivx = [];
   let confettivy = [];
-  let confettiv = 4;
+  let confettiv = 10;
   let confettimin = -600;
 
   function drawConfetti() {
     for (i = 0; i < confettiCount; i++) {
       confetti[i] = new createjs.Shape();
       confetti[i].graphics.beginFill(COLORS[0, rng.nextRange(0, COLORS.length)]).drawCircle(0, 0, rng.nextRange(7, 15));
-      confetti[i].x = rng.nextRange(0, window.innerWidth);
+      confetti[i].x = rng.nextRange(0, width);
       confetti[i].y = rng.nextRange(window.innerHeight + 30);
       confetti[i].visible = false;
       confettivx[i] = rng.nextRange(-1, 1) / 5.0;
