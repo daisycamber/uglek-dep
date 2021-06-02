@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.84
+// By Jasper Camber Holton. V0.0.86
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -7,6 +7,17 @@ function get_completed_cell(row, col) {
       return completedboard[row][col];
     }
 
+  
+  function logBoard() {
+    console.log("Board");
+      for (let x = 0; x < 9; x++) {
+        b = ""
+        for (let y = 0; y < 9; y++) {
+          b = b + board[x][y] + ",";
+        }
+        console.log(b)
+      }
+  }
 function blank_board_array() {
       return [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -349,7 +360,7 @@ function is_legal_move(row, col, value) {
       balls[i][j].col = i;
       balls[i][j].on("mousedown", function(evt) {
         makeMove(evt.target.row, evt.target.col, selectedBall + 1);
-        console.log(board);
+        
       });
       container.addChild(balls[i][j])
 
@@ -479,11 +490,11 @@ function is_legal_move(row, col, value) {
 
   createjs.Ticker.setFPS(60);
   createjs.Ticker.addEventListener("tick", stage);
-  createjs.Ticker.addEventListener("tick", handleTick);
+  createjs.Ticker.addEventListener("tick", handleTick2);
 
   let droppedConfetti = false;
 
-  function handleTick(event) {
+  function handleTick2(event) {
     if (!droppedConfetti) {
       dropped = true;
       for (i = 0; i < confettiCount; i++) {
@@ -587,6 +598,7 @@ function is_legal_move(row, col, value) {
       read();
       updateSelectorBalls();
       console.log("Reading");
+      logBoard();
     }
     ticks++;
     stage.update();
