@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.716
+// By Jasper Camber Holton. V0.0.717
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -609,23 +609,24 @@
   }
   let ticks = 0;
 
-  /*function handleTick(event) {
+  function handleTick(event) {
     if(ticks > 5*60){
       ticks = 0;
       read();
       console.log("Reading");
     }
+    ticks++;
     stage.update();
-  }*/
+  }
 
-  const interval = setInterval(function() {
+  /*const interval = setInterval(function() {
       read();
       updateSelectorBalls();
       console.log("Reading");
       stage.update();
-   }, 5000);
+   }, 5000);*/
 
-  //createjs.Ticker.addEventListener("tick", handleTick);
+  createjs.Ticker.addEventListener("tick", handleTick);
 
 
 
