@@ -613,6 +613,7 @@
     if(ticks > 5*60){
       ticks = 0;
       read();
+      updateSelectorBalls();
       console.log("Reading");
     }
     ticks++;
