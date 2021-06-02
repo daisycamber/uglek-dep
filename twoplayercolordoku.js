@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.78
+// By Jasper Camber Holton. V0.0.79
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -291,7 +291,7 @@ function is_legal_move(row, col, value) {
   
   function makeMove(row,col,num){
     var ball = balls[col][row]
-    if (!is_legal_move(col,row,ball)) {
+    if (!is_legal_move(col,row,num)) {
           ball.graphics.beginFill("grey").drawCircle(0, 0, ballSize);
           if (get_board_array()[col][row] > 0) {
             setTimeout(() => {
