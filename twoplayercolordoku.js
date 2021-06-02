@@ -1,4 +1,5 @@
 // By Jasper Camber Holton. V0.0.719
+
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
@@ -256,6 +257,9 @@
       return true;
     }
   };
+  
+  
+  var game1 = new MultiplayerSudoku();
 
   line1 = new createjs.Shape();
   line1.graphics.beginFill("grey").drawRect(0, 0, 800, 5);
@@ -304,7 +308,7 @@
   line7.y = topbound + 50 + 800;
   container.addChild(line7)
 
-  var game1 = new MultiplayerSudoku();
+
 
   function updateSelectorBalls(){
     let availableBalls = game1.get_available_balls();
@@ -391,6 +395,8 @@
   function playTurn(col,row,selBall){
     console.log("Made move with ball: " + selBall+1)
     target = balls[row][col];
+    var aballs = game1.get_available_balls();
+    console.log("Balls before: " + aballs);
     if (selBall != 9) {
       game1.make_move(row, col, selBall + 1);
       target.graphics.beginFill(colors[selBall]).drawCircle(0, 0, ballSize);
@@ -402,6 +408,8 @@
         selectorBalls[9].alpha = 0.3;
       }
     }
+    aballs = game1.get_available_balls();
+    console.log("Balls after: " + aballs);
     updateSelectorBalls();
   }
 
