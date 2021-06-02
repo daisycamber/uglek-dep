@@ -349,6 +349,7 @@ function is_legal_move(row, col, value) {
       balls[i][j].col = i;
       balls[i][j].on("mousedown", function(evt) {
         makeMove(evt.target.row, evt.target.col, selectedBall + 1);
+        console.log(board);
       });
       container.addChild(balls[i][j])
 
