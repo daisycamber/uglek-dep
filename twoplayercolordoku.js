@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.717
+// By Jasper Camber Holton. V0.0.718
 (function twoplayercolordoku(){
   let seed = Math.floor(Math.random() * 5000);
 
