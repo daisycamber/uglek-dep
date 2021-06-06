@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.92
+// By Jasper Camber Holton. V0.0.93
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -141,6 +141,9 @@ function is_legal_move(col, row, value) {
     player1 = document.getElementById("player1").innerHTML;
     player2 = document.getElementById("player2").innerHTML;
     user = document.getElementById("user").innerHTML;
+    if(user == player2){
+      send("join");
+    }
   } catch {
     console.log("No game")
   }
@@ -411,6 +414,19 @@ function is_legal_move(col, row, value) {
     }
   }
   print_sudoku_to_webpage()
+  
+  function opponentJoinedGame(){
+    opjContainer = new createjs.Container();
+      opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
+      opjText.x = leftbound + 500;
+      opjText.y = topbound + 30;
+      opjText].textAlign = 'center';
+      difficultyContainer.addChild(opjText);
+    setTimeout(() => {
+              container.removeChild(opjContainer);
+            }, 5000);
+    container.addChild(opjContainer);
+  }
 
   let currentTurn = 0;
   function readCallback(){
@@ -431,6 +447,10 @@ function is_legal_move(col, row, value) {
             playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
             currentTurn = i+1;
             console.log("Set command");
+          } else if(sp[0] == "join" && user != player2){
+            opponentJoinedGame();
+            currentTurn = i+1;
+            console.log("Opponent Joined Game");
           }
         }
   }
