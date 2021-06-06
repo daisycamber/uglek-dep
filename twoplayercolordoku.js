@@ -420,7 +420,7 @@ function is_legal_move(col, row, value) {
       opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
       opjText.x = leftbound + 500;
       opjText.y = topbound + 30;
-      opjText].textAlign = 'center';
+      opjText.textAlign = 'center';
       difficultyContainer.addChild(opjText);
     setTimeout(() => {
               container.removeChild(opjContainer);
