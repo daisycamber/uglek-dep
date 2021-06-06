@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.94
+// By Jasper Camber Holton. V0.0.95
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -414,14 +414,14 @@ function is_legal_move(col, row, value) {
     }
   }
   print_sudoku_to_webpage()
-  
+  var opjContainer;
   function opponentJoinedGame(){
     opjContainer = new createjs.Container();
-      opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
+      var opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
       opjText.x = leftbound + 500;
-      opjText.y = topbound + 30;
+      opjText.y = topbound + 10;
       opjText.textAlign = 'center';
-      difficultyContainer.addChild(opjText);
+      opjContainer.addChild(opjText);
     setTimeout(() => {
               container.removeChild(opjContainer);
             }, 5000);
