@@ -9,13 +9,13 @@ function get_completed_cell(col, row) {
 
   
   function logBoard() {
-    console.log("Board");
+    //console.log("Board");
       for (let x = 0; x < 9; x++) {
         b = ""
         for (let y = 0; y < 9; y++) {
           b = b + board[x][y] + ",";
         }
-        console.log(b)
+        //console.log(b)
       }
   }
 function blank_board_array() {
@@ -72,7 +72,7 @@ function get_available_balls() {
     }
 
 function make_move(col, row) {
-      console.log("Made move at " + col + "," + row + " with ball " + completedboard[col][row])
+      //console.log("Made move at " + col + "," + row + " with ball " + completedboard[col][row])
       board[col][row] = completedboard[col][row];
       let willDropConfetti = true;
       for (let x = 0; x < 9; x++) {
@@ -145,7 +145,7 @@ function is_legal_move(col, row, value) {
       send("join");
     }
   } catch {
-    console.log("No game")
+    //console.log("No game")
   }
 
   let gameplay;
@@ -284,7 +284,7 @@ function is_legal_move(col, row, value) {
 
   function updateSelectorBalls(){
     let availableBalls = get_available_balls();
-    console.log("Available balls: " + availableBalls)
+    //console.log("Available balls: " + availableBalls)
     for (let i = 1; i < 10; i++) {
       if (!availableBalls[i]) {
         selectorBalls[i - 1].alpha = 0.3; //graphics.beginFill("grey").drawCircle(0,0,ballSize);
@@ -380,10 +380,10 @@ function is_legal_move(col, row, value) {
   }
 
   function playTurn(col,row,selBall){
-    console.log("Made move with ball: " + selBall+1)
+    //console.log("Made move with ball: " + selBall+1)
     target = balls[col][row];
     var aballs = get_available_balls();
-    console.log("Balls before: " + aballs);
+    //console.log("Balls before: " + aballs);
     if (selBall != 10) {
       make_move(col, row);
       target.graphics.beginFill(colors[get_completed_cell(col, row) - 1]).drawCircle(0, 0, ballSize);
@@ -396,7 +396,7 @@ function is_legal_move(col, row, value) {
       }
     }
     aballs = get_available_balls();
-    console.log("Balls after: " + aballs);
+    //console.log("Balls after: " + aballs);
     updateSelectorBalls();
   }
 
@@ -431,26 +431,27 @@ function is_legal_move(col, row, value) {
   let currentTurn = 0;
   function readCallback(){
     gp = gameplay;
-    console.log("Read callback");
+    //console.log("Read callback");
         for(let i = currentTurn; i < gp.length; i++){
           sp = gp[i].split(",");
           //if(sp[3] == user){
             //currentTurn = i+1;
             //console.log("Player turn syndicated");
+      
           //} else
           if(sp[0] == "start"){
             newGame(parseInt(sp[1]));
             //container.removeChild(difficultyContainer);
             currentTurn = i+1;
-            console.log("Start command");
+            //console.log("Start command");
           } else if(sp[0] == "set"){
             playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
             currentTurn = i+1;
-            console.log("Set command");
+            //console.log("Set command");
           } else if(sp[0] == "join" && user != player2){
             opponentJoinedGame();
             currentTurn = i+1;
-            console.log("Opponent Joined Game");
+            //console.log("Opponent Joined Game");
           }
         }
   }
@@ -626,7 +627,7 @@ function is_legal_move(col, row, value) {
       ticks = 0;
       read();
       updateSelectorBalls();
-      console.log("Reading");
+      //console.log("Reading");
       logBoard();
     }
     ticks++;
