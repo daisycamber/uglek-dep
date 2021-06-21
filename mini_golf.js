@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.455
+// By Jasper Camber Holton. V0.0.456
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -520,7 +520,9 @@ function startGame(newGame){
   obstacleSize = [];
   fixedobstacles = [];
   fixedobstacleSize = [];
-
+  // Clear RNG
+  rng = new RNG(seed);
+  // Draw new game
   //newGame = 4;
   if(newGame == 0){
     holeposx = 900;
