@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.451
+// By Jasper Camber Holton. V0.0.452
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -490,7 +490,6 @@ function wonDialog(){
   wonContainer.addChild(wonText)
   wonContainer.on("mousedown", function(evt) {
     if(player1 == user){
-      container.removeChild(wonContainer);
       var newGame = Math.floor(Math.random() * 5)
       send("start,"+newGame)
       startGame(newGame);
@@ -501,6 +500,7 @@ function wonDialog(){
 
 
 function startGame(newGame){
+  container.removeChild(wonContainer);
   container.removeChild(playerball);
   container.removeChild(opponentball);
   playerball = null;
@@ -709,4 +709,4 @@ function startGame(newGame){
     ticks = ticks + 1;
   }
 
-  wonDialog();
+//  wonDialog();
