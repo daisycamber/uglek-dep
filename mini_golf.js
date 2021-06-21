@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.458
+// By Jasper Camber Holton. V0.0.459
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -489,6 +489,7 @@ function wonDialog(){
   wonText.textAlign = 'center';
   wonContainer.addChild(wonText)
   wonContainer.on("mousedown", function(evt) {
+    container.removeChild(wonContainer);
     if(player1 == user){
       var newGame = Math.floor(Math.random() * 5);
       send("start,"+newGame);
