@@ -1,6 +1,6 @@
-// By Jasper Camber Holton. V0.0.450
+// By Jasper Camber Holton. V0.0.451
 var seed = 7;
-
+let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
 function RNG(seed) {
   // LCG using GCC's constants
@@ -52,7 +52,10 @@ function readCallback(){
       for(var i = currentTurn; i < gp.length; i++){
         console.log(gp[i]);
         sp = gp[i].split(",");
-        if(sp[3] == user){
+        if(sp[0] == "start"){
+          startGame(sp[1]);
+          currentTurn = i+1;
+        } else if(sp[3] == user){
           currentTurn = i+1;
           console.log("Player turn syndicated");
         } else if(sp[0] == "set"){
@@ -95,7 +98,7 @@ var movey;
 var stage = new createjs.Stage("game156");
 createjs.Touch.enable(stage, true, false);
 var container = new createjs.Container();
-scale = container.scale = less/1000;  
+scale = container.scale = less/1000;
 background = new createjs.Shape();
 background.graphics.beginFill("black").drawRect(0, 0, window.innerWidth, window.innerHeight);
 stage.addChild(background);
@@ -111,7 +114,7 @@ green = new createjs.Shape();
 green.graphics.beginFill("green").drawRect(leftbound, topbound, 1000, 1000);
   container.addChild(green);
   createjs.Touch.enable(stage);
-  
+
   start = new createjs.Shape();
   start.graphics.beginFill("grey").drawRect(leftbound, topbound, 200, 100);
   start.x = 0;
@@ -145,7 +148,7 @@ function setOpponentBall(x,y){
     opponentball.inHole = false;
         container.addChild(opponentball);
     opponentballset = true;
-    
+
   } else {
     opponentball.x = x + leftbound;
     opponentball.y = y + topbound;
@@ -221,7 +224,6 @@ for(var i = 0; i < 10; i++){
   obstacles[i].vy = 0;
       container.addChild(obstacles[i])
 }
-
 var fixedobstacles = [];
 var fixedobstacleSize = [];
 for(var i = 0; i < 7; i++){
@@ -282,7 +284,7 @@ stage.on("stagemousemove", function(evt) {
         }
   }
       });
-  
+
     //Update stage will render next frame
   stage.update();
   createjs.Ticker.setFPS(60);
@@ -327,7 +329,7 @@ function checkObstacleCollisions() {
         var body = obstacles[o];
          var obs = obstacles[i];
         // If collided
-        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < (obstacleSize[o] + obstacleSize[i]))){
+        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < (obstacleSize[o] + obstacleSize[i])){
           let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
           let distance = Math.sqrt((obs.x-body.x)*(obs.x-body.x) + (obs.y-body.y)*(obs.y-body.y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
@@ -470,6 +472,200 @@ function checkBallCollisions(){
       }
 
 var opponentPlayingTicks = 0;
+var wonContainer;
+function wonDialog(){
+  wonContainer = new createjs.Container();
+  wonrect = new createjs.Shape();
+  wonrect.graphics.beginFill("white").drawRect(leftbound, topbound + 450, 1000, 100);
+  wonContainer.addChild(wonrect)
+
+  text = "Your opponent won!"
+  if(opponentball && playerball && opponentball.inHole && playerball.inHole){
+    text = "You and your opponent won!"
+  }
+  wonText = new createjs.Text(text, TEXTTYPE, "#000000")
+  wonText.x = leftbound + 500;
+  wonText.y = topbound + 500-20;
+  wonText.textAlign = 'center';
+  wonContainer.addChild(wonText)
+  wonContainer.on("mousedown", function(evt) {
+    if(player1 == user){
+      container.removeChild(wonContainer);
+      var newGame = Math.floor(Math.random() * 5)
+      send("start,"+newGame)
+      startGame(newGame);
+    }
+  });
+  container.addChild(wonContainer);
+}
+
+
+function startGame(newGame){
+  container.removeChild(playerball);
+  container.removeChild(opponentball);
+  playerball = null;
+  opponentball = null;
+  // Clear the objects on screen
+  for(var i = 0; i < fixedobstacles.length; i++){
+    container.removeChild(fixedobstacles[i]);
+  }
+  for(var i = 0; i < obstacles.length; i++){
+    container.removeChild(obstacles[i]);
+  }
+  container.removeChild(hole);
+
+  obstacles = [];
+  obstacleSize = [];
+  fixedobstacles = [];
+  fixedobstacleSize = [];
+  console.log(newGame);
+  //newGame = 4;
+  if(newGame == 0){
+    holeposx = 900;
+    holeposy = 800;
+    hole = new createjs.Shape();
+    hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+    hole.x = leftbound + holeposx;
+    hole.y = topbound + holeposy;
+    container.addChild(hole)
+    for(var i = 0; i < 20; i++){
+      obstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*30 + 30);
+      obstacleSize[i] = size;
+          obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
+          obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+          obstacles[i].y = topbound + rng.nextFloat() * 850 + 75;
+        obstacles[i].vx = 0;
+      obstacles[i].vy = 0;
+          container.addChild(obstacles[i])
+    }
+    for(var i = 0; i < 7; i++){
+      fixedobstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*60 + 60);
+      fixedobstacleSize[i] = size;
+          fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
+          fixedobstacles[i].x = leftbound + 500;
+          fixedobstacles[i].y = topbound + i * (900/7)  + 100;
+          container.addChild(fixedobstacles[i])
+    }
+  } else if(newGame == 1){
+    holeposx = 900;
+    holeposy = 200;
+    hole = new createjs.Shape();
+    hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+    hole.x = leftbound + holeposx;
+    hole.y = topbound + holeposy;
+    container.addChild(hole)
+    // Draw new objects
+    for(var i = 0; i < 20; i++){
+      obstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*30 + 30);
+      obstacleSize[i] = size;
+          obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
+          obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+          obstacles[i].y = topbound + rng.nextFloat() * 850 + 75;
+        obstacles[i].vx = 0;
+      obstacles[i].vy = 0;
+          container.addChild(obstacles[i])
+    }
+    for(var i = 0; i < 7; i++){
+      fixedobstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*60 + 60);
+      fixedobstacleSize[i] = size;
+          fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
+          fixedobstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+          fixedobstacles[i].y = topbound + rng.nextFloat() * 500 + 200;
+          container.addChild(fixedobstacles[i])
+    }
+  } else if(newGame == 2){
+    holeposx = 400;
+    holeposy = 700;
+    hole = new createjs.Shape();
+    hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+    hole.x = leftbound + holeposx;
+    hole.y = topbound + holeposy;
+    container.addChild(hole)
+    // Draw new objects
+    for(var i = 0; i < 25; i++){
+      obstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*30 + 30);
+      obstacleSize[i] = size;
+          obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
+          obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+          obstacles[i].y = topbound + rng.nextFloat() * 850 + 75;
+        obstacles[i].vx = 0;
+      obstacles[i].vy = 0;
+          container.addChild(obstacles[i])
+    }
+    for(var i = 0; i < 10; i++){
+      fixedobstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*60 + 60);
+      fixedobstacleSize[i] = size;
+          fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
+          fixedobstacles[i].x = leftbound + i * 600/10 + Math.sin(i/10.0) * 200 + 10;
+          fixedobstacles[i].y = topbound + i * 600/10 + 200;
+          container.addChild(fixedobstacles[i])
+    }
+  } else if(newGame == 3){
+    holeposx = 400;
+    holeposy = 700;
+    hole = new createjs.Shape();
+    hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+    hole.x = leftbound + holeposx;
+    hole.y = topbound + holeposy;
+    container.addChild(hole);
+    for(var i = 0; i < 10; i++){
+      obstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*30 + 30);
+      obstacleSize[i] = size;
+          obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
+          obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+          obstacles[i].y = topbound + rng.nextFloat() * 850 + 75;
+        obstacles[i].vx = 0;
+      obstacles[i].vy = 0;
+          container.addChild(obstacles[i])
+    }
+    for(var i = 0; i < 10; i++){
+      fixedobstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*60 + 60);
+      fixedobstacleSize[i] = size;
+          fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
+          fixedobstacles[i].x = leftbound + i * 850/10 + 25;
+          fixedobstacles[i].y = topbound + Math.sin(i/10 * 4) * 700 + 100 + 200;
+          container.addChild(fixedobstacles[i])
+    }
+  } else if(newGame == 4){
+    holeposx = 500;
+    holeposy = 900;
+    hole = new createjs.Shape();
+    hole.graphics.beginFill("black").drawCircle(0, 0, ballSize+2);
+    hole.x = leftbound + holeposx;
+    hole.y = topbound + holeposy;
+    container.addChild(hole)
+    for(var i = 0; i < 20; i++){
+      obstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*30 + 30);
+      obstacleSize[i] = size;
+          obstacles[i].graphics.beginFill("red").drawCircle(0, 0, size);
+          obstacles[i].x = leftbound + rng.nextFloat() * 850 + 75;
+          obstacles[i].y = topbound + rng.nextFloat() * 850 + 75;
+        obstacles[i].vx = 0;
+      obstacles[i].vy = 0;
+          container.addChild(obstacles[i])
+    }
+    for(var i = 0; i < 7; i++){
+      fixedobstacles[i] = new createjs.Shape();
+      var size = (rng.nextFloat()*60 + 60);
+      fixedobstacleSize[i] = size;
+          fixedobstacles[i].graphics.beginFill("blue").drawRect(0, 0, size, size);
+          fixedobstacles[i].x = leftbound + 500 + Math.sin(i/7*3) * 400;
+          fixedobstacles[i].y = topbound + i * (900/7)  + 100;
+          container.addChild(fixedobstacles[i])
+    }
+  }
+
+
+}
 
   function handleTick(event) {
     if(opponentPlaying){
@@ -480,11 +676,16 @@ var opponentPlayingTicks = 0;
         opponentPlayingTicks = 0;
       }
     }
-       
+
     if(putted){
       if(playerball.vx == 0 && playerball.vy == 0) {
         putted = false;
         //playerTurn = false;
+      }
+    }
+    if(ticks > 2*60){
+      if(playerball && opponentball && ((playerball.inHole && playerTurn) || (opponentball.inHole && !playerTurn))){
+        wonDialog();
       }
     }
     if(ticks > 2*60 && !playerTurn){
@@ -492,7 +693,7 @@ var opponentPlayingTicks = 0;
       read();
       console.log("Reading");
     }
-    
+
     if(playerball && !playerball.inHole){
    checkCollisions(playerball);
     }
@@ -503,7 +704,9 @@ var opponentPlayingTicks = 0;
       checkBallCollisions();
     }
     checkObstacleCollisions();
-    
+
     stage.update();
     ticks = ticks + 1;
   }
+
+  wonDialog();
