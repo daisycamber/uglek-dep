@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.462
+// By Jasper Camber Holton. V0.0.463
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -511,6 +511,8 @@ function startGame(newGame){
   container.removeChild(opponentball);
   playerball = null;
   opponentball = null;
+  ballplaced = false;
+  opponentballset = false;
   // Clear the objects on screen
   for(var i = 0; i < fixedobstacles.length; i++){
     container.removeChild(fixedobstacles[i]);
