@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.463
+// By Jasper Camber Holton. V0.0.464
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -705,7 +705,7 @@ function startGame(newGame){
         wonDialog();
       }
     }
-    if(ticks > 2*60 && !playerTurn){
+    if(ticks > 2*60 && (!playerTurn || wonGame)){
       ticks = 0;
       read();
       console.log("Reading");
