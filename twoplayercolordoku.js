@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.95
+// By Jasper Camber Holton. V0.0.96
 (function twoplayercolordoku(){
   var board = blank_board_array();
 var ogboard = blank_board_array();
@@ -179,7 +179,18 @@ function is_legal_move(col, row, value) {
   stage.addChild(background);
   stage.addChild(container);
 
+var dontshowad;
+try {
+    dontshowad = document.getElementById("dontshowad").innerHTML;
+ 
+  } catch {
+    //console.log("No game")
+  }
+
   let ADHEIGHT = 90;
+  if(dontshowad == "true"){
+    ADHEIGHT = 0;
+  }
   let less = window.innerWidth;
   if(window.innerHeight < less){
     less = window.innerHeight-ADHEIGHT;
