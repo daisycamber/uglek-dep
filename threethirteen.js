@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.04
+// By Jasper Camber Holton. V0.0.05
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -102,14 +102,14 @@ var images = []
     for(var y = 0; y < cards.length; y++){
       card = cards[y];
       images[x][y] = new Image();
-      images[x][y].src = "cards/" + card + suit + ".png";
+      images[x][y].src = "https://jasperholton.github.io/uglek-dep//cards/" + card + suit + ".png";
       images[x][y].onload = handleImageLoad;
     }
 
   }
 
   var backImage = new Image();
-  backImage.src = "cards/back.png";
+  backImage.src = "https://jasperholton.github.io/uglek-dep//cards/back.png";
   backImage.onload = handleImageLoad;
   var imageCount = 0;
   function handleImageLoad(event) {
