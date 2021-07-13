@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.27
+// By Jasper Camber Holton. V0.0.28
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -336,7 +336,7 @@ function drawOpponentHandFaceup(){
     }
   }
   function sortHand(numberOrSuit){
-    drawOpponentHandFaceup(); // TODO comment out in production
+    //drawOpponentHandFaceup(); // TODO comment out in production
     //1) combine the arrays:
     var list = [];
     for (var j = 0; j < playerHandCards.length; j++)
