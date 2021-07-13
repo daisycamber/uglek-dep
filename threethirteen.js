@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.09
+// By Jasper Camber Holton. V0.0.10
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -55,6 +55,11 @@
     if(dontshowad == "true"){
       ADHEIGHT = 0;
     }
+    var canPlayerDraw = false;
+    /*if(user == player1){
+      canPlayerDraw = true; // TODO change to false in production
+    }*/
+    var canPlayerDiscard = false;
 
     let id;
     let player1;
@@ -67,7 +72,7 @@
       player1 = document.getElementById("player1").innerHTML;
       player2 = document.getElementById("player2").innerHTML;
       user = document.getElementById("user").innerHTML;
-      rng = new RNG(parseInt(gameid));
+      rng = new RNG(parseInt(id));
       console.log("Setting canvas size")
       stage.canvas.width = window.innerWidth;
       canvasHeight = window.innerHeight-ADHEIGHT;
@@ -705,11 +710,7 @@ function opponentDiscard(input){
     wonGame();
   }
 }
-var canPlayerDraw = false;
-/*if(user == player1){
-  canPlayerDraw = true; // TODO change to false in production
-}*/
-var canPlayerDiscard = false;
+
   function drawDiscard(){
     console.log(discardcard)
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
