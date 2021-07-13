@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.31
+// By Jasper Camber Holton. V0.0.32
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -720,6 +720,7 @@ function opponentDiscard(input){
     console.log(discardcard)
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
+      console.log("canPlayerDraw: " + canPlayerDraw);
       if(canPlayerDraw){
         canPlayerDraw = false;
         canPlayerDiscard = true;
@@ -748,13 +749,14 @@ function opponentDiscard(input){
     drawHand();
   }
 
-  function drawDeck(cardsInDeck){ // The number of cards to draw
+  function drawDeck(cardsInDeck) { // The number of cards to draw
     var deckoffset = 5;
     for(var x = 0; x < cardsInDeck; x++){
       drawFacedownCard(350+deckoffset*(cardsInDeck-x),500+deckoffset*(cardsInDeck-x));
     }
     cardDeck = drawFacedownCard(350,500);
     cardDeck.on("mousedown", function(event) {
+      console.log("canPlayerDraw: " + canPlayerDraw);
       if(canPlayerDraw){
         canPlayerDraw = false;
         canPlayerDiscard = true;
@@ -762,9 +764,7 @@ function opponentDiscard(input){
         send("draw,deck,"+user)
       }
     });
-
   }
-
 
   function beginGame(){
     sortHand(false);
@@ -787,7 +787,6 @@ function opponentDiscard(input){
       xhr.send(text);
   }
 
-
   var opjContainer;
   function opponentJoinedGame(){
     opjContainer = new createjs.Container();
@@ -807,8 +806,7 @@ function opponentDiscard(input){
   }
   //opponentJoinedGame();
 
-
- var playerscore = 0;
+  var playerscore = 0;
   var playerScore = new createjs.Shape();
   playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 400-30 , buttonSize, buttonSize, radius,radius,radius,radius);
   var playerScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
@@ -818,7 +816,7 @@ function opponentDiscard(input){
   container.addChild(playerScore)
   container.addChild(playerScoreText)
 
-var opponentscore = 0;
+  var opponentscore = 0;
 
   var opponentScore = new createjs.Shape();
   opponentScore.graphics.beginFill("#f0655b").drawRoundRectComplex(leftbound, topbound + 600-30 , buttonSize, buttonSize, radius,radius,radius,radius);
@@ -857,8 +855,8 @@ var opponentscore = 0;
             currentTurn = i+1;
             //console.log("Start command");
           } else if(sp[0] == "discard" && sp[2] != user){
-            opponentDiscard(sp[1]);
             canPlayerDraw = true;
+            opponentDiscard(sp[1]);
             //playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
             currentTurn = i+1;
             //console.log("Set command");
