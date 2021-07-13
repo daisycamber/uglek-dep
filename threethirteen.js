@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.19
+// By Jasper Camber Holton. V0.0.20
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -336,6 +336,7 @@ function drawOpponentHandFaceup(){
     }
   }
   function sortHand(numberOrSuit){
+    drawOpponentHandFaceup(); // TODO comment out in production
     //1) combine the arrays:
     var list = [];
     for (var j = 0; j < playerHandCards.length; j++)
@@ -598,38 +599,22 @@ opponentScoreText.text = score
     score = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
     if(allCardsPlayed){
-      ndeck = []
-      for(var x = 0; x < opponentHandCards.length; x++){
-        ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
-        console.log(opponentHandCards[x])
-      }
-      console.log("Player 1 goes out next round")
-      //console.log("OPPONENT DECK: " + stringDeck(ndeck))
-      opponentscore+=calculateScore(ndeck)
-
       gameOverOnNextDiscard = true;
+      console.log("You go out next round")
       //wonGame();
     }
   }
   function checkOpponentWin(){
-    ndeck = []
+    ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
-      ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+      ndeck[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    console.log("Opponent deck:" + stringDeck(ndeck))
-    score = calculateScore(ndeck)
+    console.log("Opponent deck:" + stringDeck(ndeck2))
+    score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
     if(allCardsPlayed){
       opponentWinsOnNextDiscard = true;
-
-      ndeck = []
-      for(var x = 0; x < playerHandCards.length; x++){
-        ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
-      }
-      //console.log(stringDeck(ndeckd))
-      playerscore+= alculateScore(ndeck)
-
-      console.log("Player 2 goes out next round")
+      console.log("Opposite player goes out next round")
     }
   }
   var radius = 10;
@@ -833,7 +818,7 @@ function opponentDiscard(input){
   //opponentJoinedGame();
 
 
-
+ var playerscore = 0;
   var playerScore = new createjs.Shape();
   playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 400-30 , buttonSize, buttonSize, radius,radius,radius,radius);
   var playerScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
@@ -844,6 +829,7 @@ function opponentDiscard(input){
   container.addChild(playerScoreText)
 
 var opponentscore = 0;
+
   var opponentScore = new createjs.Shape();
   opponentScore.graphics.beginFill("#f0655b").drawRoundRectComplex(leftbound, topbound + 600-30 , buttonSize, buttonSize, radius,radius,radius,radius);
   var opponentScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
