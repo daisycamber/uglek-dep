@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.24
+// By Jasper Camber Holton. V0.0.25
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -530,19 +530,12 @@ opponentScoreText.text = score
     } else {
     currentCard = currentRound*2 + 1 + 1;
     createAndShuffleDeck();
-    // shuffle the cards
-    for (let i = deck.length - 1; i > 0; i--) {
-        let j = Math.floor(rng.nextFloat() * i);
-        let temp = deck[i];
-        deck[i] = deck[j];
-        deck[j] = temp;
-    }
 
     opponentHandCards = []
     opponentHandSuits = []
 
-    playerHandCards = []// = [0,1,2,12,4,5,12,1,2,3]
-    playerHandSuits = []// = [0,1,3,3,0,1,0,3,2,1]
+    playerHandCards = [] // = [0,1,2,12,4,5,12,1,2,3]
+    playerHandSuits = [] // = [0,1,3,3,0,1,0,3,2,1]
     var deckCount = currentRound*2+1
     // display 5 results
     firstdiscard = deck[currentRound*2 + 1].Value
@@ -585,7 +578,6 @@ opponentScoreText.text = score
     drawDiscard()
     drawOpponentHand();
   }
-
   }
 
 
