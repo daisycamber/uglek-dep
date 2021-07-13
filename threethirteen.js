@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.05
+// By Jasper Camber Holton. V0.0.06
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -51,31 +51,35 @@
     } catch {
       //console.log("No game")
     }
+    let ADHEIGHT = 90;
+    if(dontshowad == "true"){
+      ADHEIGHT = 0;
+    }
+
     let id;
     let player1;
     let player2;
     let user;
     let canvasHeight
-    try {
+  try {
 
       id = document.getElementById("gameid").innerHTML;
       player1 = document.getElementById("player1").innerHTML;
       player2 = document.getElementById("player2").innerHTML;
       user = document.getElementById("user").innerHTML;
-      rng = new RNG(int(gameid));
-      if(user == player2){
-        send("join");
-      }
+      rng = new RNG(parseInt(gameid));
+
       stage.canvas.width = window.innerWidth;
       canvasHeight = window.innerHeight-ADHEIGHT;
       stage.canvas.height = canvasHeight;
-      } catch {
-        console.log("Three Thirteen - No game.")
-      }
 
-    let ADHEIGHT = 90;
-    if(dontshowad == "true"){
-      ADHEIGHT = 0;
+ } catch {
+        console.log("Three Thirteen - No game.")
+  }
+
+
+    if(user == player2){
+      send("join");
     }
     let less = window.innerWidth;
     if(window.innerHeight < less){
