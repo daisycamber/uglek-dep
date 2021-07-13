@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.11
+// By Jasper Camber Holton. V0.0.12
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -1008,9 +1008,9 @@ var opponentscore = 0;
   function handleTick(event) {
     if(ticks > 5*60){
       ticks = 0;
-      //read();
+      read();
       //updateSelectorBalls();
-      //console.log("Reading");
+      console.log("Reading");
       //logBoard();
     }
     ticks++;
