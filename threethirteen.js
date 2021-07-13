@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.121
+// By Jasper Camber Holton. V0.0.1211
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -369,88 +369,88 @@ function drawOpponentHandFaceup(){
 var allCardsPlayed;
 
 // TODO Check for wildcards
-  function calculateScore(deck) {
+  function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
-  deck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
+  ndeck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
 
   //Step 2: calculate what cards are not counted based on triples or quadruples
-  for(var i = 0; i < deck.length - 2; i ++) {
+  for(var i = 0; i < ndeck.length - 2; i ++) {
     var nextLoc = i + 1;
     var skipped = 0;
-    while(deck[nextLoc].getValue() == deck[i].getValue()
-            && deck[i].getScoringMode() != 'run') {
-      if(deck[nextLoc].getScoringMode() == 'run') {
+    while(ndeck[nextLoc].getValue() == ndeck[i].getValue()
+            && ndeck[i].getScoringMode() != 'run') {
+      if(ndeck[nextLoc].getScoringMode() == 'run') {
         skipped ++;
       }
       nextLoc ++;
-      if(nextLoc >= deck.length) {
+      if(nextLoc >= ndeck.length) {
         break;
       }
     }
     if(nextLoc - i - skipped >= 3) {
       for(var j = i; j < nextLoc; j ++) {
-        if(skipped == 0 || deck[j].getScoringMode() != 'run')
-          deck[j].setCounted(false);
+        if(skipped == 0 || ndeck[j].getScoringMode() != 'run')
+          ndeck[j].setCounted(false);
       }
     }
   }
 
   //Setp 3: calculate a straight
-  for(var i = 0; i < deck.length - 2; i ++) {
+  for(var i = 0; i < ndeck.length - 2; i ++) {
     var nextLoc = i + 1;
     var skipped = 0;
-    var lastValue = deck[i].getValue();
+    var lastValue = ndeck[i].getValue();
     var lastGoodValue = lastValue;
 
-    while((deck[i].getSuit() == deck[nextLoc].getSuit() && deck[i].getValue() + (nextLoc - i - skipped) == deck[nextLoc].getValue())
-              || deck[nextLoc].getValue() == lastValue
-              || deck[nextLoc].getValue() == lastValue + 1) {
+    while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
+              || ndeck[nextLoc].getValue() == lastValue
+              || ndeck[nextLoc].getValue() == lastValue + 1) {
 
-      if(deck[i].getScoringMode() == 'set' || deck[nextLoc].getScoringMode() == 'set')
+      if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
         break;
 
-      if((deck[nextLoc].getValue() == lastValue && deck[nextLoc].getSuit() != deck[i].getSuit())
-              || deck[nextLoc].getScoringMode() == 'set'
-              || (deck[nextLoc].getValue() == lastValue + 1 && deck[nextLoc].getSuit() != deck[i].getSuit())) {
+      if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())
+              || ndeck[nextLoc].getScoringMode() == 'set'
+              || (ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) {
         skipped ++;
       }
       else {
         //the card is the correct suit, but there is a gap between
         //  the current cards value and the last value in the run
-        if(lastGoodValue + 2 <= deck[nextLoc].getValue()) {
+        if(lastGoodValue + 2 <= ndeck[nextLoc].getValue()) {
           skipped ++;
           break;
         }
-        lastGoodValue = deck[nextLoc].getValue();
+        lastGoodValue = ndeck[nextLoc].getValue();
       }
 
-      lastValue = deck[nextLoc].getValue();
+      lastValue = ndeck[nextLoc].getValue();
       nextLoc ++;
 
-      if(nextLoc >= deck.length)
+      if(nextLoc >= ndeck.length)
          break;
     }
 
     if(nextLoc - i - skipped >= 3) {
       for(var j = i; j < nextLoc; j ++) {
-        if(deck[j].getSuit() == deck[i].getSuit()) {
-          if(deck[j].isCounted() || deck[j].getScoringMode() != '' || deck[j].ignored()) {
-            deck[j].setIgnored(true); //makes sure that if this is detected as a run
+        if(ndeck[j].getSuit() == ndeck[i].getSuit()) {
+          if(ndeck[j].isCounted() || ndeck[j].getScoringMode() != '' || ndeck[j].ignored()) {
+            ndeck[j].setIgnored(true); //makes sure that if this is detected as a run
                                       // again because the length is greater than 3,
                                       // it is ignored the second time the loop goes over it
-            deck[j].setCounted(false);
+            ndeck[j].setCounted(false);
           }
           else {
-            deck[j].setScoringMode('set');
-            var setScore = calculateScore(deck);
+            ndeck[j].setScoringMode('set');
+            var setScore = calculateScore(ndeck);
 
-            deck[j].setScoringMode('run');
-            var runScore = calculateScore(deck);
+            ndeck[j].setScoringMode('run');
+            var runScore = calculateScore(ndeck);
 
             if(setScore < runScore)
-              deck[j].setScoringMode('set');
+              ndeck[j].setScoringMode('set');
 
-            calculateScore(deck);
+            calculateScore(ndeck);
           }
         }
       }
@@ -458,7 +458,7 @@ var allCardsPlayed;
   }
   var score = 0;
   allCardsPlayed = true;
-  deck.forEach(function(card) {
+  ndeck.forEach(function(card) {
     if(card.ignored()){
       console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     } else {
@@ -565,42 +565,42 @@ opponentScoreText.text = score
 var totalScore = 0;
 var gameOverOnNextDiscard = false;
   function checkPlayerWin(){
-    deck = []
+    ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
-      deck[deck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
+      ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
-    //console.log(stringDeck(deck))
-    score = calculateScore(deck)
+    //console.log(stringndeck(ndeck))
+    score = calculateScore(ndeck)
     console.log("PLAYER SCORED: " + score)
     if(allCardsPlayed){
-      deck = []
+      ndeck = []
       for(var x = 0; x < opponentHandCards.length; x++){
-        deck[deck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+        ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
         console.log(opponentHandCards[x])
       }
-      console.log("OPPONENT DECK: " + stringDeck(deck))
-      opponentscore+=calculateScore(deck)
+      console.log("OPPONENT DECK: " + stringDeck(ndeck))
+      opponentscore+=calculateScore(ndeck)
 
       gameOverOnNextDiscard = true;
       //wonGame();
     }
   }
   function checkOpponentWin(){
-    deck = []
+    ndeck = []
     for(var x = 0; x < opponentHandCards.length; x++){
-      deck[deck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+      ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    //console.log(stringDeck(deck))
-    score = calculateScore(deck)
+    //console.log(stringndeck(ndeck))
+    score = calculateScore(ndeck)
     console.log("OPPONENT SCORED: " + score)
     if(allCardsPlayed){
       opponentWonGame();
-      deck = []
+      ndeck = []
       for(var x = 0; x < playerHandCards.length; x++){
-        deck[deck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
+        ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
       }
-      console.log(stringDeck(deck))
-      playerscore = calculateScore(deck)
+      console.log(stringDeck(ndeckd))
+      playerscore = calculateScore(ndeckd)
       drawPlayerScore(playerscore)
     }
   }
@@ -731,13 +731,13 @@ function opponentDiscard(input){
       playerHandSuits[playerHandSuits.length] = deck[currentCard].Suit
       currentCard++;
     } else {
-      // Use discard as deck
-      deck = []
+      // Use discard as ndeck
+      ndeck = []
       for(var x = 0; x < discardcard.length; x++){
-        deck[deck.length] = (new Card(discardcard[x], discardsuit[x]))
+        ndeck[ndeck.length] = (new Card(discardcard[x], discardsuit[x]))
         currentCard = 1;
       }
-      discardcard = [deck[0].Value,deck[0].Suit]
+      discardcard = [ndeck[0].Value,ndeck[0].Suit]
     }
 
     drawHand();
