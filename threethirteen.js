@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.1211
+// By Jasper Camber Holton. V0.0.1212
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -56,6 +56,8 @@
       ADHEIGHT = 0;
     }
 
+    var totalScore = 0;
+    var gameOverOnNextDiscard = false;
 
     let id;
     let player1;
@@ -69,7 +71,7 @@
       player2 = document.getElementById("player2").innerHTML;
       user = document.getElementById("user").innerHTML;
       rng = new RNG(parseInt(id));
-      console.log("Setting canvas size")
+      //console.log("Setting canvas size")
       stage.canvas.width = window.innerWidth;
       canvasHeight = window.innerHeight-ADHEIGHT;
       stage.canvas.height = canvasHeight;
@@ -235,7 +237,7 @@ if(user == player1){
   }
   for (let i = currentRound; i < currentRound*2; i++) {
     opponentHandCards[i-currentRound] = deck[i].Value
-    console.log("Opponent hand " + deck[i].Value)
+    //console.log("Opponent hand " + deck[i].Value)
     opponentHandSuits[i-currentRound] = deck[i].Suit
   }
 } else {
@@ -460,11 +462,11 @@ var allCardsPlayed;
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
+      //console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     } else {
       allCardsPlayed = false;
       score += card.getValue() + 2
-      console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
+      //console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     }
 
     //score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
@@ -562,8 +564,7 @@ opponentScoreText.text = score
 
   }
 
-var totalScore = 0;
-var gameOverOnNextDiscard = false;
+
   function checkPlayerWin(){
     ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
@@ -571,14 +572,14 @@ var gameOverOnNextDiscard = false;
     }
     //console.log(stringndeck(ndeck))
     score = calculateScore(ndeck)
-    console.log("PLAYER SCORED: " + score)
+    //console.log("PLAYER SCORED: " + score)
     if(allCardsPlayed){
       ndeck = []
       for(var x = 0; x < opponentHandCards.length; x++){
         ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
         console.log(opponentHandCards[x])
       }
-      console.log("OPPONENT DECK: " + stringDeck(ndeck))
+      //console.log("OPPONENT DECK: " + stringDeck(ndeck))
       opponentscore+=calculateScore(ndeck)
 
       gameOverOnNextDiscard = true;
@@ -592,14 +593,14 @@ var gameOverOnNextDiscard = false;
     }
     //console.log(stringndeck(ndeck))
     score = calculateScore(ndeck)
-    console.log("OPPONENT SCORED: " + score)
+    //console.log("OPPONENT SCORED: " + score)
     if(allCardsPlayed){
       opponentWonGame();
       ndeck = []
       for(var x = 0; x < playerHandCards.length; x++){
         ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
       }
-      console.log(stringDeck(ndeckd))
+      //console.log(stringDeck(ndeckd))
       playerscore = calculateScore(ndeckd)
       drawPlayerScore(playerscore)
     }
@@ -677,7 +678,7 @@ function opponentTakeDiscard(){
   if(discardcard.length > 0){
     drawDiscard();
   }
-  console.log("Opponent took discard")
+  console.log("Opponent drew discard")
 }
 
 function opponentDiscard(input){
@@ -700,15 +701,16 @@ function opponentDiscard(input){
   discardsuit[discardsuit.length] = discardSuit
   opponentHandCards = nCards
   opponentHandSuits = nSuits
-  console.log("Opponent Hand length - " + opponentHandCards.length)
+  //console.log("Opponent Hand length - " + opponentHandCards.length)
   drawOpponentHand();
   drawDiscard();
   canPlayerDraw = true;
   canPlayerDiscard = false;
-  checkOpponentWin();
   if(gameOverOnNextDiscard){
     wonGame();
   }
+  checkOpponentWin();
+
 }
 
   function drawDiscard(){
