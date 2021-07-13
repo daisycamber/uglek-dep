@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.01
+// By Jasper Camber Holton. V0.0.02
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -28,22 +28,7 @@
   }
   let rng = new RNG(seed);
 
-  let id;
-  let player1;
-  let player2;
-  let user;
-  try {
-    id = document.getElementById("gameid").innerHTML;
-    player1 = document.getElementById("player1").innerHTML;
-    player2 = document.getElementById("player2").innerHTML;
-    user = document.getElementById("user").innerHTML;
-    rng = new RNG(int(gameid));
-    if(user == player2){
-      send("join");
-    }
-    } catch {
-      console.log("Three Thirteen - No game.")
-    }
+
 
 
 
@@ -728,7 +713,7 @@ var canPlayerDiscard = false;
       xhr.send(text);
   }
 
-  let canvasid = "game134";
+  let canvasid = "game239";
   let canvas = document.getElementById(canvasid);
   let width = canvas.width;
   let height = canvas.height;
@@ -750,6 +735,26 @@ var canPlayerDiscard = false;
   } catch {
     //console.log("No game")
   }
+  let id;
+  let player1;
+  let player2;
+  let user;
+  try {
+
+    id = document.getElementById("gameid").innerHTML;
+    player1 = document.getElementById("player1").innerHTML;
+    player2 = document.getElementById("player2").innerHTML;
+    user = document.getElementById("user").innerHTML;
+    rng = new RNG(int(gameid));
+    if(user == player2){
+      send("join");
+    }
+    stage.canvas.width = window.innerWidth;
+    let canvasHeight = window.innerHeight-ADHEIGHT;
+    stage.canvas.height = canvasHeight;
+    } catch {
+      console.log("Three Thirteen - No game.")
+    }
 
   let ADHEIGHT = 90;
   if(dontshowad == "true"){
@@ -761,9 +766,7 @@ var canPlayerDiscard = false;
   }
   scale = container.scale = less / 1000;
 
-  stage.canvas.width = window.innerWidth;
-  let canvasHeight = window.innerHeight-ADHEIGHT;
-  stage.canvas.height = canvasHeight;
+
   leftbound = (window.innerWidth - less)/2/scale;
   topbound = ((canvasHeight - less)/2)/scale;
 
