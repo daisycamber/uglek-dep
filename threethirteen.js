@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.13
+// By Jasper Camber Holton. V0.0.131
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -61,6 +61,7 @@ const cardsroot = "https://uglek.com/media/cards/";
 
     var totalScore = 0;
     var gameOverOnNextDiscard = false;
+    var opponentWinsOnNextDiscard = false;
 
     let id;
     let player1;
