@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.08
+// By Jasper Camber Holton. V0.0.09
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -80,7 +80,8 @@
 
 
     if(user == player2){
-      send("join");
+      send("join,x,"+user);
+      canPlayerDraw = false;
     }
     let less = window.innerWidth;
     if(window.innerHeight < less){
@@ -302,7 +303,7 @@ function drawOpponentHandFaceup(){
           playerHandSuits = nSuits
           console.log("Hand length - " + playerHandCards.length)
           drawDiscard();
-          send("discard,"+event.target.card + "." + event.target.suit)
+          send("discard,"+event.target.card + "." + event.target.suit,+","+user)
           drawHand();
 
           canPlayerDiscard = false;
@@ -704,7 +705,10 @@ function opponentDiscard(input){
     wonGame();
   }
 }
-var canPlayerDraw = true; // TODO change to false in production
+var canPlayerDraw = false;
+/*if(user == player1){
+  canPlayerDraw = true; // TODO change to false in production
+}*/
 var canPlayerDiscard = false;
   function drawDiscard(){
     console.log(discardcard)
@@ -712,7 +716,7 @@ var canPlayerDiscard = false;
     discard.on("mousedown", function(event) {
       if(canPlayerDraw){
         takeDiscard();
-        send("draw,discard")
+        send("draw,discard,"+user)
         canPlayerDraw = false;
         canPlayerDiscard = true;
       }
@@ -747,7 +751,7 @@ var canPlayerDiscard = false;
     cardDeck.on("mousedown", function(event) {
       if(canPlayerDraw){
         drawCardFromDeck();
-        send("draw,deck")
+        send("draw,deck,"+user)
         canPlayerDraw = false;
         canPlayerDiscard = true;
       }
