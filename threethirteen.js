@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.25
+// By Jasper Camber Holton. V0.0.26
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -548,8 +548,8 @@ opponentScoreText.text = score
         console.log("Player hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
       for (let i = currentRound; i < currentRound*2; i++) {
-        opponentHandCards[i] = deck[i].Value
-        opponentHandSuits[i] = deck[i].Suit
+        opponentHandCards[i-currentRound] = deck[i].Value
+        opponentHandSuits[i-currentRound] = deck[i].Suit
         console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
       canPlayerDraw = true;
@@ -561,8 +561,8 @@ opponentScoreText.text = score
           console.log("Player hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
         for (let i = currentRound; i < currentRound*2; i++) {
-          playerHandCards[i] = deck[i].Value
-          playerHandSuits[i] = deck[i].Suit
+          playerHandCards[i-currentRound] = deck[i].Value
+          playerHandSuits[i-currentRound] = deck[i].Suit
           console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
         canPlayerDraw = false;
