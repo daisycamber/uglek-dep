@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.21
+// By Jasper Camber Holton. V0.0.22
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -694,8 +694,7 @@ function opponentTakeDiscard(){
 }
 
 function opponentDiscard(input){
-  canPlayerDraw = true;
-  canPlayerDiscard = false;
+
   // Discard card according to opponents input
   theDiscard = input.split('.')
   console.log("opponent discarded " + input)
@@ -715,6 +714,9 @@ function opponentDiscard(input){
   discardsuit[discardsuit.length] = discardSuit
   opponentHandCards = nCards
   opponentHandSuits = nSuits
+
+  canPlayerDraw = true;
+  canPlayerDiscard = false;
   //console.log("Opponent Hand length - " + opponentHandCards.length)
   drawOpponentHand();
   drawDiscard();
