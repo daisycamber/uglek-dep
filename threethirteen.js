@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.14
+// By Jasper Camber Holton. V0.0.15
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -519,6 +519,7 @@ opponentScoreText.text = score
   function drawGameFinishedDialog(){
     console.log("Game finished")
   }
+
   function nextRound(){
 
     currentRound = currentRound + 1;
