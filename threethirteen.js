@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.26
+// By Jasper Camber Holton. V0.0.27
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -1010,12 +1010,15 @@ var opponentscore = 0;
       wonContainer.on("mousedown", function(event) {
         container.removeChild(wonContainer);
         gameIsWon = false
+        nextRound();
         // Start next game
       });
       wonContainer.addChild(wonDialog);
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
     }
+    drawPlayerScore(playerscore)
+    drawOpponentHandFaceup();
   }
   var userStartsGame = false;
   if(user == player1){
