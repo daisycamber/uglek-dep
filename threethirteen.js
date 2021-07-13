@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.1312
+// By Jasper Camber Holton. V0.0.1313
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -476,9 +476,9 @@ var allCardsPlayed;
   ndeck.forEach(function(card) {
     if(card.ignored()){
       console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
-      allCardsPlayed = false;
     } else {
       score += card.getValue() + 2
+      allCardsPlayed = false;
       console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     }
 
@@ -617,7 +617,7 @@ opponentScoreText.text = score
         ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
       }
       //console.log(stringDeck(ndeckd))
-      playerscore = calculateScore(ndeckd)
+      playerscore = calculateScore(ndeck)
 
       console.log("Player 1 goes out next round")
     }
