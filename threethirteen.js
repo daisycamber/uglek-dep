@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.28
+// By Jasper Camber Holton. V0.0.30
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -86,9 +86,6 @@ const cardsroot = "https://uglek.com/media/cards/";
       }
 
       var canPlayerDraw = false; // TODO change to false in production
-      if(user == player1 || user == null){
-        canPlayerDraw = false; // TODO change to false in production
-      }
       var canPlayerDiscard = false;
     if(user == player2){
       send("join,x,"+user);
