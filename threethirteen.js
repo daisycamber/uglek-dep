@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.16
+// By Jasper Camber Holton. V0.0.17
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -482,7 +482,7 @@ var allCardsPlayed;
       score += card.getValue() + 2;
       console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()]);
     }
-    console.log("Is counted? " + card.isCounted())
+    console.log("Is counted? " + card.isCounted());
     if(card.isCounted()){
       allCardsPlayed = false;
     }
@@ -552,10 +552,12 @@ opponentScoreText.text = score
       for (let i = 0; i < currentRound; i++) {
         playerHandCards[i] = deck[i].Value
         playerHandSuits[i] = deck[i].Suit
+        console.log("Player hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
       for (let i = currentRound; i < currentRound*2; i++) {
         opponentHandCards[i] = deck[i].Value
         opponentHandSuits[i] = deck[i].Suit
+        console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
       canPlayerDraw = true;
     } else {
@@ -563,10 +565,12 @@ opponentScoreText.text = score
         for (let i = 0; i < currentRound; i++) {
           opponentHandCards[i] = deck[i].Value
           opponentHandSuits[i] = deck[i].Suit
+          console.log("Player hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
         for (let i = currentRound; i < currentRound*2; i++) {
           playerHandCards[i] = deck[i].Value
           playerHandSuits[i] = deck[i].Suit
+          console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
         canPlayerDraw = false;
     }
@@ -590,7 +594,7 @@ opponentScoreText.text = score
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
-    //console.log(stringndeck(ndeck))
+    console.log("Player deck:" + stringndeck(ndeck))
     score = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
     if(allCardsPlayed){
@@ -612,7 +616,7 @@ opponentScoreText.text = score
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    //console.log(stringndeck(ndeck))
+    console.log("Opponent deck:" + stringndeck(ndeck))
     score = calculateScore(ndeck)
     //console.log("OPPONENT SCORED: " + score)
     if(allCardsPlayed){
@@ -623,9 +627,9 @@ opponentScoreText.text = score
         ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
       }
       //console.log(stringDeck(ndeckd))
-      playerscore = calculateScore(ndeck)
+      playerscore+= alculateScore(ndeck)
 
-      console.log("Player 1 goes out next round")
+      console.log("Player 2 goes out next round")
     }
   }
   var radius = 10;
