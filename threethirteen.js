@@ -476,8 +476,8 @@ var allCardsPlayed;
   ndeck.forEach(function(card) {
     if(card.ignored()){
       console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
-    } else {
       allCardsPlayed = false;
+    } else {
       score += card.getValue() + 2
       console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     }
