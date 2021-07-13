@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.02
+// By Jasper Camber Holton. V0.0.03
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -27,6 +27,64 @@
     return array[this.nextRange(0, array.length)];
   }
   let rng = new RNG(seed);
+
+
+    let canvasid = "game239";
+    let canvas = document.getElementById(canvasid);
+    let width = canvas.width;
+    let height = canvas.height;
+
+    let TEXTTYPE = "bold " + 42 + "px Arial";
+    let last = 0;
+    let stage = new createjs.Stage(canvasid);
+    let container = new createjs.Container();
+
+    background = new createjs.Shape();
+    background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
+    stage.addChild(background);
+    stage.addChild(container);
+
+    var dontshowad;
+    try {
+      dontshowad = document.getElementById("dontshowad").innerHTML;
+
+    } catch {
+      //console.log("No game")
+    }
+    let id;
+    let player1;
+    let player2;
+    let user;
+    try {
+
+      id = document.getElementById("gameid").innerHTML;
+      player1 = document.getElementById("player1").innerHTML;
+      player2 = document.getElementById("player2").innerHTML;
+      user = document.getElementById("user").innerHTML;
+      rng = new RNG(int(gameid));
+      if(user == player2){
+        send("join");
+      }
+      stage.canvas.width = window.innerWidth;
+      let canvasHeight = window.innerHeight-ADHEIGHT;
+      stage.canvas.height = canvasHeight;
+      } catch {
+        console.log("Three Thirteen - No game.")
+      }
+
+    let ADHEIGHT = 90;
+    if(dontshowad == "true"){
+      ADHEIGHT = 0;
+    }
+    let less = window.innerWidth;
+    if(window.innerHeight < less){
+      less = window.innerHeight-ADHEIGHT;
+    }
+    scale = container.scale = less / 1000;
+
+
+    leftbound = (window.innerWidth - less)/2/scale;
+    topbound = ((canvasHeight - less)/2)/scale;
 
 
 
@@ -713,62 +771,6 @@ var canPlayerDiscard = false;
       xhr.send(text);
   }
 
-  let canvasid = "game239";
-  let canvas = document.getElementById(canvasid);
-  let width = canvas.width;
-  let height = canvas.height;
-
-  let TEXTTYPE = "bold " + 42 + "px Arial";
-  let last = 0;
-  let stage = new createjs.Stage(canvasid);
-  let container = new createjs.Container();
-
-  background = new createjs.Shape();
-  background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
-  stage.addChild(background);
-  stage.addChild(container);
-
-  var dontshowad;
-  try {
-    dontshowad = document.getElementById("dontshowad").innerHTML;
-
-  } catch {
-    //console.log("No game")
-  }
-  let id;
-  let player1;
-  let player2;
-  let user;
-  try {
-
-    id = document.getElementById("gameid").innerHTML;
-    player1 = document.getElementById("player1").innerHTML;
-    player2 = document.getElementById("player2").innerHTML;
-    user = document.getElementById("user").innerHTML;
-    rng = new RNG(int(gameid));
-    if(user == player2){
-      send("join");
-    }
-    stage.canvas.width = window.innerWidth;
-    let canvasHeight = window.innerHeight-ADHEIGHT;
-    stage.canvas.height = canvasHeight;
-    } catch {
-      console.log("Three Thirteen - No game.")
-    }
-
-  let ADHEIGHT = 90;
-  if(dontshowad == "true"){
-    ADHEIGHT = 0;
-  }
-  let less = window.innerWidth;
-  if(window.innerHeight < less){
-    less = window.innerHeight-ADHEIGHT;
-  }
-  scale = container.scale = less / 1000;
-
-
-  leftbound = (window.innerWidth - less)/2/scale;
-  topbound = ((canvasHeight - less)/2)/scale;
 
   var opjContainer;
   function opponentJoinedGame(){
