@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.12
+// By Jasper Camber Holton. V0.0.121
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -684,8 +684,8 @@ function opponentDiscard(input){
   // Discard card according to opponents input
   theDiscard = input.split('.')
   console.log("opponent discarded " + input)
-  discardCard = int(theDiscard[0])
-  discardSuit = int(theDiscard[1])
+  discardCard = parseInt(theDiscard[0])
+  discardSuit = parseInt(theDiscard[1])
   nCards = [] // New cards and suits
   nSuits = []
   var count = 0; // our count for the new hand
