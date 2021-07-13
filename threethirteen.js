@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.23
+// By Jasper Camber Holton. V0.0.24
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -524,7 +524,6 @@ opponentScoreText.text = score
   }
 
   function nextRound(){
-
     currentRound = currentRound + 1;
     if(currentRound == 14){
       drawGameFinishedDialog();
@@ -974,48 +973,57 @@ var opponentscore = 0;
   let wonContainer;
   let wonDialog;
   let isFinished = false;
+  var gameIsWon = false;
   // Draw a dialog to create a new game
   function wonGame() {
-    wonContainer = new createjs.Container();
-    wonDialog = new createjs.Shape();
-    wonDialog.graphics.beginFill("lightgreen").drawCircle(0, 0, 1000);
-    wonDialog.y = topbound + 1000 + 900;
-    wonDialog.x = leftbound + 500;
-    let wonText = new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
-    wonText.x = leftbound + 360;
-    wonText.y = topbound + 925;
-    wonContainer.on("mousedown", function(event) {
-      container.removeChild(wonContainer);
-      // Start next game
-      nextRound();
-    });
-    wonContainer.addChild(wonDialog);
-    wonContainer.addChild(wonText);
-    container.addChild(wonContainer);
+    if(!gameIsWon){
+      gameIsWon = true;
+      wonContainer = new createjs.Container();
+      wonDialog = new createjs.Shape();
+      wonDialog.graphics.beginFill("lightgreen").drawCircle(0, 0, 1000);
+      wonDialog.y = topbound + 1000 + 900;
+      wonDialog.x = leftbound + 500;
+      let wonText = new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
+      wonText.x = leftbound + 360;
+      wonText.y = topbound + 925;
+      wonContainer.on("mousedown", function(event) {
+        container.removeChild(wonContainer);
+        // Start next game
+        nextRound();
+        gameIsWon = false;
+      });
+      wonContainer.addChild(wonDialog);
+      wonContainer.addChild(wonText);
+      container.addChild(wonContainer);
 
-    drawOpponentScore(opponentscore)
-    drawOpponentHandFaceup();
+      drawOpponentScore(opponentscore)
+      drawOpponentHandFaceup();
+    }
   }
 
 
 
   // Draw a dialog to create a new game
   function opponentWonGame() {
-    wonContainer = new createjs.Container();
-    wonDialog = new createjs.Shape();
-    wonDialog.graphics.beginFill("lightblue").drawCircle(0, 0, 1000);
-    wonDialog.y = topbound + 1000 + 900;
-    wonDialog.x = leftbound + 500;
-    let wonText = new createjs.Text("Your opponent won!", TEXTTYPE, "#000000")
-    wonText.x = leftbound + 360;
-    wonText.y = topbound + 925;
-    wonContainer.on("mousedown", function(event) {
-      container.removeChild(wonContainer);
-      // Start next game
-    });
-    wonContainer.addChild(wonDialog);
-    wonContainer.addChild(wonText);
-    container.addChild(wonContainer);
+    if(!gameIsWon){
+      gameIsWon = true;
+      wonContainer = new createjs.Container();
+      wonDialog = new createjs.Shape();
+      wonDialog.graphics.beginFill("lightblue").drawCircle(0, 0, 1000);
+      wonDialog.y = topbound + 1000 + 900;
+      wonDialog.x = leftbound + 500;
+      let wonText = new createjs.Text("Your opponent won!", TEXTTYPE, "#000000")
+      wonText.x = leftbound + 360;
+      wonText.y = topbound + 925;
+      wonContainer.on("mousedown", function(event) {
+        container.removeChild(wonContainer);
+        gameIsWon = false
+        // Start next game
+      });
+      wonContainer.addChild(wonDialog);
+      wonContainer.addChild(wonText);
+      container.addChild(wonContainer);
+    }
   }
   var userStartsGame = false;
   if(user == player1){
