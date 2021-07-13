@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.15
+// By Jasper Camber Holton. V0.0.16
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -293,11 +293,14 @@ function drawOpponentHandFaceup(){
         yoffset = yo1;
         ioffset = 7;
       }
+      //console.log("Drawing card " + playerHandCards[i] + " of " + playerHandSuits[i])
       playerHandObjects[playerHandCount] = drawCard(playerHandSuits[i],playerHandCards[i],1000-(1000/7 * (i-ioffset)), 1000-yoffset);
       playerHandObjects[playerHandCount].suit = playerHandSuits[i]
       playerHandObjects[playerHandCount].card = playerHandCards[i]
       playerHandObjects[playerHandCount].on("mousedown", function(event) {
         if(canPlayerDiscard){
+          canPlayerDiscard = false;
+          canPlayerDraw = false;
           nCards = [] // New cards and suits
           nSuits = []
           var count = 0; // our count for the new hand
@@ -317,8 +320,7 @@ function drawOpponentHandFaceup(){
           send("discard,"+event.target.card + "." + event.target.suit,+","+user)
           drawHand();
 
-          canPlayerDiscard = false;
-          canPlayerDraw = false;
+
 
           checkPlayerWin();
           if(opponentWinsOnNextDiscard){
@@ -703,6 +705,8 @@ function opponentTakeDiscard(){
 }
 
 function opponentDiscard(input){
+  canPlayerDraw = true;
+  canPlayerDiscard = false;
   // Discard card according to opponents input
   theDiscard = input.split('.')
   console.log("opponent discarded " + input)
@@ -725,8 +729,7 @@ function opponentDiscard(input){
   //console.log("Opponent Hand length - " + opponentHandCards.length)
   drawOpponentHand();
   drawDiscard();
-  canPlayerDraw = true;
-  canPlayerDiscard = false;
+
   if(gameOverOnNextDiscard){
     wonGame();
   }
@@ -739,10 +742,10 @@ function opponentDiscard(input){
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
       if(canPlayerDraw){
-        takeDiscard();
-        send("draw,discard,"+user)
         canPlayerDraw = false;
         canPlayerDiscard = true;
+        takeDiscard();
+        send("draw,discard,"+user)
       }
     });
   }
@@ -774,10 +777,10 @@ function opponentDiscard(input){
     cardDeck = drawFacedownCard(350,500);
     cardDeck.on("mousedown", function(event) {
       if(canPlayerDraw){
-        drawCardFromDeck();
-        send("draw,deck,"+user)
         canPlayerDraw = false;
         canPlayerDiscard = true;
+        drawCardFromDeck();
+        send("draw,deck,"+user)
       }
     });
 
