@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.1318
+// By Jasper Camber Holton. V0.0.14
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -265,7 +265,7 @@ function drawOpponentHandFaceup(){
     container.removeChild(opponentHandObjects[i])
   }
   opponentHandObjects = []
-  for(var i = 0; i < currentRound; i++){
+  for(var i = 0; i < opponentHandCards.length; i++){
     yoffset = yo2;
     ioffset = 0;
     if(i > 6){
