@@ -666,6 +666,7 @@ function opponentDrawDeck(){
   currentCard++;
   drawOpponentHand();
   console.log("Opponent drew from deck")
+canPlayerDraw = false;
 }
 function opponentTakeDiscard(){
   // Draw card to the oppponents hand from the discard
@@ -679,6 +680,7 @@ function opponentTakeDiscard(){
     drawDiscard();
   }
   console.log("Opponent drew discard")
+canPlayerDraw = false;
 }
 
 function opponentDiscard(input){
