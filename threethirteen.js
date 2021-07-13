@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.03
+// By Jasper Camber Holton. V0.0.04
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -55,6 +55,7 @@
     let player1;
     let player2;
     let user;
+    let canvasHeight
     try {
 
       id = document.getElementById("gameid").innerHTML;
@@ -66,7 +67,7 @@
         send("join");
       }
       stage.canvas.width = window.innerWidth;
-      let canvasHeight = window.innerHeight-ADHEIGHT;
+      canvasHeight = window.innerHeight-ADHEIGHT;
       stage.canvas.height = canvasHeight;
       } catch {
         console.log("Three Thirteen - No game.")
