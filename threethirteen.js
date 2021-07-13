@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.10
+// By Jasper Camber Holton. V0.0.11
 (function threethirteen(){
   let seed = 24;
   function RNG(seed) {
@@ -55,11 +55,7 @@
     if(dontshowad == "true"){
       ADHEIGHT = 0;
     }
-    var canPlayerDraw = false;
-    /*if(user == player1){
-      canPlayerDraw = true; // TODO change to false in production
-    }*/
-    var canPlayerDiscard = false;
+
 
     let id;
     let player1;
@@ -83,7 +79,11 @@
         stage.canvas.height = 0;
       }
 
-
+      var canPlayerDraw = false;
+      if(user == player1 || user == null){
+        canPlayerDraw = true; // TODO change to false in production
+      }
+      var canPlayerDiscard = false;
     if(user == player2){
       send("join,x,"+user);
       canPlayerDraw = false;
@@ -800,6 +800,7 @@ function opponentDiscard(input){
     }
 
   }
+  //opponentJoinedGame();
 
 
 
@@ -834,7 +835,7 @@ var opponentscore = 0;
             //console.log("Player turn syndicated");
 
           //} else
-          if(sp[0] == "join" && user != player2){
+          if(sp[0] == "join" && sp[2] != user){
             opponentJoinedGame();
             currentTurn = i+1;
             //console.log("Opponent Joined Game");
