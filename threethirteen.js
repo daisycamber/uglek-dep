@@ -1,5 +1,8 @@
-// By Jasper Camber Holton. V0.0.1212
+// By Jasper Camber Holton. V0.0.13
 (function threethirteen(){
+
+//  const cardsroot = "/cards/"//
+const cardsroot = "https://uglek.com/media/cards/";
   let seed = 24;
   function RNG(seed) {
     // LCG using GCC's constants
@@ -81,9 +84,9 @@
         stage.canvas.height = 0;
       }
 
-      var canPlayerDraw = false;
+      var canPlayerDraw = false; // TODO change to false in production
       if(user == player1 || user == null){
-        canPlayerDraw = true; // TODO change to false in production
+        canPlayerDraw = false; // TODO change to false in production
       }
       var canPlayerDiscard = false;
     if(user == player2){
@@ -115,14 +118,14 @@ var images = []
     for(var y = 0; y < cards.length; y++){
       card = cards[y];
       images[x][y] = new Image();
-      images[x][y].src = "https://uglek.com/media/cards/" + card + suit + ".png";
+      images[x][y].src = cardsroot + card + suit + ".png";
       images[x][y].onload = handleImageLoad;
     }
 
   }
 
   var backImage = new Image();
-  backImage.src = "https://uglek.com/media/cards/back.png";
+  backImage.src = cardsroot + "back.png";
   backImage.onload = handleImageLoad;
   var imageCount = 0;
   function handleImageLoad(event) {
@@ -140,7 +143,7 @@ var images = []
     var bitmap = new createjs.Bitmap(images[suit][card]);
     bitmap.scale = cardScale;
     bitmap.x = leftbound + x-250 * cardScale/2;
-    bitmap.y = topbound + y - 350 * cardScale/2;
+    bitmap.y = topbound + y-350 * cardScale/2;
     container.addChild(bitmap);
     stage.update();
     return bitmap
@@ -314,7 +317,15 @@ function drawOpponentHandFaceup(){
           drawHand();
 
           canPlayerDiscard = false;
+
           checkPlayerWin();
+          if(opponentWinsOnNextDiscard){
+            opponentWonGame();
+            drawPlayerScore(playerscore)
+            gameOverOnNextDiscard = false;
+            opponentWinsOnNextDiscard = false;
+          }
+
         }
       });
       playerHandCount++;
@@ -462,11 +473,11 @@ var allCardsPlayed;
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      //console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
+      console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     } else {
       allCardsPlayed = false;
       score += card.getValue() + 2
-      //console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
+      console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()])
     }
 
     //score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
@@ -556,6 +567,7 @@ opponentScoreText.text = score
     var discardsuit = [firstdiscardsuit]
 
     gameOverOnNextDiscard = false;
+    opponentWinsOnNextDiscard = false;
     sortHand(false);
     drawHand();
     drawDiscard()
@@ -579,6 +591,7 @@ opponentScoreText.text = score
         ndeck[ndeck.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
         console.log(opponentHandCards[x])
       }
+      console.log("Player 1 goes out next round")
       //console.log("OPPONENT DECK: " + stringDeck(ndeck))
       opponentscore+=calculateScore(ndeck)
 
@@ -595,14 +608,16 @@ opponentScoreText.text = score
     score = calculateScore(ndeck)
     //console.log("OPPONENT SCORED: " + score)
     if(allCardsPlayed){
-      opponentWonGame();
+      opponentWinsOnNextDiscard = true;
+
       ndeck = []
       for(var x = 0; x < playerHandCards.length; x++){
         ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
       }
       //console.log(stringDeck(ndeckd))
       playerscore = calculateScore(ndeckd)
-      drawPlayerScore(playerscore)
+
+      console.log("Player 1 goes out next round")
     }
   }
   var radius = 10;
@@ -626,7 +641,7 @@ opponentScoreText.text = score
 
     var button456 = new createjs.Shape();
     button456.graphics.beginFill("lightblue").drawRoundRectComplex(leftbound + 1000 - buttonSize, topbound + 470 , buttonSize, buttonSize, radius,radius,radius,radius);
-    var text456 = new createjs.Text("654", TEXTTYPE, "#000000")
+    var text456 = new createjs.Text("456", TEXTTYPE, "#000000")
       text456.x = leftbound + 1000-50;
       text456.textAlign = 'center';
       text456.y = topbound + 505;
