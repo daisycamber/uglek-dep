@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.41
+// By Jasper Camber Holton. V0.0.42
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -395,111 +395,12 @@ function isWildcard(value){
   function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
   ndeck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
-  //Step 2: calculate what cards are not counted based on triples or quadruples
-  for(var i = 0; i < ndeck.length - 2; i ++) {
-    var nextLoc = i + 1;
-    var skipped = 0;
-    while((ndeck[nextLoc].getValue() == ndeck[i].getValue() || isWildcard(ndeck[i]) || isWildcard(ndeck[i])) //while((ndeck[nextLoc].getValue() == ndeck[i].getValue())
-            && ndeck[i].getScoringMode() != 'run') {
-      if(ndeck[nextLoc].getScoringMode() == 'run') {
-        skipped ++;
-      }
-      nextLoc ++;
-      if(nextLoc >= ndeck.length) {
-        break;
-      }
-    }
-    if(nextLoc - i - skipped >= 3) {
-      for(var j = i; j < nextLoc; j ++) {
-        if(skipped == 0 || ndeck[j].getScoringMode() != 'run')
-          ndeck[j].setCounted(false);
-      }
-    }
-  }
-  //Setp 3: calculate a straight
-  for(var i = 0; i < ndeck.length - 2; i ++) {
-    var nextLoc = i + 1;
-    var skipped = 0;
-    var lastValue = ndeck[i].getValue();
-    var lastGoodValue = lastValue;
-    //while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
-    //          || ndeck[nextLoc].getValue() == lastValue
-    //          || ndeck[nextLoc].getValue() == lastValue + 1) {
-    while(((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() || isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc])) && ((ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue()) || isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc]))) || ndeck[nextLoc].getValue() == lastValue || ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i])) {
-      if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
-        break;
-      if(isWildcard(ndeck[nextLoc]) || ((ndeck[nextLoc].getValue() == lastValue || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i])) && (ndeck[nextLoc].getSuit() != ndeck[i].getSuit() || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i]))) || ndeck[nextLoc].getScoringMode() == 'set' || ((ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc] || isWildcard(ndeck[i])) && (ndeck[nextLoc].getSuit() != ndeck[i].getSuit() || (isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc])))))) {
-        skipped ++;
-      }
-      else {
-        //the card is the correct suit, but there is a gap between
-        //  the current cards value and the last value in the run
-        if(lastGoodValue + 2 <= ndeck[nextLoc].getValue() && !isWildcard(ndeck[nextLoc])) { // TODO check this
-          skipped ++;
-          break;
-        }
-        lastGoodValue = ndeck[nextLoc].getValue();
-      }
-      lastValue = ndeck[nextLoc].getValue();
-      nextLoc ++;
-      if(nextLoc >= ndeck.length)
-         break;
-    }
-
-    if(nextLoc - i - skipped >= 3) {
-      for(var j = i; j < nextLoc; j ++) {
-        if((ndeck[j].getSuit() == ndeck[i].getSuit()) || (isWildcard(ndeck[j]) || isWildcard(ndeck[i]))) {
-          if(ndeck[j].isCounted() || ndeck[j].getScoringMode() != '' || ndeck[j].ignored()) {
-            ndeck[j].setIgnored(true); //makes sure that if this is detected as a run
-                                      // again because the length is greater than 3,
-                                      // it is ignored the second time the loop goes over it
-            ndeck[j].setCounted(false);
-          }
-          else {
-            ndeck[j].setScoringMode('set');
-            var setScore = calculateScore(ndeck);
-
-            ndeck[j].setScoringMode('run');
-            var runScore = calculateScore(ndeck);
-
-            if(setScore < runScore)
-              ndeck[j].setScoringMode('set');
-
-            calculateScore(ndeck);
-          }
-        }
-      }
-    }
-  }
-  var score = 0;
-  allCardsPlayed = true;
-  ndeck.forEach(function(card) {
-    if(card.ignored()){
-      console.log("Ignoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()]);
-    } else {
-      score += card.getValue() + 2;
-      console.log("Scoring card with value " + card.getValue() + " and suit " + suits[card.getSuit()]);
-    }
-    console.log("Is counted? " + card.isCounted());
-    if(card.isCounted()){
-      allCardsPlayed = false;
-    }
-    // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
-  });
-  console.log("All cards played? " + allCardsPlayed)
-  return score;
-}
-
-// TODO Check for wildcards
-  function oldCalculateScore(ndeck) {
-  //Step 1: Make all cards counted, not ignored
-  ndeck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
 
   //Step 2: calculate what cards are not counted based on triples or quadruples
   for(var i = 0; i < ndeck.length - 2; i ++) {
     var nextLoc = i + 1;
     var skipped = 0;
-    while(ndeck[nextLoc].getValue() == ndeck[i].getValue()
+    while(isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc]) || ndeck[nextLoc].getValue() == ndeck[i].getValue()
             && ndeck[i].getScoringMode() != 'run') {
       if(ndeck[nextLoc].getScoringMode() == 'run') {
         skipped ++;
@@ -523,17 +424,14 @@ function isWildcard(value){
     var skipped = 0;
     var lastValue = ndeck[i].getValue();
     var lastGoodValue = lastValue;
-
     while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
               || ndeck[nextLoc].getValue() == lastValue
-              || ndeck[nextLoc].getValue() == lastValue + 1) {
-
+              || ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc])) {
       if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
         break;
-
-      if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())
+      if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit() || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i]))
               || ndeck[nextLoc].getScoringMode() == 'set'
-              || (ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) {
+              || ((ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i])) {
         skipped ++;
       }
       else {
@@ -594,29 +492,10 @@ function isWildcard(value){
     // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
   });
   console.log("All cards played? " + allCardsPlayed)
+  if(allCardsPlayed){
+    score = 0;
+  }
   return score;
-}
-
-function getScore(hand){
-  score1 = oldCalculateScore(hand);
-  if(allCardsPlayed){
-    return 0
-  }
-  score2 = calculateScore(hand);
-  if(allCardsPlayed){
-    return 0
-  }
-  console.log("Score 1 - " + score1)
-  console.log("Score 2 - " + score2)
-  if(score1 == 0 || score2 == 0){
-    allCardsPlayed = true;
-  } else {
-    allCardsPlayed = false;
-  }
-  if(score1 < score2){
-    return score1
-  }
-  return score2
 }
 
 function stringCard(card) {
@@ -713,7 +592,7 @@ opponentScoreText.text = score
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
     console.log("Player deck:" + stringDeck(ndeck))
-    score = getScore(ndeck)
+    score = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
     if(allCardsPlayed){
       gameOverOnNextDiscard = true;
@@ -727,7 +606,7 @@ opponentScoreText.text = score
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
     console.log("Opponent deck:" + stringDeck(ndeck2))
-    score = getScore(ndeck2)
+    score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
     if(allCardsPlayed){
       opponentWinsOnNextDiscard = true;
