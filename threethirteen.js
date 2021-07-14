@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.42
+// By Jasper Camber Holton. V0.0.43
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -533,7 +533,7 @@ opponentScoreText.text = score
     if(currentRound == 14){
       drawGameFinishedDialog();
     } else {
-    currentCard = currentRound*2 + 1 + 1;
+
     createAndShuffleDeck();
 
     opponentHandCards = []
@@ -582,6 +582,7 @@ opponentScoreText.text = score
     drawHand();
     drawDiscard()
     drawOpponentHand();
+    currentCard = currentRound*2 + 1 + 1;
   }
   }
 
