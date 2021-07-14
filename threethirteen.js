@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.46
+// By Jasper Camber Holton. V0.0.47
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -603,7 +603,7 @@ opponentScoreText.text = score
     console.log("Player deck:" + stringDeck(ndeck))
     playerscore = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
-    if(allCardsPlayed){
+    if(score == 0){
       gameOverOnNextDiscard = true;
       console.log("You go out next round")
       //wonGame();
@@ -617,7 +617,7 @@ opponentScoreText.text = score
     console.log("Opponent deck:" + stringDeck(ndeck2))
     opponentscore = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
-    if(allCardsPlayed){
+    if(score == 0){
       opponentWinsOnNextDiscard = true;
       console.log("Opposite player goes out next round")
     }
@@ -725,14 +725,13 @@ function opponentDiscard(input){
   //console.log("Opponent Hand length - " + opponentHandCards.length)
   drawOpponentHand();
   drawDiscard();
+  checkOpponentWin();
+  canPlayerDraw = true;
+  canPlayerDiscard = false;
 
   if(gameOverOnNextDiscard){
     wonGame();
   }
-  checkOpponentWin();
-
-  canPlayerDraw = true;
-  canPlayerDiscard = false;
 }
 
   function drawDiscard(){
