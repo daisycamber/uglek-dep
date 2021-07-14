@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.43
+// By Jasper Camber Holton. V0.0.44
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -557,7 +557,11 @@ opponentScoreText.text = score
         opponentHandSuits[i-currentRound] = deck[i].Suit
         console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
-      canPlayerDraw = true;
+      if(currentRound%2 == 1){
+        canPlayerDraw = true;
+      } else {
+        canPlayerDraw = false;
+      }
     } else {
       console.log("Ready player 2")
         for (let i = 0; i < currentRound; i++) {
@@ -570,7 +574,11 @@ opponentScoreText.text = score
           playerHandSuits[i-currentRound] = deck[i].Suit
           console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
-        canPlayerDraw = false;
+        if(currentRound%2 == 0){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
     }
 
     var discardcard = [firstdiscard]
