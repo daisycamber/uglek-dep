@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.35
+// By Jasper Camber Holton. V0.0.36
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -383,7 +383,7 @@ function drawOpponentHandFaceup(){
 
 var allCardsPlayed;
 
-function isWildcard(values){
+function isWildcard(value){
   return value.getValue() == currentRound-2
 }
 
