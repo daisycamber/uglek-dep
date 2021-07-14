@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.33
+// By Jasper Camber Holton. V0.0.34
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -729,6 +729,9 @@ function opponentDiscard(input){
         canPlayerDiscard = true;
         takeDiscard();
         send("draw,discard,"+user)
+      } else {
+        canPlayerDraw = false;
+        canPlayerDiscard = true;
       }
     });
   }
@@ -748,7 +751,8 @@ function opponentDiscard(input){
       }
       discardcard = [ndeck[0].Value,ndeck[0].Suit]
     }
-
+    canPlayerDraw = false;
+    canPlayerDiscard = true;
     drawHand();
   }
 
@@ -765,6 +769,9 @@ function opponentDiscard(input){
         canPlayerDiscard = true;
         drawCardFromDeck();
         send("draw,deck,"+user)
+      } else {
+        canPlayerDraw = false;
+        canPlayerDiscard = true;
       }
     });
   }
@@ -858,7 +865,7 @@ function opponentDiscard(input){
             currentTurn = i+1;
             //console.log("Start command");
           } else if(sp[0] == "discard" && sp[2] != user){
-            canPlayerDraw = true;
+            //canPlayerDraw = true;
             opponentDiscard(sp[1]);
             //playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
             currentTurn = i+1;
