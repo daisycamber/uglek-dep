@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.40
+// By Jasper Camber Holton. V0.0.41
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -235,11 +235,11 @@ var firstdiscardsuit = deck[currentRound*2 + 1].Suit
 if(user == player1){
   console.log("Ready player 1")
   for (let i = 0; i < currentRound; i++) {
-    playerHandCards[i] = i*2+3 //deck[i].Value
-    playerHandSuits[i] = 0 //deck[i].Suit
+    playerHandCards[i] = deck[i].Value
+    playerHandSuits[i] = deck[i].Suit
   }
-  playerHandCards[0] = 0;
-  playerHandSuits[0] = 3;
+  //playerHandCards[0] = 0;
+  //playerHandSuits[0] = 3;
   for (let i = currentRound; i < currentRound*2; i++) {
     opponentHandCards[i-currentRound] = deck[i].Value
     //console.log("Opponent hand " + deck[i].Value)
