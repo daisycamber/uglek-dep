@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.34
+// By Jasper Camber Holton. V0.0.35
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -383,6 +383,10 @@ function drawOpponentHandFaceup(){
 
 var allCardsPlayed;
 
+function isWildcard(values){
+  return value.getValue() == currentRound-2
+}
+
 // TODO Check for wildcards
   function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
@@ -392,7 +396,7 @@ var allCardsPlayed;
   for(var i = 0; i < ndeck.length - 2; i ++) {
     var nextLoc = i + 1;
     var skipped = 0;
-    while((ndeck[nextLoc].getValue() == ndeck[i].getValue() || ndeck[i].getValue() == currentRound-2) //while((ndeck[nextLoc].getValue() == ndeck[i].getValue())
+    while((ndeck[nextLoc].getValue() == ndeck[i].getValue() && !isWildcard(ndeck[i])) //while((ndeck[nextLoc].getValue() == ndeck[i].getValue())
             && ndeck[i].getScoringMode() != 'run') {
       if(ndeck[nextLoc].getScoringMode() == 'run') {
         skipped ++;
@@ -420,20 +424,18 @@ var allCardsPlayed;
     //while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
     //          || ndeck[nextLoc].getValue() == lastValue
     //          || ndeck[nextLoc].getValue() == lastValue + 1) {
-    while((((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() || ndeck[nextLoc].getValue() == currentRound-2)) && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue()) || ndeck[nextLoc].getValue() == lastValue || ndeck[nextLoc].getValue() == lastValue + 1 || ndeck[nextLoc].getValue() == currentRound-2) {
+    while((((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() || isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc]))) && (ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue() || isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc]))) || ndeck[nextLoc].getValue() == lastValue || ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc])) {
 
       if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
         break;
 
-      if(ndeck[nextLoc].getValue() == currentRound-2 || ((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit()))
-              || ndeck[nextLoc].getScoringMode() == 'set'
-              || (ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) {
+      if(isWildcard(ndeck[nextLoc]) || ((ndeck[nextLoc].getValue() == lastValue || isWildcard(ndeck[nextLoc])) && (ndeck[nextLoc].getSuit() != ndeck[i].getSuit()  || isWildcard(ndeck[nextLoc]))) || ndeck[nextLoc].getScoringMode() == 'set' || ((ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc])) && (ndeck[nextLoc].getSuit() != ndeck[i].getSuit() || isWildcard(ndeck[i]) || isWildcard(ndeck[nextLoc])))) {
         skipped ++;
       }
       else {
         //the card is the correct suit, but there is a gap between
         //  the current cards value and the last value in the run
-        if(lastGoodValue + 2 <= ndeck[nextLoc].getValue() && ndeck[nextLoc].getValue() != currentRound-2) {
+        if(lastGoodValue + 2 <= ndeck[nextLoc].getValue() && !isWildcard(ndeck[nextLoc])) {
           skipped ++;
           break;
         }
@@ -449,7 +451,7 @@ var allCardsPlayed;
 
     if(nextLoc - i - skipped >= 3) {
       for(var j = i; j < nextLoc; j ++) {
-        if(ndeck[j].getSuit() == ndeck[i].getSuit() || ndeck[j].getValue() == currentRound-2) {
+        if(ndeck[j].getSuit() == ndeck[i].getSuit() || isWildcard(ndeck[j]) || isWildcard(ndeck[i])) {
           if(ndeck[j].isCounted() || ndeck[j].getScoringMode() != '' || ndeck[j].ignored()) {
             ndeck[j].setIgnored(true); //makes sure that if this is detected as a run
                                       // again because the length is greater than 3,
