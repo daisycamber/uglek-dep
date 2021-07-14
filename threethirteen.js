@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.32
+// By Jasper Camber Holton. V0.0.33
 (function threethirteen(){
 
 //  const cardsroot = "/cards/"//
@@ -392,7 +392,7 @@ var allCardsPlayed;
   for(var i = 0; i < ndeck.length - 2; i ++) {
     var nextLoc = i + 1;
     var skipped = 0;
-    while(ndeck[nextLoc].getValue() == ndeck[i].getValue()
+    while((ndeck[nextLoc].getValue() == ndeck[i].getValue() || ndeck[i].getValue() == currentRound-2) //while((ndeck[nextLoc].getValue() == ndeck[i].getValue())
             && ndeck[i].getScoringMode() != 'run') {
       if(ndeck[nextLoc].getScoringMode() == 'run') {
         skipped ++;
@@ -417,14 +417,15 @@ var allCardsPlayed;
     var lastValue = ndeck[i].getValue();
     var lastGoodValue = lastValue;
 
-    while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
-              || ndeck[nextLoc].getValue() == lastValue
-              || ndeck[nextLoc].getValue() == lastValue + 1) {
+    //while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
+    //          || ndeck[nextLoc].getValue() == lastValue
+    //          || ndeck[nextLoc].getValue() == lastValue + 1) {
+    while((((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() || ndeck[nextLoc].getValue() == currentRound-2)) && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue()) || ndeck[nextLoc].getValue() == lastValue || ndeck[nextLoc].getValue() == lastValue + 1 || ndeck[nextLoc].getValue() == currentRound-2) {
 
       if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
         break;
 
-      if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())
+      if(ndeck[nextLoc].getValue() == currentRound-2 || ((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit()))
               || ndeck[nextLoc].getScoringMode() == 'set'
               || (ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) {
         skipped ++;
@@ -432,7 +433,7 @@ var allCardsPlayed;
       else {
         //the card is the correct suit, but there is a gap between
         //  the current cards value and the last value in the run
-        if(lastGoodValue + 2 <= ndeck[nextLoc].getValue()) {
+        if(lastGoodValue + 2 <= ndeck[nextLoc].getValue() && ndeck[nextLoc].getValue() != currentRound-2) {
           skipped ++;
           break;
         }
@@ -448,7 +449,7 @@ var allCardsPlayed;
 
     if(nextLoc - i - skipped >= 3) {
       for(var j = i; j < nextLoc; j ++) {
-        if(ndeck[j].getSuit() == ndeck[i].getSuit()) {
+        if(ndeck[j].getSuit() == ndeck[i].getSuit() || ndeck[j].getValue() == currentRound-2) {
           if(ndeck[j].isCounted() || ndeck[j].getScoringMode() != '' || ndeck[j].ignored()) {
             ndeck[j].setIgnored(true); //makes sure that if this is detected as a run
                                       // again because the length is greater than 3,
@@ -666,7 +667,7 @@ function opponentDrawDeck(){
   currentCard++;
   drawOpponentHand();
   console.log("Opponent drew from deck")
-canPlayerDraw = false;
+  canPlayerDraw = false;
 }
 function opponentTakeDiscard(){
   // Draw card to the oppponents hand from the discard
@@ -680,7 +681,7 @@ function opponentTakeDiscard(){
     drawDiscard();
   }
   console.log("Opponent drew discard")
-canPlayerDraw = false;
+  canPlayerDraw = false;
 }
 
 function opponentDiscard(input){
@@ -723,7 +724,7 @@ function opponentDiscard(input){
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
       console.log("canPlayerDraw: " + canPlayerDraw);
-      if(canPlayerDraw){
+      if(canPlayerDraw && playerHandCards.length < currentRound + 1){
         canPlayerDraw = false;
         canPlayerDiscard = true;
         takeDiscard();
@@ -759,7 +760,7 @@ function opponentDiscard(input){
     cardDeck = drawFacedownCard(350,500);
     cardDeck.on("mousedown", function(event) {
       console.log("canPlayerDraw: " + canPlayerDraw);
-      if(canPlayerDraw){
+      if(canPlayerDraw && playerHandCards.length < currentRound + 1){
         canPlayerDraw = false;
         canPlayerDiscard = true;
         drawCardFromDeck();
