@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.73 - Fixed score placement
+// By Jasper Camber Holton. V0.0.74 - More robust scoring
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -620,28 +620,48 @@ opponentScoreText.text = score
 
 
   function checkPlayerWin(){
+    sortHand(true);
+    sortHand(true);
     ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
-    sortHand(true);
     score = calculateScore(ndeck)
+    sortHand(false);
+    sortHand(false);
+    ndeck = []
+    for(var x = 0; x < playerHandCards.length; x++){
+      ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
+    }
+    score2 = calculateScore(ndeck)
+
     //console.log("PLAYER SCORED: " + score)
-    if(score == 0){
+    if(score == 0 || score2 == 0){
       gameOverOnNextDiscard = true;
       console.log("You go out next round")
       //wonGame();
     }
   }
   function checkOpponentWin(){
+
+    sortOpponentHand(true);
+    sortOpponentHand(true);
     ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    sortOpponentHand(true);
-    score = calculateScore(ndeck2)
+    score = calculateScore(ndeck)
+    sortOpponentHand(false);
+    sortOpponentHand(false);
+    ndeck2 = []
+    for(var x = 0; x < opponentHandCards.length; x++){
+      ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+    }
+    score2 = calculateScore(ndeck)
+    //sortOpponentHand(true);
+    //score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
-    if(score == 0){
+    if(score == 0 || score2 == 0){
       opponentWinsOnNextDiscard = true;
       console.log("Opposite player goes out next round")
     }
