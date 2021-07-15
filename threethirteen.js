@@ -1,7 +1,7 @@
-// By Jasper Camber Holton. V0.0.68 - fixing feedback loop
+// By Jasper Camber Holton. V0.0.69 - fixing feedback loop
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
-
+  var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
   const cardnames = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
   //const cardsroot = "/cards/"
@@ -893,7 +893,7 @@ function opponentDiscard(input){
   container.addChild(opponentScoreText)
 
 
-  let currentTurn = 0;
+
   function readCallback(){
     gp = gameplay;
         for(let i = currentTurn; i < gp.length; i++){
