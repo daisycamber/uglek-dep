@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.64
+// By Jasper Camber Holton. V0.0.65
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
 
@@ -416,7 +416,6 @@ var allCardsPlayed;
 function isWildcard(value){
   return value.getValue() == currentRound-2
 }
-
 
 // TODO Check for wildcards
   function calculateScore(ndeck) {
