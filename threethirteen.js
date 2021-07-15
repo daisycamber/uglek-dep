@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.67 - fixing scoring
+// By Jasper Camber Holton. V0.0.68 - fixing feedback loop
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
 
@@ -315,16 +315,14 @@ function drawOpponentHandFaceup(){
           drawDiscard();
           send("discard,"+event.target.card + "." + event.target.suit,+","+user)
           drawHand();
-
-
-
           checkPlayerWin();
           if(opponentWinsOnNextDiscard){
             opponentWonGame();
             gameOverOnNextDiscard = false;
             opponentWinsOnNextDiscard = false;
           }
-
+          canPlayerDiscard = false;
+          canPlayerDraw = false;
         }
       });
       playerHandCount++;
@@ -851,6 +849,7 @@ function opponentDiscard(input){
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
       xhr.send(text);
       canPlayerDraw = false;
+      currentTurn++;
   }
 
   var opjContainer;
