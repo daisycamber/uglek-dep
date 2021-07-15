@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.78 - Trying to fix broken score counter
+// By Jasper Camber Holton. V0.0.79 - Trying to fix broken score counter
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -508,22 +508,22 @@ function isWildcard(value){
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+      //console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
       val = card.getValue() + 2;
       if(val > 10){
         val = 10;
       }
       score += val;
-      console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+      //console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     }
-    console.log("Is counted? " + card.isCounted());
+    //console.log("Is counted? " + card.isCounted());
     if(card.isCounted()){
       allCardsPlayed = false;
     }
     // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
   });
-  console.log("All cards played? " + allCardsPlayed)
+  //console.log("All cards played? " + allCardsPlayed)
   if(allCardsPlayed){
     score = 0;
   }
