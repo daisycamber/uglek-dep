@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.65
+// By Jasper Camber Holton. V0.0.66
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
 
@@ -622,7 +622,7 @@ opponentScoreText.text = score
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
-    sortHand(false);
+    sortHand(true);
     playerscore = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
     if(playerscore == 0){
@@ -636,7 +636,7 @@ opponentScoreText.text = score
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    sortOpponentHand(false);
+    sortOpponentHand(true);
     opponentscore = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
     if(opponentscore == 0){
