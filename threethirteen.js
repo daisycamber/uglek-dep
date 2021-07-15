@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.48
+// By Jasper Camber Holton. V0.0.49
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -462,15 +462,15 @@ function isWildcard(value){
           }
           else {
             ndeck[j].setScoringMode('set');
-            var setScore = oldCalculateScore(ndeck);
+            var setScore = calculateScore(ndeck);
 
             ndeck[j].setScoringMode('run');
-            var runScore = oldCalculateScore(ndeck);
+            var runScore = calculateScore(ndeck);
 
             if(setScore < runScore)
               ndeck[j].setScoringMode('set');
 
-            oldCalculateScore(ndeck);
+            calculateScore(ndeck);
           }
         }
       }
@@ -1009,10 +1009,19 @@ function opponentDiscard(input){
       wonContainer.addChild(wonDialog);
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
+      calculateOpponentScore();
 
       drawOpponentScore(opponentscore)
       drawOpponentHandFaceup();
     }
+  }
+
+  function calculateOpponentScore(){
+    ndeck2 = []
+    for(var x = 0; x < opponentHandCards.length; x++){
+      ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+    }
+    opponentscore = calculateScore(ndeck2)
   }
 
 
