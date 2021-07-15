@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.61
+// By Jasper Camber Holton. V0.0.62
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
