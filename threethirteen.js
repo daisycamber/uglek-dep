@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.55
+// By Jasper Camber Holton. V0.0.53
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -52,8 +52,9 @@
     var dontshowad;
     try {
       dontshowad = document.getElementById("dontshowad").innerHTML;
-    } catch {
 
+    } catch {
+      //console.log("No game")
     }
     let ADHEIGHT = 90;
     if(dontshowad == "true"){
@@ -76,6 +77,7 @@
       player2 = document.getElementById("player2").innerHTML;
       user = document.getElementById("user").innerHTML;
       rng = new RNG(parseInt(id));
+      //console.log("Setting canvas size")
       stage.canvas.width = window.innerWidth;
       canvasHeight = window.innerHeight-ADHEIGHT;
       stage.canvas.height = canvasHeight;
@@ -236,8 +238,11 @@ if(user == player1){
     playerHandCards[i] = deck[i].Value
     playerHandSuits[i] = deck[i].Suit
   }
+  //playerHandCards[0] = 0;
+  //playerHandSuits[0] = 3;
   for (let i = currentRound; i < currentRound*2; i++) {
     opponentHandCards[i-currentRound] = deck[i].Value
+    //console.log("Opponent hand " + deck[i].Value)
     opponentHandSuits[i-currentRound] = deck[i].Suit
   }
 } else {
@@ -289,6 +294,7 @@ function drawOpponentHandFaceup(){
         yoffset = yo1;
         ioffset = 7;
       }
+      //console.log("Drawing card " + playerHandCards[i] + " of " + playerHandSuits[i])
       playerHandObjects[playerHandCount] = drawCard(playerHandSuits[i],playerHandCards[i],1000-(1000/7 * (i-ioffset)), 1000-yoffset);
       playerHandObjects[playerHandCount].suit = playerHandSuits[i]
       playerHandObjects[playerHandCount].card = playerHandCards[i]
@@ -310,6 +316,7 @@ function drawOpponentHandFaceup(){
           discardsuit[discardsuit.length] = event.target.suit
           playerHandCards = nCards
           playerHandSuits = nSuits
+          console.log("Hand length - " + playerHandCards.length)
           drawDiscard();
           send("discard,"+event.target.card + "." + event.target.suit,+","+user)
           drawHand();
@@ -543,10 +550,12 @@ opponentScoreText.text = score
       for (let i = 0; i < currentRound; i++) {
         playerHandCards[i] = deck[i].Value
         playerHandSuits[i] = deck[i].Suit
+        console.log("Player hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
       for (let i = currentRound; i < currentRound*2; i++) {
         opponentHandCards[i-currentRound] = deck[i].Value
         opponentHandSuits[i-currentRound] = deck[i].Suit
+        console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
       }
       if(currentRound%2 == 1){
         canPlayerDraw = true;
@@ -558,10 +567,12 @@ opponentScoreText.text = score
         for (let i = 0; i < currentRound; i++) {
           opponentHandCards[i] = deck[i].Value
           opponentHandSuits[i] = deck[i].Suit
+          console.log("Player hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
         for (let i = currentRound; i < currentRound*2; i++) {
           playerHandCards[i-currentRound] = deck[i].Value
           playerHandSuits[i-currentRound] = deck[i].Suit
+          console.log("Opponent hand - " + deck[i].Value + " of " + deck[i].Suit)
         }
         if(currentRound%2 == 0){
           canPlayerDraw = true;
@@ -589,10 +600,13 @@ opponentScoreText.text = score
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
+    console.log("Player deck:" + stringDeck(ndeck))
     playerscore = calculateScore(ndeck)
+    //console.log("PLAYER SCORED: " + score)
     if(playerscore == 0){
       gameOverOnNextDiscard = true;
       console.log("You go out next round")
+      //wonGame();
     }
   }
   function checkOpponentWin(){
@@ -602,6 +616,7 @@ opponentScoreText.text = score
     }
     console.log("Opponent deck:" + stringDeck(ndeck2))
     opponentscore = calculateScore(ndeck2)
+    //console.log("OPPONENT SCORED: " + score)
     if(opponentscore == 0){
       opponentWinsOnNextDiscard = true;
       console.log("Opposite player goes out next round")
@@ -866,6 +881,7 @@ function opponentDiscard(input){
           if(sp[0] == "join" && sp[2] != user){
             opponentJoinedGame();
             currentTurn = i+1;
+            //console.log("Opponent Joined Game");
           } else if(sp[0] == "draw" && sp[2] != user){
               if(sp[1] == "deck"){
                 opponentDrawDeck();
@@ -873,14 +889,19 @@ function opponentDiscard(input){
                 opponentTakeDiscard();
               }
               canPlayerDraw = false;
-              currentTurn = i+1;
-          } else if(sp[0] == "discard" && sp[2] != user){
-            opponentDiscard(sp[1]);
+            //newGame(parseInt(sp[1]));
+            //container.removeChild(difficultyContainer);
             currentTurn = i+1;
+            //console.log("Start command");
+          } else if(sp[0] == "discard" && sp[2] != user){
+            //canPlayerDraw = true;
+            opponentDiscard(sp[1]);
+            //playTurn(parseInt(sp[1]),parseInt(sp[2]), parseInt(sp[3]))
+            currentTurn = i+1;
+            //console.log("Set command");
           } else {
             currentTurn = i+1;
           }
-
         }
   }
 
@@ -1056,10 +1077,29 @@ function opponentDiscard(input){
     if(ticks > 5*60){
       ticks = 0;
       read();
+      //updateSelectorBalls();
+      console.log("Reading");
+      //logBoard();
     }
     ticks++;
     stage.update();
   }
+
+  /*const interval = setInterval(function() {
+      read();
+      updateSelectorBalls();
+      console.log("Reading");
+      stage.update();
+   }, 5000);*/
+
   createjs.Ticker.addEventListener("tick", handleTick);
+
+
+  //wonGame();
   stage.update();
+
+
+
+  //dropConfetti();
+  //wonGame();
 })();
