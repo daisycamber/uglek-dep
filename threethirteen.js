@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.54
+// By Jasper Camber Holton. V0.0.55
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -865,6 +865,7 @@ function opponentDiscard(input){
           sp = gp[i].split(",");
           if(sp[0] == "join" && sp[2] != user){
             opponentJoinedGame();
+            currentTurn = i+1;
           } else if(sp[0] == "draw" && sp[2] != user){
               if(sp[1] == "deck"){
                 opponentDrawDeck();
@@ -872,10 +873,14 @@ function opponentDiscard(input){
                 opponentTakeDiscard();
               }
               canPlayerDraw = false;
+              currentTurn = i+1;
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
+            currentTurn = i+1;
+          } else {
+            currentTurn = i+1;
           }
-          currentTurn = i+1;
+
         }
   }
 
