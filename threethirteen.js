@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.71 -- Fixed scoring
+// By Jasper Camber Holton. V0.0.72 -- Fixed scoring
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -505,7 +505,11 @@ function isWildcard(value){
     if(card.ignored()){
       console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
-      score += card.getValue() + 2;
+      val = card.getValue() + 2;
+      if(val > 10){
+        val = 10;
+      }
+      score += val;
       console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     }
     console.log("Is counted? " + card.isCounted());
@@ -566,8 +570,7 @@ opponentScoreText.text = score
     playerHandSuits = [] // = [0,1,3,3,0,1,0,3,2,1]
     var deckCount = currentRound*2+1
     // display 5 results
-    firstdiscard = deck[currentRound*2 + 1].Value
-    firstdiscardsuit = deck[currentRound*2 + 1].Suit
+
     if(user == player1){
       console.log("Ready player 1")
       for (let i = 0; i < currentRound; i++) {
@@ -599,6 +602,8 @@ opponentScoreText.text = score
           canPlayerDraw = false;
         }
     }
+    firstdiscard = deck[currentRound*2 + 1].Value
+    firstdiscardsuit = deck[currentRound*2 + 1].Suit
 
     var discardcard = [firstdiscard]
     var discardsuit = [firstdiscardsuit]
