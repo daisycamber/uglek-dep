@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.76 - Fixing more robust scoring again
+// By Jasper Camber Holton. V0.0.77 - Aesthetic fixes
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -910,7 +910,7 @@ function opponentDiscard(input){
   playerScoreText.textAlign = 'center';
   playerScoreText.y = topbound + 600;
   container.addChild(playerScore)
-  container.addChild(playerScoreText)
+
 
   var opponentscore = 0;
 
@@ -922,6 +922,7 @@ function opponentDiscard(input){
   opponentScoreText.y = topbound + 400;
   container.addChild(opponentScore)
   container.addChild(opponentScoreText)
+  container.addChild(playerScoreText)
 
 
 
