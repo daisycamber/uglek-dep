@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.54
+// By Jasper Camber Holton. V0.0.55
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -880,9 +880,9 @@ function opponentDiscard(input){
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
             currentTurn = i+1;
-          } else {
+          }/* else {
             currentTurn = i+1;
-          }
+          }*/
         }
   }
 
@@ -1058,6 +1058,7 @@ function opponentDiscard(input){
     if(ticks > 5*60){
       ticks = 0;
       read();
+      console.log("Reading");
     }
     ticks++;
     stage.update();
