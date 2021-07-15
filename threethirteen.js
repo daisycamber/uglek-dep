@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.50
+// By Jasper Camber Holton. V0.0.51
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -810,6 +810,7 @@ function opponentDiscard(input){
       xhr.open("POST", "https://uglek.com/game/" + id + "/post/", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
       xhr.send(text);
+      canPlayerDraw = false;
   }
 
   var opjContainer;
