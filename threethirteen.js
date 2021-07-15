@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.62
+// By Jasper Camber Holton. V0.0.63
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -360,6 +360,37 @@ function drawOpponentHandFaceup(){
     //playerHandSuits.reverse();
   }
 
+
+  function sortOpponentHand(numberOrSuit){
+    //drawOpponentHandFaceup(); // TODO comment out in production
+    //1) combine the arrays:
+    var list = [];
+    for (var j = 0; j < opponentHandCards.length; j++)
+        list.push({'card': opponentHandCards[j], 'suit': opponentHandSuits[j]});
+    //2) sort:
+    if(numberOrSuit){
+      list.sort(function(a, b) {
+          return ((a.card > b.card) ? -1 : ((a.card == b.card) ? 0 : 1));
+          //Sort could be modified to, for example, sort on the age
+          // if the name is the same.
+      });
+    } else {
+      list.sort(function(a, b) {
+          return ((a.suit < b.suit) ? -1 : ((a.suit == b.suit) ? 0 : 1));
+          //Sort could be modified to, for example, sort on the age
+          // if the name is the same.
+      });
+    }
+
+    //3) separate them back out:
+    for (var k = 0; k < list.length; k++) {
+        opponentHandCards[k] = list[k].card;
+        opponentHandSuits[k] = list[k].suit;
+    }
+    //playerHandCards.reverse(); // TODO reerse sorting
+    //playerHandSuits.reverse();
+  }
+
   function Card(valueInput, suitInput) {
   var suit = suitInput;
   var value = Number(valueInput);
@@ -591,6 +622,7 @@ opponentScoreText.text = score
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
+    sortHand(false);
     playerscore = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
     if(playerscore == 0){
@@ -604,6 +636,7 @@ opponentScoreText.text = score
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
+    sortOpponentHand(false);
     opponentscore = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
     if(opponentscore == 0){
