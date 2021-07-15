@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.56
+// By Jasper Camber Holton. V0.0.57
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -385,6 +385,7 @@ function isWildcard(value){
   return value.getValue() == currentRound-2
 }
 
+//
 // TODO Check for wildcards
   function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
