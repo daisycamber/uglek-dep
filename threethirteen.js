@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.79 - Trying to fix broken score counter
+// By Jasper Camber Holton. V0.0.80 - Trying to fix broken score counter
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -635,7 +635,7 @@ function stringDeck(deck) {
     score2 = calculateScore(ndeck)
     sortHand(playerSorted);
 
-    //console.log("PLAYER SCORED: " + score)
+    console.log("PLAYER SCORED: " + score + " or " + score2)
     if(score == 0 || score2 == 0){
       gameOverOnNextDiscard = true;
       console.log("You go out next round")
