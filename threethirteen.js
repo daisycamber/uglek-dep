@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.51
+// By Jasper Camber Holton. V0.0.52
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -480,10 +480,10 @@ function isWildcard(value){
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      console.log("Ignoring card with value " + card.getValue() + " and suit " + suitnames[card.getSuit()]);
+      console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
       score += card.getValue() + 2;
-      console.log("Scoring card with value " + card.getValue() + " and suit " + suitnames[card.getSuit()]);
+      console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     }
     console.log("Is counted? " + card.isCounted());
     if(card.isCounted()){
