@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.59
+// By Jasper Camber Holton. V0.0.6
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -1008,8 +1008,8 @@ function opponentDiscard(input){
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
       calculateOpponentScore();
-
       drawOpponentScore(opponentscore)
+      drawPlayerScore(playerscore)
       drawOpponentHandFaceup();
     }
   }
@@ -1021,9 +1021,6 @@ function opponentDiscard(input){
     }
     opponentscore = calculateScore(ndeck2)
   }
-
-
-
   // Draw a dialog to create a new game
   function opponentWonGame() {
     if(!gameIsWon){
