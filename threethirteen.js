@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.72 -- Fixed scoring
+// By Jasper Camber Holton. V0.0.73 - Fixed score placement
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -882,7 +882,7 @@ function opponentDiscard(input){
   var playerScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
   playerScoreText.x = leftbound + 50;
   playerScoreText.textAlign = 'center';
-  playerScoreText.y = topbound + 400;
+  playerScoreText.y = topbound + 600;
   container.addChild(playerScore)
   container.addChild(playerScoreText)
 
@@ -893,7 +893,7 @@ function opponentDiscard(input){
   var opponentScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
   opponentScoreText.x = leftbound + 50;
   opponentScoreText.textAlign = 'center';
-  opponentScoreText.y = topbound + 600;
+  opponentScoreText.y = topbound + 400;
   container.addChild(opponentScore)
   container.addChild(opponentScoreText)
 
