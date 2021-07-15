@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.80 - Trying to fix broken score counter
+// By Jasper Camber Holton. V0.0.81 - Fixed it!!!
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -1100,7 +1100,7 @@ opponentScoreText.text = input
     sortOpponentHand(false);
     ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
-      ndeck[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+      ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
     score2 = calculateScore(ndeck2)
     if(score < score2){
