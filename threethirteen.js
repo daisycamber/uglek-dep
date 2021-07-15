@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.77 - Aesthetic fixes
+// By Jasper Camber Holton. V0.0.78 - Trying to fix broken score counter
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -548,13 +548,7 @@ function stringDeck(deck) {
 }
 
 
-  function drawPlayerScore(score){
-playerScoreText.text = score
-  }
 
-  function drawOpponentScore(score){
-opponentScoreText.text = score
-  }
 
   function drawGameFinishedDialog(){
     console.log("Game finished")
@@ -909,7 +903,7 @@ function opponentDiscard(input){
   playerScoreText.x = leftbound + 50;
   playerScoreText.textAlign = 'center';
   playerScoreText.y = topbound + 600;
-  container.addChild(playerScore)
+
 
 
   var opponentscore = 0;
@@ -920,9 +914,18 @@ function opponentDiscard(input){
   opponentScoreText.x = leftbound + 50;
   opponentScoreText.textAlign = 'center';
   opponentScoreText.y = topbound + 400;
+  container.addChild(playerScore)
   container.addChild(opponentScore)
   container.addChild(opponentScoreText)
   container.addChild(playerScoreText)
+
+  function drawPlayerScore(input){
+playerScoreText.text = input
+  }
+
+  function drawOpponentScore(input){
+opponentScoreText.text = input
+  }
 
 
 
@@ -1046,6 +1049,7 @@ function opponentDiscard(input){
   function calculateAndDrawScores(){
     opponentscore+=calculateOpponentScore();
     playerscore+=calculatePlayerScore();
+
     drawOpponentScore(opponentscore);
     drawPlayerScore(playerscore);
   }
@@ -1103,7 +1107,6 @@ function opponentDiscard(input){
       return score
     }
     return score2
-
   }
   function calculatePlayerScore(){
     sortHand(true);
