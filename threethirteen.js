@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.74 - More robust scoring
+// By Jasper Camber Holton. V0.0.75 - Fixing more robust scoring
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -650,14 +650,14 @@ opponentScoreText.text = score
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    score = calculateScore(ndeck)
+    score = calculateScore(ndeck2)
     sortOpponentHand(false);
     sortOpponentHand(false);
     ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    score2 = calculateScore(ndeck)
+    score2 = calculateScore(ndeck2)
     //sortOpponentHand(true);
     //score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
@@ -1078,19 +1078,46 @@ function opponentDiscard(input){
   }
 
   function calculateOpponentScore(){
+    sortOpponentHand(true);
+    sortOpponentHand(true);
     ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
+    score = calculateScore(ndeck2)
+    sortOpponentHand(false);
+    sortOpponentHand(false);
+    ndeck2 = []
+    for(var x = 0; x < opponentHandCards.length; x++){
+      ndeck[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
+    }
+    score2 = calculateScore(ndeck2)
+    if(score1 < score2){
+      return score1
+    }
+    return score2
 
-    return calculateScore(ndeck2)
   }
   function calculatePlayerScore(){
-    ndeck2 = []
+    sortHand(true);
+    sortHand(true);
+    ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
-      ndeck2[ndeck2.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
+      ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
-    return calculateScore(ndeck2)
+    score = calculateScore(ndeck)
+    sortHand(false);
+    sortHand(false);
+    ndeck = []
+    for(var x = 0; x < playerHandCards.length; x++){
+      ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
+    }
+    score2 = calculateScore(ndeck)
+    if(score1 < score2){
+      return score1
+    }
+    return score2
+
   }
   // Draw a dialog to create a new game
   function opponentWonGame() {
