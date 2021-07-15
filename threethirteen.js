@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.70
+// By Jasper Camber Holton. V0.0.71 -- Fixed scoring
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -620,9 +620,9 @@ opponentScoreText.text = score
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
     sortHand(true);
-    playerscore = calculateScore(ndeck)
+    score = calculateScore(ndeck)
     //console.log("PLAYER SCORED: " + score)
-    if(playerscore == 0){
+    if(score == 0){
       gameOverOnNextDiscard = true;
       console.log("You go out next round")
       //wonGame();
@@ -634,9 +634,9 @@ opponentScoreText.text = score
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
     sortOpponentHand(true);
-    opponentscore = calculateScore(ndeck2)
+    score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
-    if(opponentscore == 0){
+    if(score == 0){
       opponentWinsOnNextDiscard = true;
       console.log("Opposite player goes out next round")
     }
