@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.75 - Fixing more robust scoring
+// By Jasper Camber Holton. V0.0.76 - Fixing more robust scoring again
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -314,8 +314,9 @@ function drawOpponentHandFaceup(){
           playerHandSuits = nSuits
           drawDiscard();
           send("discard,"+event.target.card + "." + event.target.suit,+","+user)
-          drawHand();
+
           checkPlayerWin();
+          drawHand();
           if(opponentWinsOnNextDiscard){
             opponentWonGame();
             gameOverOnNextDiscard = false;
@@ -328,7 +329,11 @@ function drawOpponentHandFaceup(){
       playerHandCount++;
     }
   }
+
+var playerSorted = false;
+
   function sortHand(numberOrSuit){
+    playerSorted = numberOrSuit;
     //drawOpponentHandFaceup(); // TODO comment out in production
     //1) combine the arrays:
     var list = [];
@@ -634,6 +639,7 @@ opponentScoreText.text = score
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
     score2 = calculateScore(ndeck)
+    sortHand(playerSorted);
 
     //console.log("PLAYER SCORED: " + score)
     if(score == 0 || score2 == 0){
@@ -1092,8 +1098,8 @@ function opponentDiscard(input){
       ndeck[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
     score2 = calculateScore(ndeck2)
-    if(score1 < score2){
-      return score1
+    if(score < score2){
+      return score
     }
     return score2
 
@@ -1113,8 +1119,8 @@ function opponentDiscard(input){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
     score2 = calculateScore(ndeck)
-    if(score1 < score2){
-      return score1
+    if(score < score2){
+      return score
     }
     return score2
 
