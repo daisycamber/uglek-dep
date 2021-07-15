@@ -1,4 +1,5 @@
-// By Jasper Camber Holton. V0.0.63
+// By Jasper Camber Holton. V0.0.64
+// TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
