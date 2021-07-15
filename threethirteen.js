@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.52
+// By Jasper Camber Holton. V0.0.53
 (function threethirteen(){
 
   const suitnames = ["S", "H", "C", "D"];
@@ -677,10 +677,26 @@ function takeDiscard(){
 }
 
 function opponentDrawDeck(){
-  // Draw card to the opponents hand from the deck
-  opponentHandCards[opponentHandCards.length] = deck[currentCard].Value
-  opponentHandSuits[opponentHandSuits.length] = deck[currentCard].Suit
-  currentCard++;
+  if(currentCard < 52){
+    // Draw card to the opponents hand from the deck
+    opponentHandCards[opponentHandCards.length] = deck[currentCard].Value
+    opponentHandSuits[opponentHandSuits.length] = deck[currentCard].Suit
+    currentCard++;
+  } else {
+    // Use discard as ndeck
+    ndeck = []
+    for(var x = 0; x < discardcard.length; x++){
+      ndeck[ndeck.length] = (new Card(discardcard[x], discardsuit[x]))
+    }
+    currentCard = 1;
+    discardcard = [ndeck[0].Value]
+    discardsuit = [ndeck[0].Suit]
+    deck = []
+    for(var x = 1; x < ndeck.length; x++){
+      deck[x-1] = ndeck[x]
+    }
+    drawDiscard();
+  }
   drawOpponentHand();
   console.log("Opponent drew from deck")
   canPlayerDraw = false;
@@ -764,11 +780,18 @@ function opponentDiscard(input){
         ndeck[ndeck.length] = (new Card(discardcard[x], discardsuit[x]))
       }
       currentCard = 1;
-      discardcard = [ndeck[0].Value,ndeck[0].Suit]
+      discardcard = [ndeck[0].Value]
+      discardsuit = [ndeck[0].Suit]
+      deck = []
+      for(var x = 1; x < ndeck.length; x++){
+        deck[x-1] = ndeck[x]
+      }
+      drawDiscard();
     }
     canPlayerDraw = false;
     canPlayerDiscard = true;
     drawHand();
+
   }
 
   function drawDeck(cardsInDeck) { // The number of cards to draw
