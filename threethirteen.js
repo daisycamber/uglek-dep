@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.66
+// By Jasper Camber Holton. V0.0.67 - fixing scoring
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
 
@@ -321,7 +321,6 @@ function drawOpponentHandFaceup(){
           checkPlayerWin();
           if(opponentWinsOnNextDiscard){
             opponentWonGame();
-            drawPlayerScore(playerscore)
             gameOverOnNextDiscard = false;
             opponentWinsOnNextDiscard = false;
           }
@@ -506,18 +505,18 @@ function isWildcard(value){
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+      //console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
       score += card.getValue() + 2;
-      console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+      //console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     }
-    console.log("Is counted? " + card.isCounted());
+    //console.log("Is counted? " + card.isCounted());
     if(card.isCounted()){
       allCardsPlayed = false;
     }
     // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
   });
-  console.log("All cards played? " + allCardsPlayed)
+  //console.log("All cards played? " + allCardsPlayed)
   if(allCardsPlayed){
     score = 0;
   }
@@ -1013,6 +1012,13 @@ function opponentDiscard(input){
 
   }
 
+  function calculateAndDrawScores(){
+    opponentscore+=calculateOpponentScore();
+    playerscore+=calculatePlayerScore();
+    drawOpponentScore(opponentscore);
+    drawPlayerScore(playerscore);
+  }
+
   let difficultyColors = ["#bafa25", "#e4f218", "#faa537", "#c70808"];
   let difficultyNames = ["Easy", "Medium", "Difficult", "Expert"]; //["Simple", "Easy", "Intermed.", "Expert"];
   let wonContainer;
@@ -1032,17 +1038,17 @@ function opponentDiscard(input){
       wonText.x = leftbound + 360;
       wonText.y = topbound + 925;
       wonContainer.on("mousedown", function(event) {
+        calculateAndDrawScores();
         container.removeChild(wonContainer);
         // Start next game
         nextRound();
         gameIsWon = false;
+
       });
       wonContainer.addChild(wonDialog);
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
-      calculateOpponentScore();
-      drawOpponentScore(opponentscore)
-      drawPlayerScore(playerscore)
+
       drawOpponentHandFaceup();
     }
   }
@@ -1052,7 +1058,15 @@ function opponentDiscard(input){
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
-    opponentscore = calculateScore(ndeck2)
+
+    return calculateScore(ndeck2)
+  }
+  function calculatePlayerScore(){
+    ndeck2 = []
+    for(var x = 0; x < playerHandCards.length; x++){
+      ndeck2[ndeck2.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
+    }
+    return calculateScore(ndeck2)
   }
   // Draw a dialog to create a new game
   function opponentWonGame() {
@@ -1064,9 +1078,11 @@ function opponentDiscard(input){
       wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
       let wonText = new createjs.Text("Your opponent won!", TEXTTYPE, "#000000")
-      wonText.x = leftbound + 360;
+      wonText.textAlign = 'center'
+      wonText.x = leftbound + 500;
       wonText.y = topbound + 925;
       wonContainer.on("mousedown", function(event) {
+        calculateAndDrawScores();
         container.removeChild(wonContainer);
         gameIsWon = false
         nextRound();
@@ -1076,7 +1092,6 @@ function opponentDiscard(input){
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
     }
-    drawPlayerScore(playerscore)
     drawOpponentHandFaceup();
   }
   var userStartsGame = false;
