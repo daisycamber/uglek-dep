@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.964 - Fixes
+// By Jasper Camber Holton. V0.0.965 - Fixed duplicate glitch (currentCard)
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -641,7 +641,7 @@ function stringDeck(deck) {
     }
     firstdiscard = deck[cr*2 + 1].Value
     firstdiscardsuit = deck[cr*2 + 1].Suit
-    currentCard = currentRound*2 + 1 + 1;
+    currentCard = cr*2 + 1 + 1;
 
 
 
