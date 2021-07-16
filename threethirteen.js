@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.95 - Fixes
+// By Jasper Camber Holton. V0.0.96 - Added prepareForNextRound() to fix glitch where opposing players turn is not counted
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -597,13 +597,7 @@ function stringDeck(deck) {
 
   }
   //
-
-  function nextRound(){
-    currentRound = currentRound + 1;
-    if(currentRound == 14){
-      drawGameFinishedDialog();
-    } else {
-
+  function prepareForNextRound(){
     createAndShuffleDeck();
 
     opponentHandCards = []
@@ -652,6 +646,14 @@ function stringDeck(deck) {
 
     var discardcard = [firstdiscard]
     var discardsuit = [firstdiscardsuit]
+  }
+
+  function nextRound(){
+    currentRound = currentRound + 1;
+    if(currentRound == 14){
+      drawGameFinishedDialog();
+    } else {
+
 
     gameOverOnNextDiscard = false;
     opponentWinsOnNextDiscard = false;
@@ -1158,6 +1160,7 @@ opponentScoreText.text = input
       container.addChild(wonContainer);
 
       drawOpponentHandFaceup();
+      prepareForNextRound();
     }
   }
 
@@ -1225,8 +1228,9 @@ opponentScoreText.text = input
       wonContainer.addChild(wonDialog);
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
+      drawOpponentHandFaceup();
+      prepareForNextRound();
     }
-    drawOpponentHandFaceup();
   }
   let ticks = 0;
 
