@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.965 - Fixed duplicate glitch (currentCard)
+// By Jasper Camber Holton. V0.0.966 - Fixing scoring
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -421,6 +421,7 @@ var allCardsPlayed;
 function isWildcard(value){
   return value.getValue() == currentRound-2
 }
+
 
   function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
