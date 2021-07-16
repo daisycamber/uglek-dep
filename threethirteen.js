@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.94 - Fixes
+// By Jasper Camber Holton. V0.0.95 - Fixes
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
