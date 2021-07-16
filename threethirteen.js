@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.82
+// By Jasper Camber Holton. V0.0.83 - Adding star to show whos turn it is
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -324,6 +324,7 @@ function drawOpponentHandFaceup(){
           }
           canPlayerDiscard = false;
           canPlayerDraw = false;
+          setCurrentPlayer(false);
         }
       });
       playerHandCount++;
@@ -604,6 +605,8 @@ function stringDeck(deck) {
     firstdiscard = deck[currentRound*2 + 1].Value
     firstdiscardsuit = deck[currentRound*2 + 1].Suit
 
+
+
     var discardcard = [firstdiscard]
     var discardsuit = [firstdiscardsuit]
 
@@ -614,6 +617,7 @@ function stringDeck(deck) {
     drawDiscard()
     drawOpponentHand();
     currentCard = currentRound*2 + 1 + 1;
+    setCurrentPlayer(canPlayerDraw);
   }
   }
 
@@ -790,6 +794,7 @@ function opponentDiscard(input){
   if(gameOverOnNextDiscard){
     wonGame();
   }
+  setCurrentPlayer(true);
 }
 
   function drawDiscard(){
@@ -903,6 +908,29 @@ function opponentDiscard(input){
   playerScoreText.x = leftbound + 50;
   playerScoreText.textAlign = 'center';
   playerScoreText.y = topbound + 600;
+
+  var currentPlayer = new createjs.Text("★", TEXTTYPE2, "#000000")
+  currentPlayer.x = leftbound + 50;
+  currentPlayer.textAlign = 'center';
+  if(user == player1){
+    currentPlayer.y = topbound + 700;
+  } else {
+    currentPlayer.y = topbound + 300;
+  }
+
+  container.addChild(currentPlayer)
+
+  function setCurrentPlayer(userOrOpponent){
+    if(userOrOpponent) {
+      currentPlayer.y = topbound + 700;
+    } else {
+      currentPlayer.y = topbound + 300;
+    }
+  }
+
+
+
+
 
 
 
