@@ -1,11 +1,11 @@
-// By Jasper Camber Holton. V0.0.90 - Fixes
+// By Jasper Camber Holton. V0.0.91 - Fixes
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
   const cardnames = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
-  //const cardsroot = "/cards/"
-  const cardsroot = "https://uglek.com/media/cards/";
+  const cardsroot = "/cards/"
+  //const cardsroot = "https://uglek.com/media/cards/";
   let seed = 24;
   function RNG(seed) {
     // LCG using GCC's constants
@@ -90,7 +90,7 @@
         stage.canvas.height = 0;
       }
 
-      var canPlayerDraw = false; // TODO change to false in production
+      var canPlayerDraw = true; // TODO change to false in production
       var canPlayerDiscard = false;
     if(user == player2){
       send("join,x,"+user);
@@ -423,8 +423,9 @@ function isWildcard(value){
   return value.getValue() == currentRound-2
 }
 
+
 // TODO Check for wildcards
-  function calculateScore(ndeck) {
+function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
   ndeck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
 
@@ -512,7 +513,8 @@ function isWildcard(value){
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      //console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+
+      console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
       val = card.getValue() + 2;
       if(val == 14){
@@ -524,7 +526,7 @@ function isWildcard(value){
       score += val;
       //console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     }
-    //console.log("Is counted? " + card.isCounted());
+    console.log("Is counted? " + card.isCounted());
     if(card.isCounted()){
       allCardsPlayed = false;
     }
