@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.84 - Gold star
+// By Jasper Camber Holton. V0.0.85 - Added game finished dialog
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -42,6 +42,7 @@
 
     let TEXTTYPE = "bold " + 42 + "px Arial";
     let TEXTTYPE2 = "bold " + 70 + "px Arial";
+    let TEXTTYPE3 = "bold " + 40 + "px Arial";
 
     let last = 0;
     let stage = new createjs.Stage(canvasid);
@@ -555,7 +556,45 @@ function stringDeck(deck) {
 
   function drawGameFinishedDialog(){
     console.log("Game finished")
+      var bitmap2 = new createjs.Bitmap(backImage);
+      bitmap2.scale = cardScale * 2;
+      bitmap2.x = leftbound + 300-250 * cardScale/2*2;
+      bitmap2.y = topbound + 500-350 * cardScale/2*2;
+      container.addChild(bitmap2);
+      var toDisplay = []
+      if(user == player1){
+        toDisplay[0] = player1 + ": " + playerscore
+      } else {
+        toDisplay[0] = player1 + ": " + opponentscore
+      }
+      if(user == player1){
+        toDisplay[1] = player2 + ": " + opponentscore
+      } else {
+        toDisplay[1] = player2 + ": " + playerscore
+      }
+      if(playerscore > opponentscore){
+        toDisplay[2] = "You won!"
+      } else if(playerscore < opponentscore){
+        toDisplay[2] = "Your opponent won!"
+      } else {
+        toDisplay[2] = "It's a tie!"
+      }
+      var texts = []
+      var extra = 0
+      for(x = 0; x < toDisplay.length; x++){
+        if(x == toDisplay.length - 1){
+          extra = 300;
+        }
+        texts[x] = new createjs.Text(toDisplay[x], TEXTTYPE3, "#000000")
+        texts[x].x = leftbound + 500 - 400;
+        texts[x].y = topbound + 500 - 270 + 80 * x + extra;
+        container.addChild(texts[x]);
+      }
+      stage.update();
+
+
   }
+  //
 
   function nextRound(){
     currentRound = currentRound + 1;
@@ -870,6 +909,7 @@ function opponentDiscard(input){
     drawDiscard();
     drawSortButtons();
     //drawOpponentHandFaceup();
+    //drawGameFinishedDialog();
     stage.update();
   }
 
