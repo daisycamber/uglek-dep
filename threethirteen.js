@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.85 - Added game finished dialog
+// By Jasper Camber Holton. V0.0.86 - Beautifying the layout
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -716,11 +716,11 @@ function stringDeck(deck) {
   function drawSortButtons(){
 
     var button333 = new createjs.Shape();
-    button333.graphics.beginFill("lightgreen").drawRoundRectComplex(leftbound + 1000 - buttonSize, topbound + 340 , buttonSize, buttonSize, radius,radius,radius,radius);
+    button333.graphics.beginFill("lightgreen").drawRoundRectComplex(leftbound + 1000 - buttonSize, topbound + 350 , buttonSize, buttonSize, radius,radius,radius,radius);
     var text333 = new createjs.Text("333", TEXTTYPE, "#000000")
       text333.x = leftbound + 1000 - 50;
       text333.textAlign = 'center';
-      text333.y = topbound + 400 -30;
+      text333.y = topbound + 350 +30;
 
     container.addChild(button333)
     container.addChild(text333)
@@ -731,11 +731,11 @@ function stringDeck(deck) {
 
 
     var button456 = new createjs.Shape();
-    button456.graphics.beginFill("lightblue").drawRoundRectComplex(leftbound + 1000 - buttonSize, topbound + 470 , buttonSize, buttonSize, radius,radius,radius,radius);
+    button456.graphics.beginFill("lightblue").drawRoundRectComplex(leftbound + 1000 - buttonSize, topbound + 550 , buttonSize, buttonSize, radius,radius,radius,radius);
     var text456 = new createjs.Text("456", TEXTTYPE, "#000000")
       text456.x = leftbound + 1000-50;
       text456.textAlign = 'center';
-      text456.y = topbound + 505;
+      text456.y = topbound + 550+30;
 
     container.addChild(button456)
     container.addChild(text456)
@@ -945,11 +945,11 @@ function opponentDiscard(input){
 
   var playerscore = 0;
   var playerScore = new createjs.Shape();
-  playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 400-30 , buttonSize, buttonSize, radius,radius,radius,radius);
+  playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 350 , buttonSize, buttonSize, radius,radius,radius,radius);
   var playerScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
   playerScoreText.x = leftbound + 50;
   playerScoreText.textAlign = 'center';
-  playerScoreText.y = topbound + 600;
+  playerScoreText.y = topbound + 350 + 30;
 
   var currentPlayer = new createjs.Text("★", TEXTTYPE2, "#E8CD71")
   currentPlayer.x = leftbound + 50;
@@ -979,11 +979,11 @@ function opponentDiscard(input){
   var opponentscore = 0;
 
   var opponentScore = new createjs.Shape();
-  opponentScore.graphics.beginFill("#f0655b").drawRoundRectComplex(leftbound, topbound + 600-30 , buttonSize, buttonSize, radius,radius,radius,radius);
+  opponentScore.graphics.beginFill("#f0655b").drawRoundRectComplex(leftbound, topbound + 550 , buttonSize, buttonSize, radius,radius,radius,radius);
   var opponentScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
   opponentScoreText.x = leftbound + 50;
   opponentScoreText.textAlign = 'center';
-  opponentScoreText.y = topbound + 400;
+  opponentScoreText.y = topbound + 550 + 30;
   container.addChild(playerScore)
   container.addChild(opponentScore)
   container.addChild(opponentScoreText)
