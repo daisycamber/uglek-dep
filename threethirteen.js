@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.88 - Removing console logs
+// By Jasper Camber Holton. V0.0.89 - Fixes
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -515,6 +515,9 @@ function isWildcard(value){
       //console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
       val = card.getValue() + 2;
+      if(val == 14){
+        val = 1;
+      }
       if(val > 10){
         val = 10;
       }
@@ -941,12 +944,12 @@ function opponentDiscard(input){
     }
 
   }
-  opponentJoinedGame();
+  //opponentJoinedGame();
 
   var playerscore = 0;
   var psoffset = 30;
   var playerScore = new createjs.Shape();
-  playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 350 , buttonSize, buttonSize, radius,radius,radius,radius);
+  playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 550 , buttonSize, buttonSize, radius,radius,radius,radius);
   var playerScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
   playerScoreText.x = leftbound + 50;
   playerScoreText.textAlign = 'center';
@@ -980,7 +983,7 @@ function opponentDiscard(input){
   var opponentscore = 0;
 
   var opponentScore = new createjs.Shape();
-  opponentScore.graphics.beginFill("#f0655b").drawRoundRectComplex(leftbound, topbound + 550 , buttonSize, buttonSize, radius,radius,radius,radius);
+  opponentScore.graphics.beginFill("#f0655b").drawRoundRectComplex(leftbound, topbound + 350 , buttonSize, buttonSize, radius,radius,radius,radius);
   var opponentScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
   opponentScoreText.x = leftbound + 50;
   opponentScoreText.textAlign = 'center';
