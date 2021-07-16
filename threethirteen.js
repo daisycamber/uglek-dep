@@ -1,11 +1,11 @@
-// By Jasper Camber Holton. V0.0.91 - Fixes
+// By Jasper Camber Holton. V0.0.92 - More fixes
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
   const cardnames = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
-  const cardsroot = "/cards/"
-  //const cardsroot = "https://uglek.com/media/cards/";
+  //const cardsroot = "/cards/"
+  const cardsroot = "https://uglek.com/media/cards/";
   let seed = 24;
   function RNG(seed) {
     // LCG using GCC's constants
@@ -90,7 +90,7 @@
         stage.canvas.height = 0;
       }
 
-      var canPlayerDraw = true; // TODO change to false in production
+      var canPlayerDraw = false; // TODO change to false in production
       var canPlayerDiscard = false;
     if(user == player2){
       send("join,x,"+user);
