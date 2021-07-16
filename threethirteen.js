@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.962 - Fixes
+// By Jasper Camber Holton. V0.0.964 - Fixes
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -647,6 +647,7 @@ function stringDeck(deck) {
 
     var discardcard = [firstdiscard]
     var discardsuit = [firstdiscardsuit]
+    setCurrentPlayer(canPlayerDraw);
   }
 
   function nextRound(){
