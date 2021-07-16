@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.83 - Adding star to show whos turn it is
+// By Jasper Camber Holton. V0.0.84 - Gold star
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -41,6 +41,8 @@
     let height = canvas.height;
 
     let TEXTTYPE = "bold " + 42 + "px Arial";
+    let TEXTTYPE2 = "bold " + 70 + "px Arial";
+
     let last = 0;
     let stage = new createjs.Stage(canvasid);
     let container = new createjs.Container();
@@ -909,7 +911,7 @@ function opponentDiscard(input){
   playerScoreText.textAlign = 'center';
   playerScoreText.y = topbound + 600;
 
-  var currentPlayer = new createjs.Text("★", TEXTTYPE2, "#000000")
+  var currentPlayer = new createjs.Text("★", TEXTTYPE2, "#E8CD71")
   currentPlayer.x = leftbound + 50;
   currentPlayer.textAlign = 'center';
   if(user == player1){
