@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.81 - Fixed it!!!
+// By Jasper Camber Holton. V0.0.82
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -1154,10 +1154,6 @@ opponentScoreText.text = input
       container.addChild(wonContainer);
     }
     drawOpponentHandFaceup();
-  }
-  var userStartsGame = false;
-  if(user == player1){
-    userStartsGame = true;
   }
   let ticks = 0;
 
