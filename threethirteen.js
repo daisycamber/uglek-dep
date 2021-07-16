@@ -1,5 +1,4 @@
 // By Jasper Camber Holton. V0.0.96 - Added prepareForNextRound() to fix glitch where opposing players turn is not counted after a round when wonDialog isn't clicked
-// TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
