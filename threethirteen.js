@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.87 - Beautifying the layout again
+// By Jasper Camber Holton. V0.0.88 - Removing console logs
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -86,7 +86,7 @@
       stage.canvas.height = canvasHeight;
 
       } catch {
-        console.log("Three Thirteen - No game.")
+        //console.log("Three Thirteen - No game.")
         stage.canvas.height = 0;
       }
 
@@ -680,10 +680,10 @@ function stringDeck(deck) {
     score2 = calculateScore(ndeck)
     sortHand(playerSorted);
 
-    console.log("PLAYER SCORED: " + score + " or " + score2)
+    //console.log("PLAYER SCORED: " + score + " or " + score2)
     if(score == 0 || score2 == 0){
       gameOverOnNextDiscard = true;
-      console.log("You go out next round")
+      //console.log("You go out next round")
       //wonGame();
     }
   }
@@ -708,7 +708,7 @@ function stringDeck(deck) {
     //console.log("OPPONENT SCORED: " + score)
     if(score == 0 || score2 == 0){
       opponentWinsOnNextDiscard = true;
-      console.log("Opposite player goes out next round")
+      //console.log("Opposite player goes out next round")
     }
   }
   var radius = 10;
@@ -787,7 +787,7 @@ function opponentDrawDeck(){
     drawDiscard();
   }
   drawOpponentHand();
-  console.log("Opponent drew from deck")
+  //console.log("Opponent drew from deck")
   canPlayerDraw = false;
 }
 function opponentTakeDiscard(){
@@ -801,7 +801,7 @@ function opponentTakeDiscard(){
   if(discardcard.length > 0){
     drawDiscard();
   }
-  console.log("Opponent drew discard")
+  //console.log("Opponent drew discard")
   canPlayerDraw = false;
 }
 
@@ -811,7 +811,7 @@ function opponentDiscard(input){
 
   discardCard = parseInt(theDiscard[0])
   discardSuit = parseInt(theDiscard[1])
-  console.log("Opponent discarded " + cardnames[discardCard] + " of " + suitnames[discardSuit])
+  //console.log("Opponent discarded " + cardnames[discardCard] + " of " + suitnames[discardSuit])
   nCards = [] // New cards and suits
   nSuits = []
   var count = 0; // our count for the new hand
@@ -841,7 +841,7 @@ function opponentDiscard(input){
   function drawDiscard(){
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
-      console.log("canPlayerDraw: " + canPlayerDraw);
+      //console.log("canPlayerDraw: " + canPlayerDraw);
       if(canPlayerDraw && playerHandCards.length < currentRound + 1){
         canPlayerDraw = false;
         canPlayerDiscard = true;
@@ -888,7 +888,7 @@ function opponentDiscard(input){
     }
     cardDeck = drawFacedownCard(350,500);
     cardDeck.on("mousedown", function(event) {
-      console.log("canPlayerDraw: " + canPlayerDraw);
+      //console.log("canPlayerDraw: " + canPlayerDraw);
       if(canPlayerDraw && playerHandCards.length < currentRound + 1){
         canPlayerDraw = false;
         canPlayerDiscard = true;
@@ -1232,7 +1232,7 @@ opponentScoreText.text = input
     if(ticks > 5*60){
       ticks = 0;
       read();
-      console.log("Reading");
+      //console.log("Reading");
     }
     ticks++;
     stage.update();
