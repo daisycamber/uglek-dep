@@ -1,4 +1,5 @@
-// By Jasper Camber Holton. V0.0.96 - Added prepareForNextRound() to fix glitch where opposing players turn is not counted after a round when wonDialog isn't clicked
+// By Jasper Camber Holton. V0.0.961 - Fixed prepareForNextRound (preparing for last round without updated currentRound)
+// TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -604,42 +605,43 @@ function stringDeck(deck) {
 
     playerHandCards = [] // = [0,1,2,12,4,5,12,1,2,3]
     playerHandSuits = [] // = [0,1,3,3,0,1,0,3,2,1]
-    var deckCount = currentRound*2+1
+    var cr = currentRound + 1
+    var deckCount = cr*2+1
     // display 5 results
 
     if(user == player1){
       console.log("Ready player 1")
-      for (let i = 0; i < currentRound; i++) {
+      for (let i = 0; i < cr; i++) {
         playerHandCards[i] = deck[i].Value
         playerHandSuits[i] = deck[i].Suit
       }
-      for (let i = currentRound; i < currentRound*2; i++) {
-        opponentHandCards[i-currentRound] = deck[i].Value
-        opponentHandSuits[i-currentRound] = deck[i].Suit
+      for (let i = currentRound; i < cr*2; i++) {
+        opponentHandCards[i-cr] = deck[i].Value
+        opponentHandSuits[i-cr] = deck[i].Suit
       }
-      if(currentRound%2 == 1){
+      if(cr%2 == 1){
         canPlayerDraw = true;
       } else {
         canPlayerDraw = false;
       }
     } else {
       console.log("Ready player 2")
-        for (let i = 0; i < currentRound; i++) {
+        for (let i = 0; i < cr; i++) {
           opponentHandCards[i] = deck[i].Value
           opponentHandSuits[i] = deck[i].Suit
         }
-        for (let i = currentRound; i < currentRound*2; i++) {
-          playerHandCards[i-currentRound] = deck[i].Value
-          playerHandSuits[i-currentRound] = deck[i].Suit
+        for (let i = cr; i < cr*2; i++) {
+          playerHandCards[i-cr] = deck[i].Value
+          playerHandSuits[i-cr] = deck[i].Suit
         }
-        if(currentRound%2 == 0){
+        if(cr%2 == 0){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
         }
     }
-    firstdiscard = deck[currentRound*2 + 1].Value
-    firstdiscardsuit = deck[currentRound*2 + 1].Suit
+    firstdiscard = deck[cr*2 + 1].Value
+    firstdiscardsuit = deck[cr*2 + 1].Suit
 
 
 
