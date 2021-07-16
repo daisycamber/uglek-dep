@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.86 - Beautifying the layout
+// By Jasper Camber Holton. V0.0.87 - Beautifying the layout again
 // TODO fix so sort before scoring doesnt permanently sort hand
 (function threethirteen(){
   var currentTurn = 0;
@@ -929,7 +929,7 @@ function opponentDiscard(input){
     opjContainer = new createjs.Container();
       var opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
       opjText.x = leftbound + 500;
-      opjText.y = topbound + 10;
+      opjText.y = topbound + 270;
       opjText.textAlign = 'center';
       opjContainer.addChild(opjText);
     setTimeout(() => {
@@ -941,9 +941,10 @@ function opponentDiscard(input){
     }
 
   }
-  //opponentJoinedGame();
+  opponentJoinedGame();
 
   var playerscore = 0;
+  var psoffset = 30;
   var playerScore = new createjs.Shape();
   playerScore.graphics.beginFill("lightyellow").drawRoundRectComplex(leftbound, topbound + 350 , buttonSize, buttonSize, radius,radius,radius,radius);
   var playerScoreText = new createjs.Text("--", TEXTTYPE, "#000000")
@@ -955,18 +956,18 @@ function opponentDiscard(input){
   currentPlayer.x = leftbound + 50;
   currentPlayer.textAlign = 'center';
   if(user == player1){
-    currentPlayer.y = topbound + 700;
+    currentPlayer.y = topbound + 700-psoffset;
   } else {
-    currentPlayer.y = topbound + 300;
+    currentPlayer.y = topbound + 300-psoffset;
   }
 
   container.addChild(currentPlayer)
 
   function setCurrentPlayer(userOrOpponent){
     if(userOrOpponent) {
-      currentPlayer.y = topbound + 700;
+      currentPlayer.y = topbound + 700-psoffset;
     } else {
-      currentPlayer.y = topbound + 300;
+      currentPlayer.y = topbound + 300-psoffset;
     }
   }
 
