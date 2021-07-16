@@ -1,5 +1,4 @@
-// By Jasper Camber Holton. V0.0.961 - Fixed prepareForNextRound (preparing for last round without updated currentRound)
-// TODO fix so sort before scoring doesnt permanently sort hand
+// By Jasper Camber Holton. V0.0.962 - Fixes
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -615,7 +614,7 @@ function stringDeck(deck) {
         playerHandCards[i] = deck[i].Value
         playerHandSuits[i] = deck[i].Suit
       }
-      for (let i = currentRound; i < cr*2; i++) {
+      for (let i = cr; i < cr*2; i++) {
         opponentHandCards[i-cr] = deck[i].Value
         opponentHandSuits[i-cr] = deck[i].Suit
       }
@@ -642,6 +641,7 @@ function stringDeck(deck) {
     }
     firstdiscard = deck[cr*2 + 1].Value
     firstdiscardsuit = deck[cr*2 + 1].Suit
+    currentCard = currentRound*2 + 1 + 1;
 
 
 
@@ -662,7 +662,7 @@ function stringDeck(deck) {
     drawHand();
     drawDiscard()
     drawOpponentHand();
-    currentCard = currentRound*2 + 1 + 1;
+
     setCurrentPlayer(canPlayerDraw);
   }
   }
@@ -1139,6 +1139,7 @@ opponentScoreText.text = input
   // Draw a dialog to create a new game
   function wonGame() {
     if(!gameIsWon){
+      calculateAndDrawScores();
       gameIsWon = true;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
@@ -1149,7 +1150,7 @@ opponentScoreText.text = input
       wonText.x = leftbound + 360;
       wonText.y = topbound + 925;
       wonContainer.on("mousedown", function(event) {
-        calculateAndDrawScores();
+
         container.removeChild(wonContainer);
         // Start next game
         nextRound();
@@ -1209,6 +1210,7 @@ opponentScoreText.text = input
   // Draw a dialog to create a new game
   function opponentWonGame() {
     if(!gameIsWon){
+      calculateAndDrawScores();
       gameIsWon = true;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
@@ -1220,7 +1222,7 @@ opponentScoreText.text = input
       wonText.x = leftbound + 500;
       wonText.y = topbound + 925;
       wonContainer.on("mousedown", function(event) {
-        calculateAndDrawScores();
+
         container.removeChild(wonContainer);
         gameIsWon = false
         nextRound();
