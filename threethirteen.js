@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.967 - Fixing scoring
+// By Jasper Camber Holton. V0.0.968 - Making more verbose
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -510,7 +510,7 @@ var score = 0;
 allCardsPlayed = true;
 ndeck.forEach(function(card) {
   if(card.ignored()){
-    //console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+    console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
   } else {
     val = card.getValue() + 2;
     if(val == 14){
@@ -520,7 +520,7 @@ ndeck.forEach(function(card) {
       val = 10;
     }
     score += val;
-    //console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+    console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
   }
   //console.log("Is counted? " + card.isCounted());
   if(card.isCounted()){
@@ -529,6 +529,7 @@ ndeck.forEach(function(card) {
   // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
 });
 //console.log("All cards played? " + allCardsPlayed)
+console.log("Calculated score: " + score)
 if(allCardsPlayed){
   score = 0;
 }
