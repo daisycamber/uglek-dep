@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.971 - Fixed hand evaluator!
+// By Jasper Camber Holton. V0.0.972 - Fixed hand evaluator!
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -530,7 +530,7 @@ function isWildcard(value){
       if(val > 10){
         val = 10;
       }
-      score += val;
+      score += val
       allCardsPlayed = false;
     }
     // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
@@ -1193,12 +1193,15 @@ opponentScoreText.text = input
     return score2
   }
   function calculatePlayerScore(){
+
+
     sortHand(true);
     sortHand(true);
     ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
+    //removeCountedCards(ndeck);
     score = calculateScore(ndeck)
     sortHand(false);
     sortHand(false);
@@ -1206,6 +1209,7 @@ opponentScoreText.text = input
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
+    //removeCountedCards(ndeck);
     score2 = calculateScore(ndeck)
     if(score < score2){
       return score
