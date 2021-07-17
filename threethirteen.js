@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.976 - Fixing hand evaluator
+// By Jasper Camber Holton. V0.0.977 - Fixing canPlayerDraw
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -656,17 +656,27 @@ function stringDeck(deck) {
     if(currentRound == 14){
       drawGameFinishedDialog();
     } else {
-
-
-    gameOverOnNextDiscard = false;
-    opponentWinsOnNextDiscard = false;
-    sortHand(false);
-    drawHand();
-    drawDiscard()
-    drawOpponentHand();
-
-    setCurrentPlayer(canPlayerDraw);
-  }
+      gameOverOnNextDiscard = false;
+      opponentWinsOnNextDiscard = false;
+      sortHand(false);
+      drawHand();
+      drawDiscard()
+      drawOpponentHand();
+      if(user == player1){
+        if(currentRound%2 == 1){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
+      } else {
+        if(currentRound%2 == 0){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
+      }
+      setCurrentPlayer(canPlayerDraw);
+    }
   }
 
 
