@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.977 - Fixing canPlayerDraw
+// By Jasper Camber Holton. V0.0.978 - Fixed discard
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -646,8 +646,9 @@ function stringDeck(deck) {
 
 
 
-    var discardcard = [firstdiscard]
-    var discardsuit = [firstdiscardsuit]
+    discardcard = [firstdiscard]
+    discardsuit = [firstdiscardsuit]
+
     setCurrentPlayer(canPlayerDraw);
   }
 
