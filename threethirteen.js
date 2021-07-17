@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.973 - Fixed hand evaluator again
+// By Jasper Camber Holton. V0.0.974 - Fixed hand evaluator one more time
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -459,7 +459,7 @@ function isWildcard(value){
 
     while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
               || ndeck[nextLoc].getValue() == lastValue
-              || ndeck[nextLoc].getValue() == lastValue + 1) {
+              || ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i])) {
 
       if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
         break;
@@ -514,14 +514,12 @@ function isWildcard(value){
   var score = 0;
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
-    if(card.ignored()){
-
+    /*if(card.ignored()){
       console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
-
       console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     }
-    console.log("Is counted? " + card.isCounted())
+    console.log("Is counted? " + card.isCounted())*/
     if(card.isCounted()){
       allCardsPlayed = false;
       val = card.getValue() + 2
@@ -532,11 +530,12 @@ function isWildcard(value){
         val = 10;
       }
       score += val
+    } else {
 
     }
     // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
   });
-  console.log("All cards played? " + allCardsPlayed)
+  //console.log("All cards played? " + allCardsPlayed)
   return score;
 }
 
