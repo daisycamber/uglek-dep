@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.969 - Fixed hand evaluator
+// By Jasper Camber Holton. V0.0.971 - Fixed hand evaluator!
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -423,7 +423,8 @@ function isWildcard(value){
 }
 
 
-function calculateScore(ndeck) {
+// TODO Check for wildcards
+  function calculateScore(ndeck) {
   //Step 1: Make all cards counted, not ignored
   ndeck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
 
@@ -431,7 +432,7 @@ function calculateScore(ndeck) {
   for(var i = 0; i < ndeck.length - 2; i ++) {
     var nextLoc = i + 1;
     var skipped = 0;
-    while(isWildcard(ndeck[i])/* || isWildcard(ndeck[nextLoc])*/ || ndeck[nextLoc].getValue() == ndeck[i].getValue()
+    while((isWildcard(ndeck[i]) || ndeck[nextLoc].getValue() == ndeck[i].getValue())
             && ndeck[i].getScoringMode() != 'run') {
       if(ndeck[nextLoc].getScoringMode() == 'run') {
         skipped ++;
@@ -455,14 +456,17 @@ function calculateScore(ndeck) {
     var skipped = 0;
     var lastValue = ndeck[i].getValue();
     var lastGoodValue = lastValue;
+
     while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
               || ndeck[nextLoc].getValue() == lastValue
-              || ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc])/* || isWildcard(ndeck[nextLoc])*/) {
+              || ndeck[nextLoc].getValue() == lastValue + 1) {
+
       if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
         break;
-      if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit() || isWildcard(ndeck[nextLoc])/* || isWildcard(ndeck[i])*/)
+
+      if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())
               || ndeck[nextLoc].getScoringMode() == 'set'
-              || ((ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) || isWildcard(ndeck[nextLoc])/* || isWildcard(ndeck[i])*/) {
+              || (ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) {
         skipped ++;
       }
       else {
@@ -511,9 +515,15 @@ function calculateScore(ndeck) {
   allCardsPlayed = true;
   ndeck.forEach(function(card) {
     if(card.ignored()){
-      //console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+
+      console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
     } else {
-      val = card.getValue() + 2;
+
+      console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
+    }
+    console.log("Is counted? " + card.isCounted())
+    if(card.isCounted()){
+      val = card.getValue() + 2
       if(val == 14){
         val = 1;
       }
@@ -521,18 +531,11 @@ function calculateScore(ndeck) {
         val = 10;
       }
       score += val;
-      //console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
-    }
-    //console.log("Is counted? " + card.isCounted());
-    if(card.isCounted()){
       allCardsPlayed = false;
     }
     // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
   });
-  //console.log("All cards played? " + allCardsPlayed)
-  if(allCardsPlayed){
-    score = 0;
-  }
+  console.log("All cards played? " + allCardsPlayed)
   return score;
 }
 
