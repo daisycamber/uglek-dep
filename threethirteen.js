@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.979 - Fixing scoring
+// By Jasper Camber Holton. V0.0.980 - Fixed hand evaluator
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -421,117 +421,212 @@ var allCardsPlayed;
 function isWildcard(value){
   return value.getValue() == currentRound-2
 }
+
+function Hand(cards, jokers, round, wilds) {
+    this.cards = clone(cards);
+    this.jokers = jokers;
+    this.wilds = wilds || 0;
+    this.round = round;
+    this.melds = [];
+    this.value = this.leftoverValue();
+}
+
+// FIND MELDS AFTER CURRENT POINT
+
+Hand.prototype.findMelds = function(suit, number) {
+
+    if (suit == undefined || number == undefined) {
+        // NOT A RECURSION: CONVERT WILDS TO JOKERS
+        suit = number = 0;
+        this.convertWilds();
+    }
+
+    // START WITH ONLY JOKERS AS OPTIMAL COMBINATION
+    if (this.jokers > 2) {
+        for (var i = 0; i < this.jokers; i++) {
+            this.melds.push({s:-1, n:-1});
+        }
+        this.value -= 25 * this.jokers - (22 - round) * (this.jokers < this.wilds ? this.jokers : this.wilds);
+    }
+
+    // SEARCH UNTIL END OR FULL LAY-DOWN
+    while (this.value > 0) {
+
+        // FIND NEXT CARD IN MATRIX
+        while (number > 10 || this.cards[suit][number] == 0) {
+            if (++number > 10) {
+                number = 0;
+                if (++suit > 3) return;
+            }
+        }
+
+        // FIND RUNS OR SETS STARTING AT CURRENT POINT
+        for (var meldType = 0; meldType < 2; meldType++) {
+
+            var meld = meldType ? this.findSet(suit, number) : this.findRun(suit, number);
+
+            // TRY DIFFERENT LENGTHS OF LONG MELD
+            for (var len = 3; len <= meld.length; len++) {
+
+                // CREATE COPY OF HAND AND REMOVE CURRENT MELD
+                var test = new Hand(this.cards, this.jokers, this.round, this.wilds);
+                test.removeCards(meld.slice(0, len));
+
+                // RECURSION ON THE COPY
+                meldType ? test.findMelds(suit, number) : test.findMelds(0, 0);
+
+                // BETTER COMBINATION FOUND
+                if (test.value < this.value) {
+                    this.value = test.value;
+                    // REPLACE BEST COMBINATION BY CURRENT MELD + MELDS FOUND THROUGH RECURSION
+                    this.melds.length = 0;
+                    this.melds = [].concat(meld.slice(0, len), test.melds);
+                }
+            }
+        }
+        number++;
+    }
+}
+
+// FIND RUN STARTING WITH CURRENT CARD
+
+Hand.prototype.findRun = function(s, n) {
+    var run = [], jokers = this.jokers;
+    while (n < 13) {
+        if (this.cards[s][n] > 0) {
+            run.push({s:s, n:n});
+        } else if (jokers > 0) {
+            run.push({s:-1, n:-1});
+            jokers--;
+        }
+        else break;
+        n++;
+    }
+
+    // ADD LEADING JOKERS (ADDED TO END FOR CODE SIMPLICITY)
+    while (jokers-- > 0) {
+        run.push({s:-1, n:-1});
+    }
+    return run;
+}
+
+// FIND SET STARTING WITH CURRENT CARD
+
+Hand.prototype.findSet = function(s, n) {
+    var set = [];
+    while (s < 4) {
+        for (var i = 0; i < this.cards[s][n]; i++) {
+            set.push({s:s, n:n});
+        }
+        s++;
+    }
+
+    // ADD JOKERS
+    for (var i = 0; i < this.jokers; i++) {
+        set.push({s:-1, n:-1});
+    }
+    return set;
+}
+
+// REMOVE ARRAY OF CARDS FROM HAND
+
+Hand.prototype.removeCards = function(cards) {
+    for (var i = 0; i < cards.length; i++) {
+        if (cards[i].s >= 0) {
+            this.cards[cards[i].s][cards[i].n]--;
+        } else this.jokers--;
+    }
+    this.value = this.leftoverValue();
+}
+
+// GET VALUE OF LEFTOVER CARDS
+
+Hand.prototype.leftoverValue = function() {
+    var leftover = 0;
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 13; j++) {
+          value = j + 2;
+          if(value == 14){
+            value = 1;
+          }
+          if(value > 10){
+            value = 10;
+          }
+            leftover += this.cards[i][j] * value; // cards count from 0 vs 3
+        }
+    }
+    return leftover + this.jokers * 10// + 25 * this.jokers - (22 - round) * (this.jokers < this.wilds ? this.jokers : this.wilds);
+}
+
+// CONVERT WILDCARDS TO JOKERS
+
+Hand.prototype.convertWilds = function() {
+    for (var i = 0; i < 4; i++) {
+        while (this.cards[i][this.round] > 0) {
+            this.cards[i][this.round]--;
+            this.jokers++; this.wilds++;
+        }
+    }
+    this.value = this.leftoverValue();
+}
+
+// UTILS: 2D ARRAY DEEP-COPIER
+
+function clone(a) {
+    var b = [];
+    for (var i = 0; i < a.length; i++) {
+        b[i] = a[i].slice();
+    }
+    return b;
+}
+
+// UTILS: SHOW HAND IN CONSOLE
+
+function showHand(c, j, r, v) {
+    var num = "    2 3 4 5 6 7 8 9 T J Q K A";
+    console.log(num);
+    for (var i = 0; i < 4; i++) {
+        console.log(["SPD ","CLB ","HRT ","DMD "][i] + c[i]);
+    }
+    console.log("    jokers: " + j + "  value: " + v);
+}
+
+// UTILS: SHOW RESULT IN CONSOLE
+
+function showResult(m, v) {
+    if (m.length == 0) console.log("no melds found");
+    while (m.length) {
+        var c = m.shift();
+        if (c.s == -1) console.log("joker *");
+        else console.log(["clubs","dmnds","heart","spade"][c.s] + " " + "3456789TJQK".charAt(c.n));
+    }
+    console.log("leftover value: " + v);
+}
+
 function calculateScore(ndeck) {
-//Step 1: Make all cards counted, not ignored
-ndeck.forEach(function(item) {item.setCounted(true); item.setIgnored(false)})
+  var matrix = [];
+  var jokers = 0;
+  var round = currentRound; // count from zero
 
-//Step 2: calculate what cards are not counted based on triples or quadruples
-for(var i = 0; i < ndeck.length - 2; i ++) {
-  var nextLoc = i + 1;
-  var skipped = 0;
-  while((isWildcard(ndeck[i]) || ndeck[nextLoc].getValue() == ndeck[i].getValue())
-          && ndeck[i].getScoringMode() != 'run') {
-    if(ndeck[nextLoc].getScoringMode() == 'run') {
-      skipped ++;
-    }
-    nextLoc ++;
-    if(nextLoc >= ndeck.length) {
-      break;
-    }
-  }
-  if(nextLoc - i - skipped >= 3) {
-    for(var j = i; j < nextLoc; j ++) {
-      if(skipped == 0 || ndeck[j].getScoringMode() != 'run')
-        ndeck[j].setCounted(false);
-    }
-  }
-}
-
-//Setp 3: calculate a straight
-for(var i = 0; i < ndeck.length - 2; i ++) {
-  var nextLoc = i + 1;
-  var skipped = 0;
-  var lastValue = ndeck[i].getValue();
-  var lastGoodValue = lastValue;
-
-  while((ndeck[i].getSuit() == ndeck[nextLoc].getSuit() && ndeck[i].getValue() + (nextLoc - i - skipped) == ndeck[nextLoc].getValue())
-            || ndeck[nextLoc].getValue() == lastValue
-            || ndeck[nextLoc].getValue() == lastValue + 1 || isWildcard(ndeck[nextLoc]) || isWildcard(ndeck[i])) {
-
-    if(ndeck[i].getScoringMode() == 'set' || ndeck[nextLoc].getScoringMode() == 'set')
-      break;
-
-    if((ndeck[nextLoc].getValue() == lastValue && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())
-            || ndeck[nextLoc].getScoringMode() == 'set'
-            || (ndeck[nextLoc].getValue() == lastValue + 1 && ndeck[nextLoc].getSuit() != ndeck[i].getSuit())) {
-      skipped ++;
-    }
-    else {
-      //the card is the correct suit, but there is a gap between
-      //  the current cards value and the last value in the run
-      if(lastGoodValue + 2 <= ndeck[nextLoc].getValue()) {
-        skipped ++;
-        break;
+  for (var i = 0; i < 4; i++) {
+      matrix[i] = [];
+      for (var j = 0; j < 13; j++) {
+          matrix[i][j] = 0;
       }
-      lastGoodValue = ndeck[nextLoc].getValue();
-    }
-
-    lastValue = ndeck[nextLoc].getValue();
-    nextLoc ++;
-
-    if(nextLoc >= ndeck.length)
-       break;
   }
-
-  if(nextLoc - i - skipped >= 3) {
-    for(var j = i; j < nextLoc; j ++) {
-      if(ndeck[j].getSuit() == ndeck[i].getSuit()) {
-        if(ndeck[j].isCounted() || ndeck[j].getScoringMode() != '' || ndeck[j].ignored()) {
-          ndeck[j].setIgnored(true); //makes sure that if this is detected as a run
-                                    // again because the length is greater than 3,
-                                    // it is ignored the second time the loop goes over it
-          ndeck[j].setCounted(false);
-        }
-        else {
-          ndeck[j].setScoringMode('set');
-          var setScore = calculateScore(ndeck);
-
-          ndeck[j].setScoringMode('run');
-          var runScore = calculateScore(ndeck);
-
-          if(setScore < runScore)
-            ndeck[j].setScoringMode('set');
-
-          calculateScore(ndeck);
-        }
-      }
+  round = currentRound; // count from zero
+  for(var x = 0; x < ndeck.length; x++){
+    card = ndeck[x]
+    if(isWildcard(card)){
+      jokers++;
+    } else {
+      matrix[card.getSuit()][card.getValue()]+=1;
     }
   }
-}
-var score = 0;
-allCardsPlayed = true;
-ndeck.forEach(function(card) {
-  /*if(card.ignored()){
-    console.log("Ignoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
-  } else {
-    console.log("Scoring card with value " + cardnames[card.getValue()] + " and suit " + suitnames[card.getSuit()]);
-  }
-  console.log("Is counted? " + card.isCounted())*/
-  if(card.isCounted()){
-    allCardsPlayed = false;
-    val = card.getValue() + 2;
-    if(val == 14){
-      val = 1;
-    }
-    if(val > 10){
-      val = 10;
-    }
-    score += val
-  }
-  // score += card.getValue() * !card.ignored();//(card.getValue() > 10 ? 10 * card.isCounted() : card.getValue()) * card.isCounted();
-});
-//console.log("All cards played? " + allCardsPlayed)
-return score;
+  var x = new Hand(matrix, jokers, round); // no wilds parameter: automatic conversion
+  showHand(x.cards, x.jokers, x.round, x.value);
+  x.findMelds();
+return x.value;
 }
 
 
@@ -681,49 +776,28 @@ function stringDeck(deck) {
 
 
   function checkPlayerWin(){
-    sortHand(true);
-    sortHand(true);
     ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
     score = calculateScore(ndeck)
-    sortHand(false);
-    sortHand(false);
-    ndeck = []
-    for(var x = 0; x < playerHandCards.length; x++){
-      ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
-    }
-    score2 = calculateScore(ndeck)
-    sortHand(playerSorted);
-
     //console.log("PLAYER SCORED: " + score + " or " + score2)
-    if(score == 0 || score2 == 0){
+    if(score == 0){
       gameOverOnNextDiscard = true;
       //console.log("You go out next round")
       //wonGame();
     }
   }
   function checkOpponentWin(){
-
-    sortOpponentHand(true);
-    sortOpponentHand(true);
     ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
     score = calculateScore(ndeck2)
-    sortOpponentHand(false);
-    sortOpponentHand(false);
-    ndeck2 = []
-    for(var x = 0; x < opponentHandCards.length; x++){
-      ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
-    }
-    score2 = calculateScore(ndeck2)
     //sortOpponentHand(true);
     //score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
-    if(score == 0 || score2 == 0){
+    if(score == 0{
       opponentWinsOnNextDiscard = true;
       //console.log("Opposite player goes out next round")
     }
@@ -1179,48 +1253,20 @@ opponentScoreText.text = input
   }
 
   function calculateOpponentScore(){
-    sortOpponentHand(true);
-    sortOpponentHand(true);
     ndeck2 = []
     for(var x = 0; x < opponentHandCards.length; x++){
       ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
     }
     score = calculateScore(ndeck2)
-    sortOpponentHand(false);
-    sortOpponentHand(false);
-    ndeck2 = []
-    for(var x = 0; x < opponentHandCards.length; x++){
-      ndeck2[ndeck2.length] = (new Card(opponentHandCards[x], opponentHandSuits[x]))
-    }
-    score2 = calculateScore(ndeck2)
-    if(score < score2){
-      return score
-    }
-    return score2
+    return score
   }
   function calculatePlayerScore(){
-
-
-    sortHand(true);
-    sortHand(true);
     ndeck = []
     for(var x = 0; x < playerHandCards.length; x++){
       ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
     }
-    //removeCountedCards(ndeck);
     score = calculateScore(ndeck)
-    sortHand(false);
-    sortHand(false);
-    ndeck = []
-    for(var x = 0; x < playerHandCards.length; x++){
-      ndeck[ndeck.length] = (new Card(playerHandCards[x], playerHandSuits[x]))
-    }
-    //removeCountedCards(ndeck);
-    score2 = calculateScore(ndeck)
-    if(score < score2){
-      return score
-    }
-    return score2
+    return score
 
   }
   // Draw a dialog to create a new game
