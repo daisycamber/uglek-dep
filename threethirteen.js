@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.980 - Fixed hand evaluator
+// By Jasper Camber Holton. V0.0.981 - Fixed hand evaluator, syntax fix
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -797,7 +797,7 @@ function stringDeck(deck) {
     //sortOpponentHand(true);
     //score = calculateScore(ndeck2)
     //console.log("OPPONENT SCORED: " + score)
-    if(score == 0{
+    if(score == 0) {
       opponentWinsOnNextDiscard = true;
       //console.log("Opposite player goes out next round")
     }
