@@ -736,7 +736,7 @@ function stringDeck(deck) {
     setCurrentPlayer(canPlayerDraw);
   }
 
-  function nextRound(){
+  function nextRound(){ // Fix it so when you go to next round the player cant get stuck with canPlayerDraw = false if they haven't hit the won dialog
     currentRound = currentRound + 1;
     if(currentRound == 14){
       drawGameFinishedDialog();
@@ -747,7 +747,7 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      /*if(user == player1){
+      if(user == player1){
         if(currentRound%2 == 1){
           canPlayerDraw = true;
         } else {
@@ -760,7 +760,7 @@ function stringDeck(deck) {
           canPlayerDraw = false;
         }
       }
-      setCurrentPlayer(canPlayerDraw);*/
+      setCurrentPlayer(canPlayerDraw);
     }
   }
 
