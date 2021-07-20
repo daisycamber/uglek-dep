@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.981 - Fixed hand evaluator, syntax fix
+// By Jasper Camber Holton. V0.0.982 - Fixed hand evaluator again (removed wilds, using jokers only)
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -422,11 +422,11 @@ function isWildcard(value){
   return value.getValue() == currentRound-2
 }
 
-function Hand(cards, jokers, round, wilds) {
+// BEGIN HAND evaluator
+
+function Hand(cards, jokers, round) {
     this.cards = clone(cards);
     this.jokers = jokers;
-    this.wilds = wilds || 0;
-    this.round = round;
     this.melds = [];
     this.value = this.leftoverValue();
 }
@@ -438,7 +438,6 @@ Hand.prototype.findMelds = function(suit, number) {
     if (suit == undefined || number == undefined) {
         // NOT A RECURSION: CONVERT WILDS TO JOKERS
         suit = number = 0;
-        this.convertWilds();
     }
 
     // START WITH ONLY JOKERS AS OPTIMAL COMBINATION
@@ -446,7 +445,7 @@ Hand.prototype.findMelds = function(suit, number) {
         for (var i = 0; i < this.jokers; i++) {
             this.melds.push({s:-1, n:-1});
         }
-        this.value -= 25 * this.jokers - (22 - round) * (this.jokers < this.wilds ? this.jokers : this.wilds);
+        this.value -= 10 * this.jokers
     }
 
     // SEARCH UNTIL END OR FULL LAY-DOWN
@@ -469,7 +468,7 @@ Hand.prototype.findMelds = function(suit, number) {
             for (var len = 3; len <= meld.length; len++) {
 
                 // CREATE COPY OF HAND AND REMOVE CURRENT MELD
-                var test = new Hand(this.cards, this.jokers, this.round, this.wilds);
+                var test = new Hand(this.cards, this.jokers);
                 test.removeCards(meld.slice(0, len));
 
                 // RECURSION ON THE COPY
@@ -552,22 +551,10 @@ Hand.prototype.leftoverValue = function() {
           if(value > 10){
             value = 10;
           }
-            leftover += this.cards[i][j] * value; // cards count from 0 vs 3
+          leftover += this.cards[i][j] * value; // cards count from 0 vs 3
         }
     }
     return leftover + this.jokers * 10// + 25 * this.jokers - (22 - round) * (this.jokers < this.wilds ? this.jokers : this.wilds);
-}
-
-// CONVERT WILDCARDS TO JOKERS
-
-Hand.prototype.convertWilds = function() {
-    for (var i = 0; i < 4; i++) {
-        while (this.cards[i][this.round] > 0) {
-            this.cards[i][this.round]--;
-            this.jokers++; this.wilds++;
-        }
-    }
-    this.value = this.leftoverValue();
 }
 
 // UTILS: 2D ARRAY DEEP-COPIER
@@ -603,6 +590,7 @@ function showResult(m, v) {
     console.log("leftover value: " + v);
 }
 
+
 function calculateScore(ndeck) {
   var matrix = [];
   var jokers = 0;
@@ -626,9 +614,10 @@ function calculateScore(ndeck) {
   var x = new Hand(matrix, jokers, round); // no wilds parameter: automatic conversion
   showHand(x.cards, x.jokers, x.round, x.value);
   x.findMelds();
-return x.value;
+  return x.value;
 }
 
+// END HAND EVALUATOR
 
 function stringCard(card) {
   var result = "";
