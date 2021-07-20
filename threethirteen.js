@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.982 - Fixed hand evaluator again (removed wilds, using jokers only)
+// By Jasper Camber Holton. V0.0.983 - Fixed hand evaluator to accomodate higher cards (2-Ace)
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -424,7 +424,8 @@ function isWildcard(value){
 
 // BEGIN HAND evaluator
 
-function Hand(cards, jokers, round) {
+
+function Hand(cards, jokers) {
     this.cards = clone(cards);
     this.jokers = jokers;
     this.melds = [];
@@ -438,6 +439,7 @@ Hand.prototype.findMelds = function(suit, number) {
     if (suit == undefined || number == undefined) {
         // NOT A RECURSION: CONVERT WILDS TO JOKERS
         suit = number = 0;
+        this.value = this.leftoverValue();
     }
 
     // START WITH ONLY JOKERS AS OPTIMAL COMBINATION
@@ -452,13 +454,12 @@ Hand.prototype.findMelds = function(suit, number) {
     while (this.value > 0) {
 
         // FIND NEXT CARD IN MATRIX
-        while (number > 10 || this.cards[suit][number] == 0) {
-            if (++number > 10) {
+        while (number > 13 || this.cards[suit][number] == 0) {
+            if (++number > 13) {
                 number = 0;
                 if (++suit > 3) return;
             }
         }
-
         // FIND RUNS OR SETS STARTING AT CURRENT POINT
         for (var meldType = 0; meldType < 2; meldType++) {
 
@@ -513,7 +514,7 @@ Hand.prototype.findRun = function(s, n) {
 
 Hand.prototype.findSet = function(s, n) {
     var set = [];
-    while (s < 4) {
+    while (s < 3) {
         for (var i = 0; i < this.cards[s][n]; i++) {
             set.push({s:s, n:n});
         }
@@ -545,7 +546,7 @@ Hand.prototype.leftoverValue = function() {
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 13; j++) {
           value = j + 2;
-          if(value == 14){
+          if(value == 13){
             value = 1;
           }
           if(value > 10){
@@ -569,7 +570,7 @@ function clone(a) {
 
 // UTILS: SHOW HAND IN CONSOLE
 
-function showHand(c, j, r, v) {
+function showHand(c, j, v) {
     var num = "    2 3 4 5 6 7 8 9 T J Q K A";
     console.log(num);
     for (var i = 0; i < 4; i++) {
@@ -611,9 +612,10 @@ function calculateScore(ndeck) {
       matrix[card.getSuit()][card.getValue()]+=1;
     }
   }
-  var x = new Hand(matrix, jokers, round); // no wilds parameter: automatic conversion
-  showHand(x.cards, x.jokers, x.round, x.value);
+  var x = new Hand(matrix, jokers); // no wilds parameter: automatic conversion
+  showHand(x.cards, x.jokers, x.value);
   x.findMelds();
+  //if(x)
   return x.value;
 }
 
