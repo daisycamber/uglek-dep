@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.984 - Fixed hand evaluator glitch
+// By Jasper Camber Holton. V0.0.985 - Fixing
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -747,7 +747,7 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      if(user == player1){
+      /*if(user == player1){
         if(currentRound%2 == 1){
           canPlayerDraw = true;
         } else {
@@ -760,7 +760,7 @@ function stringDeck(deck) {
           canPlayerDraw = false;
         }
       }
-      setCurrentPlayer(canPlayerDraw);
+      setCurrentPlayer(canPlayerDraw);*/
     }
   }
 
