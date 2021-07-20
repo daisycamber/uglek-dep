@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.983 - Fixed hand evaluator to accomodate higher cards (2-Ace)
+// By Jasper Camber Holton. V0.0.984 - Fixed hand evaluator glitch
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -424,7 +424,6 @@ function isWildcard(value){
 
 // BEGIN HAND evaluator
 
-
 function Hand(cards, jokers) {
     this.cards = clone(cards);
     this.jokers = jokers;
@@ -454,8 +453,8 @@ Hand.prototype.findMelds = function(suit, number) {
     while (this.value > 0) {
 
         // FIND NEXT CARD IN MATRIX
-        while (number > 13 || this.cards[suit][number] == 0) {
-            if (++number > 13) {
+        while (number > 14 || this.cards[suit][number] == 0) {
+            if (++number > 14) {
                 number = 0;
                 if (++suit > 3) return;
             }
@@ -492,7 +491,7 @@ Hand.prototype.findMelds = function(suit, number) {
 
 Hand.prototype.findRun = function(s, n) {
     var run = [], jokers = this.jokers;
-    while (n < 13) {
+    while (n < 14) {
         if (this.cards[s][n] > 0) {
             run.push({s:s, n:n});
         } else if (jokers > 0) {
@@ -514,7 +513,7 @@ Hand.prototype.findRun = function(s, n) {
 
 Hand.prototype.findSet = function(s, n) {
     var set = [];
-    while (s < 3) {
+    while (s < 4) {
         for (var i = 0; i < this.cards[s][n]; i++) {
             set.push({s:s, n:n});
         }
@@ -546,7 +545,7 @@ Hand.prototype.leftoverValue = function() {
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 13; j++) {
           value = j + 2;
-          if(value == 13){
+          if(value == 14){
             value = 1;
           }
           if(value > 10){
