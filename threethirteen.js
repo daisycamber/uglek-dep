@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.986 - Fixing
+// By Jasper Camber Holton. V0.0.987 - Fixing
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -747,21 +747,7 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      /*
-      if(user == player1){
-        if(currentRound%2 == 1){
-          canPlayerDraw = true;
-        } else {
-          canPlayerDraw = false;
-        }
-      } else {
-        if(currentRound%2 == 0){
-          canPlayerDraw = true;
-        } else {
-          canPlayerDraw = false;
-        }
-      }
-      setCurrentPlayer(canPlayerDraw);*/
+      setCurrentPlayer(canPlayerDraw);
     }
   }
 
@@ -1217,6 +1203,19 @@ opponentScoreText.text = input
   function wonGame() {
     if(!gameIsWon){
       calculateAndDrawScores();
+      if(user == player1){
+        if((currentRound+1)%2 == 1){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
+      } else {
+        if((currentRound+1)%2 == 0){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
+      }
       gameIsWon = true;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
@@ -1264,6 +1263,19 @@ opponentScoreText.text = input
   function opponentWonGame() {
     if(!gameIsWon){
       calculateAndDrawScores();
+      if(user == player1){
+        if((currentRound+1)%2 == 1){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
+      } else {
+        if((currentRound+1)%2 == 0){
+          canPlayerDraw = true;
+        } else {
+          canPlayerDraw = false;
+        }
+      }
       gameIsWon = true;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
