@@ -1,5 +1,6 @@
-// By Jasper Camber Holton. V0.0.990 - Fixed stuck on win glich
+// By Jasper Camber Holton. V0.0.991 - Shortening turn time
 (function threethirteen(){
+  const TURNTIME = 3; // Turn time in seconds
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
   const cardnames = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
@@ -1302,7 +1303,7 @@ opponentScoreText.text = input
   let ticks = 0;
 
   function handleTick(event) {
-    if(ticks > 5*60){
+    if(ticks > TURNTIME*60){
       ticks = 0;
       read();
       //console.log("Reading");
