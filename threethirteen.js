@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.987 - Fixing
+// By Jasper Camber Holton. V0.0.988 - Fixing scoring issues so aces score high or low
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -112,7 +112,7 @@
 var cardScale = 0.9;
 var cardCount = 53;
 var suits = ["S","H","C","D"]
-var cards = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"]
+var cards = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"]
 var images = []
   for(var x = 0; x < suits.length; x++){
     suit = suits[x];
@@ -418,11 +418,10 @@ var playerSorted = false;
 
 var allCardsPlayed;
 
-function isWildcard(value){
-  return value.getValue() == currentRound-2
-}
 
-// BEGIN HAND evaluator
+function isWildcard(value){
+  return value.getValue() == currentRound-1
+}
 
 function Hand(cards, jokers) {
     this.cards = clone(cards);
@@ -446,15 +445,15 @@ Hand.prototype.findMelds = function(suit, number) {
         for (var i = 0; i < this.jokers; i++) {
             this.melds.push({s:-1, n:-1});
         }
-        this.value -= 10 * this.jokers
+        this.value -= currentRound * this.jokers
     }
 
     // SEARCH UNTIL END OR FULL LAY-DOWN
     while (this.value > 0) {
 
         // FIND NEXT CARD IN MATRIX
-        while (number > 14 || this.cards[suit][number] == 0) {
-            if (++number > 14) {
+        while (number > 15 || this.cards[suit][number] == 0) {
+            if (++number > 15) {
                 number = 0;
                 if (++suit > 3) return;
             }
@@ -491,8 +490,8 @@ Hand.prototype.findMelds = function(suit, number) {
 
 Hand.prototype.findRun = function(s, n) {
     var run = [], jokers = this.jokers;
-    while (n < 14) {
-        if (this.cards[s][n] > 0) {
+    while (n < 14) { // 14
+        if ((n == 13 && this.cards[s][0] > 0) ||  this.cards[s][n] > 0) {
             run.push({s:s, n:n});
         } else if (jokers > 0) {
             run.push({s:-1, n:-1});
@@ -531,8 +530,10 @@ Hand.prototype.findSet = function(s, n) {
 
 Hand.prototype.removeCards = function(cards) {
     for (var i = 0; i < cards.length; i++) {
-        if (cards[i].s >= 0) {
+        if (cards[i].s >= 0 && cards[i].n < 13) {
             this.cards[cards[i].s][cards[i].n]--;
+        } else if (cards[i].n == 13){
+          this.cards[cards[i].s][0]--;
         } else this.jokers--;
     }
     this.value = this.leftoverValue();
@@ -544,17 +545,14 @@ Hand.prototype.leftoverValue = function() {
     var leftover = 0;
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 13; j++) {
-          value = j + 2;
-          if(value == 14){
-            value = 1;
-          }
+          value = j + 1;
           if(value > 10){
             value = 10;
           }
           leftover += this.cards[i][j] * value; // cards count from 0 vs 3
         }
     }
-    return leftover + this.jokers * 10// + 25 * this.jokers - (22 - round) * (this.jokers < this.wilds ? this.jokers : this.wilds);
+    return leftover + this.jokers * currentRound // + 25 * this.jokers - (22 - round) * (this.jokers < this.wilds ? this.jokers : this.wilds);
 }
 
 // UTILS: 2D ARRAY DEEP-COPIER
@@ -570,7 +568,7 @@ function clone(a) {
 // UTILS: SHOW HAND IN CONSOLE
 
 function showHand(c, j, v) {
-    var num = "    2 3 4 5 6 7 8 9 T J Q K A";
+    var num = "    A 2 3 4 5 6 7 8 9 T J Q K";
     console.log(num);
     for (var i = 0; i < 4; i++) {
         console.log(["SPD ","CLB ","HRT ","DMD "][i] + c[i]);
