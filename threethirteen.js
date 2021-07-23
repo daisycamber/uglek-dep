@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.989 - Drawing opponent hand faceup on win
+// By Jasper Camber Holton. V0.0.990 - Fixed stuck on win glich
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -323,9 +323,10 @@ function drawOpponentHandFaceup(){
             opponentWonGame();
             gameOverOnNextDiscard = false;
             opponentWinsOnNextDiscard = false;
+          } else {
+            canPlayerDiscard = false;
+            canPlayerDraw = false;
           }
-          canPlayerDiscard = false;
-          canPlayerDraw = false;
           setCurrentPlayer(false);
         }
       });
@@ -898,7 +899,6 @@ function opponentDiscard(input){
   checkOpponentWin();
   canPlayerDraw = true;
   canPlayerDiscard = false;
-
   if(gameOverOnNextDiscard){
     wonGame();
   }
