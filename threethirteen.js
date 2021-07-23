@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.988 - Fixing scoring issues so aces score high or low
+// By Jasper Camber Holton. V0.0.989 - Drawing opponent hand faceup on win
 (function threethirteen(){
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
@@ -774,6 +774,7 @@ function stringDeck(deck) {
     //console.log("OPPONENT SCORED: " + score)
     if(score == 0) {
       opponentWinsOnNextDiscard = true;
+      drawOpponentHandFaceup();
       //console.log("Opposite player goes out next round")
     }
   }
