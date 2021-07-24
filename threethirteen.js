@@ -1,9 +1,9 @@
-// By Jasper Camber Holton. V0.1.01 - Fixes
+// By Jasper Camber Holton. V0.1.0101 - Showing card names in center of screen
 (function threethirteen(){
   const TURNTIME = 3; // Turn time in seconds
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
-  const cardnames = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+  const cardnames = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
   //const cardsroot = "/cards/"
   const cardsroot = "https://uglek.com/media/cards/";
   let seed = 24;
@@ -1051,7 +1051,7 @@ circle.x = leftbound + 500;
 circle.y = topbound + 500;
 container.addChild(circle);
 
-  var roundtext = new createjs.Text(currentRound, TEXTTYPE2, "#000000")
+  var roundtext = new createjs.Text("", TEXTTYPE2, "#000000")
   roundtext.x = leftbound + 500;
   roundtext.y = topbound + 500 - 30;
   roundtext.textAlign = 'center';
@@ -1059,8 +1059,9 @@ container.addChild(circle);
   container.addChild(roundtext)
 
   function setRoundText(){
-    roundtext.text = currentRound;
+    roundtext.text = cardnames[currentRound-1];
   }
+  setRoundText();
 
 
 
