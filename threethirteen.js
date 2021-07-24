@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0 - Fixed won dialog
+// By Jasper Camber Holton. V0.1.01 - Fixes
 (function threethirteen(){
   const TURNTIME = 3; // Turn time in seconds
   var currentTurn = 0;
@@ -676,9 +676,8 @@ function stringDeck(deck) {
         texts[x].y = topbound + 500 - 270 + 80 * x + extra;
         container.addChild(texts[x]);
       }
+      dropConfetti();
       stage.update();
-
-
   }
   //
   function prepareForNextRound(){
@@ -743,11 +742,14 @@ function stringDeck(deck) {
     } else {
       gameOverOnNextDiscard = false;
       opponentWinsOnNextDiscard = false;
+      container.removeChild(discard);
+      container.removeChild(lastDiscard);
       sortHand(false);
       drawHand();
       drawDiscard()
       drawOpponentHand();
       setCurrentPlayer(canPlayerDraw);
+      setRoundText();
     }
   }
 
@@ -814,7 +816,7 @@ function stringDeck(deck) {
     });
   }
 
-var discardx = 650;
+var discardx = 700;
 var discardy = 500;
 var discard;
 
@@ -905,8 +907,12 @@ function opponentDiscard(input){
   }
   setCurrentPlayer(true);
 }
-
+var lastDiscard;
   function drawDiscard(){
+    if(lastDiscard){
+      container.removeChild(lastDiscard);
+    }
+    lastDiscard = discard
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
       //console.log("canPlayerDraw: " + canPlayerDraw);
@@ -952,9 +958,9 @@ function opponentDiscard(input){
   function drawDeck(cardsInDeck) { // The number of cards to draw
     var deckoffset = 5;
     for(var x = 0; x < cardsInDeck; x++){
-      drawFacedownCard(350+deckoffset*(cardsInDeck-x),500+deckoffset*(cardsInDeck-x));
+      drawFacedownCard(300+deckoffset*(cardsInDeck-x),500+deckoffset*(cardsInDeck-x));
     }
-    cardDeck = drawFacedownCard(350,500);
+    cardDeck = drawFacedownCard(300,500);
     cardDeck.on("mousedown", function(event) {
       //console.log("canPlayerDraw: " + canPlayerDraw);
       if(canPlayerDraw && playerHandCards.length < currentRound + 1){
@@ -1037,6 +1043,23 @@ function opponentDiscard(input){
     } else {
       currentPlayer.y = topbound + 300-psoffset;
     }
+  }
+
+  var circle = new createjs.Shape();
+circle.graphics.beginFill("#E8CD71").drawCircle(0, 0, 50);
+circle.x = leftbound + 500;
+circle.y = topbound + 500;
+container.addChild(circle);
+
+  var roundtext = new createjs.Text(currentRound, TEXTTYPE2, "#000000")
+  roundtext.x = leftbound + 500;
+  roundtext.y = topbound + 500 - 30;
+  roundtext.textAlign = 'center';
+
+  container.addChild(roundtext)
+
+  function setRoundText(){
+    roundtext.text = currentRound;
   }
 
 
@@ -1131,27 +1154,30 @@ opponentScoreText.text = input
     for (i = 0; i < confettiCount; i++) {
       confetti[i] = new createjs.Shape();
       confetti[i].graphics.beginFill(COLORS[0, rng.nextRange(0, COLORS.length)]).drawCircle(0, 0, rng.nextRange(7, 15));
-      confetti[i].x = rng.nextRange(0, width);
-      confetti[i].y = rng.nextRange(window.innerHeight + 30);
+      confetti[i].x = rng.nextRange(0, stage.canvas.width);
+      confetti[i].y = rng.nextRange(stage.canvas.height + 30);
       confetti[i].visible = false;
       confettivx[i] = rng.nextRange(-1, 1) / 5.0;
       confettivy[i] = rng.nextRange(-1, 1) / 5.0;
-      stage.addChild(confetti[i]);
+      container.addChild(confetti[i]);
     }
   }
 
   function dropConfetti() {
+    drawConfetti();
     droppedConfetti = false;
     for (i = 0; i < confettiCount; i++) {
       confetti[i].visible = true;
       confetti[i].y = rng.nextRange(confettimin, -20);
-      confetti[i].x = rng.nextRange(0, width);
+      confetti[i].x = rng.nextRange(0, stage.canvas.width);
       confettivx[i] = rng.nextRange(-3, 3) / 7.0;
       confettivy[i] = rng.nextRange(-3, 3) / 3.0;
     }
   }
 
   drawConfetti();
+
+
 
   //Update stage will render next frame
 
@@ -1184,6 +1210,8 @@ opponentScoreText.text = input
   function newGame(difficulty) {
 
   }
+
+
 
   function calculateAndDrawScores(){
     opponentscore+=calculateOpponentScore();
