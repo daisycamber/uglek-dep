@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.991 - Shortening turn time
+// By Jasper Camber Holton. V0.1.0 - Fixed won dialog
 (function threethirteen(){
   const TURNTIME = 3; // Turn time in seconds
   var currentTurn = 0;
@@ -658,9 +658,9 @@ function stringDeck(deck) {
       } else {
         toDisplay[1] = player2 + ": " + playerscore
       }
-      if(playerscore > opponentscore){
+      if(playerscore < opponentscore){
         toDisplay[2] = "You won!"
-      } else if(playerscore < opponentscore){
+      } else if(playerscore > opponentscore){
         toDisplay[2] = "Your opponent won!"
       } else {
         toDisplay[2] = "It's a tie!"
