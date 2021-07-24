@@ -1,6 +1,6 @@
-// By Jasper Camber Holton. V0.1.0101 - Showing card names in center of screen
+// By Jasper Camber Holton. V0.1.0102 - Fixing turn time
 (function threethirteen(){
-  const TURNTIME = 3; // Turn time in seconds
+  const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
   const suitnames = ["S", "H", "C", "D"];
   const cardnames = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
