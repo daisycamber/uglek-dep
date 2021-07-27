@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0102 - Fixing turn time
+// By Jasper Camber Holton. V0.1.0103 - Fixing things
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -236,7 +236,6 @@ var deckCount = currentRound*2+1
 var firstdiscard = deck[currentRound*2 + 1].Value
 var firstdiscardsuit = deck[currentRound*2 + 1].Suit
 if(user == player1){
-  console.log("Ready player 1")
   for (let i = 0; i < currentRound; i++) {
     playerHandCards[i] = deck[i].Value
     playerHandSuits[i] = deck[i].Suit
@@ -246,7 +245,6 @@ if(user == player1){
     opponentHandSuits[i-currentRound] = deck[i].Suit
   }
 } else {
-  console.log("Ready player 2")
     for (let i = 0; i < currentRound; i++) {
       opponentHandCards[i] = deck[i].Value
       opponentHandSuits[i] = deck[i].Suit
@@ -322,8 +320,6 @@ function drawOpponentHandFaceup(){
           drawHand();
           if(opponentWinsOnNextDiscard){
             opponentWonGame();
-            gameOverOnNextDiscard = false;
-            opponentWinsOnNextDiscard = false;
           } else {
             canPlayerDiscard = false;
             canPlayerDraw = false;
@@ -641,30 +637,36 @@ function stringDeck(deck) {
 
 
   function drawGameFinishedDialog(){
-    console.log("Game finished")
       var bitmap2 = new createjs.Bitmap(backImage);
       bitmap2.scale = cardScale * 2;
       bitmap2.x = leftbound + 300-250 * cardScale/2*2;
       bitmap2.y = topbound + 500-350 * cardScale/2*2;
       container.addChild(bitmap2);
       var toDisplay = []
-      if(user == player1){
-        toDisplay[0] = player1 + ": " + playerscore
-      } else {
-        toDisplay[0] = player1 + ": " + opponentscore
-      }
-      if(user == player1){
-        toDisplay[1] = player2 + ": " + opponentscore
-      } else {
-        toDisplay[1] = player2 + ": " + playerscore
-      }
+      var player1txt = ""
+      var player2txt = ""
       if(playerscore < opponentscore){
         toDisplay[2] = "You won!"
+        player1txt = "★"
       } else if(playerscore > opponentscore){
         toDisplay[2] = "Your opponent won!"
+        player2txt = "★"
       } else {
         toDisplay[2] = "It's a tie!"
+        player1txt = "★"
+        player2txt = "★"
       }
+      if(user == player1){
+        toDisplay[0] = player1txt + player1 + ": " + playerscore
+      } else {
+        toDisplay[0] = player1txt + player1 + ": " + opponentscore
+      }
+      if(user == player1){
+        toDisplay[1] = player2txt + player2 + ": " + opponentscore
+      } else {
+        toDisplay[1] = player2txt + player2 + ": " + playerscore
+      }
+
       var texts = []
       var extra = 0
       for(x = 0; x < toDisplay.length; x++){
@@ -983,6 +985,8 @@ var lastDiscard;
     drawDiscard();
     drawSortButtons();
     //drawOpponentHandFaceup();
+    //playerscore = 10;
+    //opponentscore=15;
     //drawGameFinishedDialog();
     stage.update();
   }
@@ -1006,16 +1010,14 @@ var lastDiscard;
       opjText.y = topbound + 270;
       opjText.textAlign = 'center';
       opjContainer.addChild(opjText);
-    setTimeout(() => {
-              container.removeChild(opjContainer);
-            }, 5000);
+      setTimeout(() => {
+        container.removeChild(opjContainer);
+      }, 5000);
     container.addChild(opjContainer);
     if(user == player1){
       canPlayerDraw = true;
     }
-
   }
-  //opponentJoinedGame();
 
   var playerscore = 0;
   var psoffset = 30;
@@ -1046,10 +1048,10 @@ var lastDiscard;
   }
 
   var circle = new createjs.Shape();
-circle.graphics.beginFill("#E8CD71").drawCircle(0, 0, 50);
-circle.x = leftbound + 500;
-circle.y = topbound + 500;
-container.addChild(circle);
+  circle.graphics.beginFill("#E8CD71").drawCircle(0, 0, 50);
+  circle.x = leftbound + 500;
+  circle.y = topbound + 500;
+  container.addChild(circle);
 
   var roundtext = new createjs.Text("", TEXTTYPE2, "#000000")
   roundtext.x = leftbound + 500;
@@ -1062,12 +1064,6 @@ container.addChild(circle);
     roundtext.text = cardnames[currentRound-1];
   }
   setRoundText();
-
-
-
-
-
-
 
   var opponentscore = 0;
 
@@ -1083,11 +1079,11 @@ container.addChild(circle);
   container.addChild(playerScoreText)
 
   function drawPlayerScore(input){
-playerScoreText.text = input
+    playerScoreText.text = input
   }
 
   function drawOpponentScore(input){
-opponentScoreText.text = input
+    opponentScoreText.text = input
   }
 
 
@@ -1110,9 +1106,7 @@ opponentScoreText.text = input
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
             currentTurn = i+1;
-          }/* else {
-            currentTurn = i+1;
-          }*/
+          }
         }
   }
 
@@ -1150,6 +1144,8 @@ opponentScoreText.text = input
   let confettivy = [];
   let confettiv = 10;
   let confettimin = -600;
+  var droppedConfetti = false;
+  //var droppedConfetti = false;
 
   function drawConfetti() {
     for (i = 0; i < confettiCount; i++) {
@@ -1160,7 +1156,7 @@ opponentScoreText.text = input
       confetti[i].visible = false;
       confettivx[i] = rng.nextRange(-1, 1) / 5.0;
       confettivy[i] = rng.nextRange(-1, 1) / 5.0;
-      container.addChild(confetti[i]);
+      stage.addChild(confetti[i]);
     }
   }
 
@@ -1186,7 +1182,7 @@ opponentScoreText.text = input
   createjs.Ticker.addEventListener("tick", stage);
   createjs.Ticker.addEventListener("tick", handleTick2);
 
-  let droppedConfetti = false;
+
 
   function handleTick2(event) {
     if (!droppedConfetti) {
@@ -1207,23 +1203,13 @@ opponentScoreText.text = input
     stage.update();
   }
 
-  let gamesfactor = 4*2; // gamesFactor is number of games / 400 (1600 games gamesFactor is 4)
-  function newGame(difficulty) {
-
-  }
-
-
-
   function calculateAndDrawScores(){
     opponentscore+=calculateOpponentScore();
     playerscore+=calculatePlayerScore();
-
     drawOpponentScore(opponentscore);
     drawPlayerScore(playerscore);
   }
 
-  let difficultyColors = ["#bafa25", "#e4f218", "#faa537", "#c70808"];
-  let difficultyNames = ["Easy", "Medium", "Difficult", "Expert"]; //["Simple", "Easy", "Intermed.", "Expert"];
   let wonContainer;
   let wonDialog;
   let isFinished = false;
@@ -1255,12 +1241,10 @@ opponentScoreText.text = input
       wonText.x = leftbound + 360;
       wonText.y = topbound + 925;
       wonContainer.on("mousedown", function(event) {
-
         container.removeChild(wonContainer);
         // Start next game
         nextRound();
         gameIsWon = false;
-
       });
       wonContainer.addChild(wonDialog);
       wonContainer.addChild(wonText);
@@ -1286,7 +1270,6 @@ opponentScoreText.text = input
     }
     score = calculateScore(ndeck)
     return score
-
   }
   // Draw a dialog to create a new game
   function opponentWonGame() {
@@ -1335,7 +1318,6 @@ opponentScoreText.text = input
     if(ticks > TURNTIME*60){
       ticks = 0;
       read();
-      //console.log("Reading");
     }
     ticks++;
     stage.update();
