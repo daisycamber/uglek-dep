@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0103 - Fixing things
+// By Jasper Camber Holton. V0.1.0104 - Fixing things again
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -647,10 +647,18 @@ function stringDeck(deck) {
       var player2txt = ""
       if(playerscore < opponentscore){
         toDisplay[2] = "You won!"
-        player1txt = "★"
+        if(user == player1){
+          player1txt = "★"
+        } else {
+          player2txt = "★"
+        }
       } else if(playerscore > opponentscore){
         toDisplay[2] = "Your opponent won!"
-        player2txt = "★"
+        if(user == player1){
+          player2txt = "★"
+        } else {
+          player1txt = "★"
+        }
       } else {
         toDisplay[2] = "It's a tie!"
         player1txt = "★"
@@ -986,7 +994,7 @@ var lastDiscard;
     drawSortButtons();
     //drawOpponentHandFaceup();
     //playerscore = 10;
-    //opponentscore=15;
+    //opponentscore = 15;
     //drawGameFinishedDialog();
     stage.update();
   }
