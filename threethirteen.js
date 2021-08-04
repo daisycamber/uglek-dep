@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0104 - Fixing things again
+// By Jasper Camber Holton. V0.1.0105 - Sorting opponent hand when it's drawn faceup
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -259,6 +259,7 @@ var discardcard = [firstdiscard]
 var discardsuit = [firstdiscardsuit]
 
 function drawOpponentHandFaceup(){
+  sortOpponentHand(true);
   opponentHandCount = 0;
   for(var i = 0; i < opponentHandObjects.length; i++){
     container.removeChild(opponentHandObjects[i])
