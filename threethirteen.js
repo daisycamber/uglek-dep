@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0106 - Trying to fix sorting
+// By Jasper Camber Holton. V0.1.0107 - Trying to fix sorting
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -353,7 +353,7 @@ var playerSorted = false;
       });
     } else {
       list.sort(function(a, b) {
-          return ((a.suit < b.suit) ? -1 : ((a.suit == b.suit) ? 0 : 1));
+          return ((a.suit > b.suit) ? -1 : ((a.suit == b.suit) ? 0 : 1));
           //Sort could be modified to, for example, sort on the age
           // if the name is the same.
       });
@@ -387,7 +387,7 @@ var playerSorted = false;
       });
     } else {
       list.sort(function(a, b) {
-          return ((a.suit < b.suit) ? -1 : ((a.suit == b.suit) ? 0 : 1));
+          return ((a.suit > b.suit) ? -1 : ((a.suit == b.suit) ? 0 : 1));
           //Sort could be modified to, for example, sort on the age
           // if the name is the same.
       });
