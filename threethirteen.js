@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0105 - Sorting opponent hand when it's drawn faceup
+// By Jasper Camber Holton. V0.1.0106 - Trying to fix sorting
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -338,6 +338,9 @@ var playerSorted = false;
     playerSorted = numberOrSuit;
     //drawOpponentHandFaceup(); // TODO comment out in production
     //1) combine the arrays:
+    if(!numberOrSuit){
+      sortHand(true);
+    }
     var list = [];
     for (var j = 0; j < playerHandCards.length; j++)
         list.push({'card': playerHandCards[j], 'suit': playerHandSuits[j]});
@@ -369,6 +372,9 @@ var playerSorted = false;
   function sortOpponentHand(numberOrSuit){
     //drawOpponentHandFaceup(); // TODO comment out in production
     //1) combine the arrays:
+    if(!numberOrSuit){
+      sortOpponentHand(true);
+    }
     var list = [];
     for (var j = 0; j < opponentHandCards.length; j++)
         list.push({'card': opponentHandCards[j], 'suit': opponentHandSuits[j]});
