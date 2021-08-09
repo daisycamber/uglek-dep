@@ -932,7 +932,7 @@ var lastDiscard;
     lastDiscard = discard
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
-      //console.log("canPlayerDraw: " + canPlayerDraw);
+      //console.log("canPlayerDraw: " + canPlayerDraw);f
       if(canPlayerDraw && playerHandCards.length < currentRound + 1){
         canPlayerDraw = false;
         canPlayerDiscard = true;
@@ -1123,6 +1123,8 @@ var lastDiscard;
             currentTurn = i+1;
           }
         }
+    stage.update();
+    
   }
 
   function read(){
@@ -1328,15 +1330,22 @@ var lastDiscard;
     }
   }
   let ticks = 0;
+  
+  function handleTurn(){
+    read();
+    setTimeout(function() {
+      handleTurn();
+    }, 5000);
+  }
 
-  function handleTick(event) {
+  /*function handleTick(event) {
     if(ticks > TURNTIME*60){
       ticks = 0;
       read();
     }
     ticks++;
     stage.update();
-  }
-  createjs.Ticker.addEventListener("tick", handleTick);
+  }*/
+  //createjs.Ticker.addEventListener("tick", handleTick);
   stage.update();
 })();
