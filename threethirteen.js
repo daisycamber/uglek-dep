@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0107 - Trying to fix sorting
+// By Jasper Camber Holton. V0.1.0109 - Fixing read with setTimeout()
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1337,7 +1337,7 @@ var lastDiscard;
       handleTurn();
     }, 5000);
   }
-
+  handleTurn();
   /*function handleTick(event) {
     if(ticks > TURNTIME*60){
       ticks = 0;
