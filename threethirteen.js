@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0109 - Fixing read with setTimeout()
+// By Jasper Camber Holton. V0.1.0109 - Removing console logs
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -615,7 +615,7 @@ function calculateScore(ndeck) {
     }
   }
   var x = new Hand(matrix, jokers); // no wilds parameter: automatic conversion
-  showHand(x.cards, x.jokers, x.value);
+  //showHand(x.cards, x.jokers, x.value);
   x.findMelds();
   //if(x)
   return x.value;
