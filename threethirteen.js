@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0112 - Fixed text centering
+// By Jasper Camber Holton. V0.1.0113 - Fixing sorting
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -813,6 +813,7 @@ function stringDeck(deck) {
     container.addChild(button333)
     container.addChild(text333)
     button333.on("mousedown", function(event) {
+      sortHand(false);
       sortHand(true);
       drawHand();
     });
