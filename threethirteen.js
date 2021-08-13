@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0111 - Fixed so both players can win a round
+// By Jasper Camber Holton. V0.1.0112 - Fixed text centering
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1264,8 +1264,9 @@ var lastDiscard;
       }
       txt = txt + " (Tap)"
       let wonText = new createjs.Text(txt, TEXTTYPE, "#000000")
-      wonText.x = leftbound + 360;
+      wonText.x = leftbound + 500;
       wonText.y = topbound + 925;
+      wonText.textAlign = 'center'
       wonContainer.on("mousedown", function(event) {
         container.removeChild(wonContainer);
         // Start next game
