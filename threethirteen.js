@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0110 - Removing console logs
+// By Jasper Camber Holton. V0.1.0111 - Fixed so both players can win a round
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1254,7 +1254,16 @@ var lastDiscard;
       wonDialog.graphics.beginFill("lightgreen").drawCircle(0, 0, 1000);
       wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
-      let wonText = new createjs.Text("You won! (Tap)", TEXTTYPE, "#000000")
+      var txt = ""
+      if(playerscore == 0 && opponentscore == 0){
+        txt = "You both won!"
+      } else if(playerscore == 0) {
+        txt = "You won!"
+      } else if(opponentscore == 0) {
+        txt = "Your opponent won!"
+      }
+      txt = txt + " (Tap)"
+      let wonText = new createjs.Text(txt, TEXTTYPE, "#000000")
       wonText.x = leftbound + 360;
       wonText.y = topbound + 925;
       wonContainer.on("mousedown", function(event) {
@@ -1311,7 +1320,17 @@ var lastDiscard;
       wonDialog.graphics.beginFill("lightblue").drawCircle(0, 0, 1000);
       wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
-      let wonText = new createjs.Text("Your opponent won!", TEXTTYPE, "#000000")
+      var txt = ""
+      if(playerscore == 0 && opponentscore == 0){
+        txt = "You both won!"
+      } else if(playerscore == 0) {
+        txt = "You won!"
+      } else if(opponentscore == 0) {
+        txt = "Your opponent won!"
+      }
+      txt = txt + " (Tap)"
+      let wonText = new createjs.Text(txt, TEXTTYPE, "#000000")
+      wonText.x = leftbound + 360;
       wonText.textAlign = 'center'
       wonText.x = leftbound + 500;
       wonText.y = topbound + 925;
