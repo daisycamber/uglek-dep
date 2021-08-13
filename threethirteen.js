@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0113 - Fixing sorting
+// By Jasper Camber Holton. V0.1.0114 - Fixing sorting opponent hand
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -259,6 +259,7 @@ var discardcard = [firstdiscard]
 var discardsuit = [firstdiscardsuit]
 
 function drawOpponentHandFaceup(){
+  sortOpponentHand(false);
   sortOpponentHand(true);
   opponentHandCount = 0;
   for(var i = 0; i < opponentHandObjects.length; i++){
