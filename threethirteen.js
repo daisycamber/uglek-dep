@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0115 - Fixing dialogs
+// By Jasper Camber Holton. V0.1.0116 - Fixing dialogs text position
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1258,7 +1258,7 @@ var lastDiscard;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
       wonDialog.graphics.beginFill("lightgreen").drawCircle(0, 0, 1000);
-      wonDialog.y = topbound + 1000 + 900;
+      wonDialog.y = topbound + 1000 + 910;
       wonDialog.x = leftbound + 500;
       var txt = ""
       if(lastPlayerScore == 0 && lastOpponentScore == 0){
@@ -1325,7 +1325,7 @@ var lastDiscard;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
       wonDialog.graphics.beginFill("lightblue").drawCircle(0, 0, 1000);
-      wonDialog.y = topbound + 1000 + 900;
+      wonDialog.y = topbound + 1000 + 910;
       wonDialog.x = leftbound + 500;
       var txt = ""
       if(lastPlayerScore == 0 && lastOpponentScore == 0){
