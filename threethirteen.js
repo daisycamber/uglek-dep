@@ -1331,7 +1331,6 @@ var lastDiscard;
       }
       txt = txt + " (Tap)"
       let wonText = new createjs.Text(txt, TEXTTYPE, "#000000")
-      wonText.x = leftbound + 360;
       wonText.textAlign = 'center'
       wonText.x = leftbound + 500;
       wonText.y = topbound + 925;
