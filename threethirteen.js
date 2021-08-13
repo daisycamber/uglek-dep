@@ -1258,7 +1258,7 @@ var lastDiscard;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
       wonDialog.graphics.beginFill("lightgreen").drawCircle(0, 0, 1000);
-      wonDialog.y = topbound + 1000 + 910;
+      wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
       var txt = ""
       if(lastPlayerScore == 0 && lastOpponentScore == 0){
@@ -1271,7 +1271,7 @@ var lastDiscard;
       txt = txt + " (Tap)"
       let wonText = new createjs.Text(txt, TEXTTYPE, "#000000")
       wonText.x = leftbound + 500;
-      wonText.y = topbound + 925;
+      wonText.y = topbound + 935;
       wonText.textAlign = 'center'
       wonContainer.on("mousedown", function(event) {
         container.removeChild(wonContainer);
@@ -1325,7 +1325,7 @@ var lastDiscard;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
       wonDialog.graphics.beginFill("lightblue").drawCircle(0, 0, 1000);
-      wonDialog.y = topbound + 1000 + 910;
+      wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
       var txt = ""
       if(lastPlayerScore == 0 && lastOpponentScore == 0){
@@ -1339,7 +1339,7 @@ var lastDiscard;
       let wonText = new createjs.Text(txt, TEXTTYPE, "#000000")
       wonText.textAlign = 'center'
       wonText.x = leftbound + 500;
-      wonText.y = topbound + 925;
+      wonText.y = topbound + 935;
       wonContainer.on("mousedown", function(event) {
 
         container.removeChild(wonContainer);
