@@ -1,7 +1,9 @@
-// By Jasper Camber Holton. V0.1.0114 - Fixing sorting opponent hand
+// By Jasper Camber Holton. V0.1.0115 - Fixing dialogs
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
+  var lastPlayerScore = 0;
+  var lastOpponentScore = 0;
   const suitnames = ["S", "H", "C", "D"];
   const cardnames = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
   //const cardsroot = "/cards/"
@@ -1221,10 +1223,12 @@ var lastDiscard;
     }
     stage.update();
   }
-
+  
   function calculateAndDrawScores(){
-    opponentscore+=calculateOpponentScore();
-    playerscore+=calculatePlayerScore();
+    lastOpponentScore = calculateOpponentScore();
+    lastPlayerScore = calculatePlayerScore();
+    opponentscore+=lastOpponentScore;
+    playerscore+=lastPlayerScore;
     drawOpponentScore(opponentscore);
     drawPlayerScore(playerscore);
   }
@@ -1257,11 +1261,11 @@ var lastDiscard;
       wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
       var txt = ""
-      if(playerscore == 0 && opponentscore == 0){
+      if(lastPlayerScore == 0 && lastOpponentScore == 0){
         txt = "You both won!"
-      } else if(playerscore == 0) {
+      } else if(lastPlayerScore == 0) {
         txt = "You won!"
-      } else if(opponentscore == 0) {
+      } else if(lastOpponentScore == 0) {
         txt = "Your opponent won!"
       }
       txt = txt + " (Tap)"
@@ -1324,11 +1328,11 @@ var lastDiscard;
       wonDialog.y = topbound + 1000 + 900;
       wonDialog.x = leftbound + 500;
       var txt = ""
-      if(playerscore == 0 && opponentscore == 0){
+      if(lastPlayerScore == 0 && lastOpponentScore == 0){
         txt = "You both won!"
-      } else if(playerscore == 0) {
+      } else if(lastPlayerScore == 0) {
         txt = "You won!"
-      } else if(opponentscore == 0) {
+      } else if(lastOpponentScore == 0) {
         txt = "Your opponent won!"
       }
       txt = txt + " (Tap)"
