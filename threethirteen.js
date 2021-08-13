@@ -1081,6 +1081,7 @@ var lastDiscard;
 
   function setRoundText(){
     roundtext.text = cardnames[currentRound-1];
+    stage.update();
   }
   setRoundText();
 
