@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0118 - Fixing
+// By Jasper Camber Holton. V0.1.0119 - Fixing
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
