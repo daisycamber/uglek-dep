@@ -62,7 +62,7 @@
     } catch {
 
     }
-    let ADHEIGHT = 90;
+    var ADHEIGHT = 90;
     if(dontshowad == "true"){
       ADHEIGHT = 0;
     }
@@ -99,8 +99,8 @@
       canPlayerDraw = false;
     }
     let less = window.innerWidth;
-    if(window.innerHeight < less){
-      less = window.innerHeight-ADHEIGHT;
+    if(canvasHeight < less){
+      less = canvasHeight;
     }
     scale = container.scale = less / 1000;
 
