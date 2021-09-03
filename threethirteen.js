@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0119 - Fixing
+// By Jasper Camber Holton. V0.1.0120 - Fixing
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -54,6 +54,9 @@
     background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
     stage.addChild(background);
     stage.addChild(container);
+    //background.on("mousedown", function(event) {
+      
+    //});
 
     var dontshowad;
     try {
