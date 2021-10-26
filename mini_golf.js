@@ -61,7 +61,6 @@ function readCallback(){
         } else if(sp[0] == "set"){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           currentTurn = i+1;
-          opponentPlaying = true;
           console.log("Opponent set ball");
         } else if(sp[0] == "put"){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
