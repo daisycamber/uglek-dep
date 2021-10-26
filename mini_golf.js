@@ -694,7 +694,7 @@ function startGame(newGame){
 }
 
   function handleInterval(){
-    if(!playerTurn || wonGame){
+    if(!playerTurn){
       read();
       console.log("Reading");
     }
