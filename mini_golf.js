@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.468
+// By Jasper Camber Holton. V0.0.469
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -328,7 +328,7 @@ function checkObstacleCollisions() {
     if(i != o){
         // If collided
         if(pythagorean(Math.abs(obstacles[o].x - obstacles[i].x),Math.abs(obstacles[o].y - obstacles[i].y)) < (obstacleSize[o] + obstacleSize[i])){
-          let vCollision = {x: obs.x - obstacles[o].x, y: obs.y - obstacles[o].y};
+          let vCollision = {x: obstacles[i].x - obstacles[o].x, y: obstacles[i].y - obstacles[o].y};
           let distance = Math.sqrt((obstacles[i].x-obstacles[o].x)*(obstacles[i].x-obstacles[o].x) + (obstacles[i].y-obstacles[o].y)*(obstacles[i].y-obstacles[o].y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
           let vRelativeVelocity = {x: obstacles[i].vx - obstacles[o].vx, y: obstacles[i].vy - obstacles[o].vy};
