@@ -161,7 +161,7 @@ function putOpponentBall(x,y){
 }
 
   start.on("mousedown", function(evt) {
-    if(playerTurn && evt.stageX/scale > leftbound + ballSize/2 && evt.stageY/scale > topbound + ballSize/2){
+    if(playerTurn && evt.stageX/scale > leftbound + ballSize && evt.stageY/scale > topbound + ballSize){
       if(!ballplaced){
         playerball = new createjs.Shape();
         playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
@@ -257,7 +257,7 @@ stage.on("stagemouseup", function(evt) {
         console.log("Move:");
               console.log(movex);
             console.log(movey);
-  if(playerTurn && ballplaced && playerball && playerball.vx == 0 && playerball.vy == 0){
+       if(playerTurn && ballplaced && playerball && playerball.vx == 0 && playerball.vy == 0){
           if(pythagorean(Math.abs(movex),Math.abs(movey)) > 30 && pressmovestarted){
             playerball.vx = movex/movefactor;
             playerball.vy = movey/movefactor;
