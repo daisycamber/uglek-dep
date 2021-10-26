@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.470
+// By Jasper Camber Holton. V0.0.471
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -59,6 +59,7 @@ function readCallback(){
           currentTurn = i+1;
           console.log("Player turn syndicated");
         } else if(sp[0] == "set"){
+          opponentballset = false;
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           currentTurn = i+1;
           console.log("Opponent set ball");
@@ -148,7 +149,6 @@ function setOpponentBall(x,y){
     opponentball.inHole = false;
         container.addChild(opponentball);
     opponentballset = true;
-
   } else {
     opponentball.x = x + leftbound;
     opponentball.y = y + topbound;
@@ -513,6 +513,7 @@ function startGame(newGame){
   opponentball = null;
   ballplaced = false;
   opponentballset = false;
+  
   // Clear the objects on screen
   for(var i = 0; i < fixedobstacles.length; i++){
     container.removeChild(fixedobstacles[i]);
