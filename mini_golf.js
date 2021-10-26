@@ -1,5 +1,5 @@
 // By Jasper Camber Holton. V0.0.481
-var seed = 7;
+var seed = 9;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
 function RNG(seed) {
@@ -267,6 +267,8 @@ stage.on("stagemouseup", function(evt) {
               playerball.vx = Math.cos(angle)*maxv;
               playerball.vy = Math.sin(angle)*maxv;
             }
+            playerball.vx = Math.round(playerball.vx * 10000) / 10000
+            playerball.vy = Math.round(playerball.vy * 10000) / 10000
             send("put,"+playerball.vx+","+playerball.vy+","+user);
             playerTurn = false;
             firstPut = true;
@@ -551,7 +553,7 @@ function startGame(newGame){
     hole.x = leftbound + holeposx;
     hole.y = topbound + holeposy;
     container.addChild(hole)
-    for(var i = 0; i < 20; i++){
+    for(var i = 0; i < 10; i++){
       obstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*30 + 30);
       obstacleSize[i] = size;
@@ -562,7 +564,7 @@ function startGame(newGame){
       obstacles[i].vy = 0;
           container.addChild(obstacles[i])
     }
-    for(var i = 0; i < 7; i++){
+    for(var i = 0; i < 5; i++){
       fixedobstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*60 + 60);
       fixedobstacleSize[i] = size;
@@ -580,7 +582,7 @@ function startGame(newGame){
     hole.y = topbound + holeposy;
     container.addChild(hole)
     // Draw new objects
-    for(var i = 0; i < 20; i++){
+    for(var i = 0; i < 10; i++){
       obstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*30 + 30);
       obstacleSize[i] = size;
@@ -591,7 +593,7 @@ function startGame(newGame){
       obstacles[i].vy = 0;
           container.addChild(obstacles[i])
     }
-    for(var i = 0; i < 7; i++){
+    for(var i = 0; i < 5; i++){
       fixedobstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*60 + 60);
       fixedobstacleSize[i] = size;
@@ -609,7 +611,7 @@ function startGame(newGame){
     hole.y = topbound + holeposy;
     container.addChild(hole)
     // Draw new objects
-    for(var i = 0; i < 25; i++){
+    for(var i = 0; i < 15; i++){
       obstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*30 + 30);
       obstacleSize[i] = size;
@@ -620,7 +622,7 @@ function startGame(newGame){
       obstacles[i].vy = 0;
           container.addChild(obstacles[i])
     }
-    for(var i = 0; i < 10; i++){
+    for(var i = 0; i < 7; i++){
       fixedobstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*60 + 60);
       fixedobstacleSize[i] = size;
@@ -637,7 +639,7 @@ function startGame(newGame){
     hole.x = leftbound + holeposx;
     hole.y = topbound + holeposy;
     container.addChild(hole);
-    for(var i = 0; i < 10; i++){
+    for(var i = 0; i < 6; i++){
       obstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*30 + 30);
       obstacleSize[i] = size;
@@ -648,7 +650,7 @@ function startGame(newGame){
       obstacles[i].vy = 0;
           container.addChild(obstacles[i])
     }
-    for(var i = 0; i < 10; i++){
+    for(var i = 0; i < 6; i++){
       fixedobstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*60 + 60);
       fixedobstacleSize[i] = size;
@@ -665,7 +667,7 @@ function startGame(newGame){
     hole.x = leftbound + holeposx;
     hole.y = topbound + holeposy;
     container.addChild(hole)
-    for(var i = 0; i < 20; i++){
+    for(var i = 0; i < 10; i++){
       obstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*30 + 30);
       obstacleSize[i] = size;
@@ -676,7 +678,7 @@ function startGame(newGame){
       obstacles[i].vy = 0;
           container.addChild(obstacles[i])
     }
-    for(var i = 0; i < 7; i++){
+    for(var i = 0; i < 5; i++){
       fixedobstacles[i] = new createjs.Shape();
       var size = (rng.nextFloat()*60 + 60);
       fixedobstacleSize[i] = size;
