@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.477
+// By Jasper Camber Holton. V0.0.478
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -61,6 +61,7 @@ function readCallback(){
         } else if(sp[0] == "set"){
           setOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
           currentTurn = i+1;
+          opponentPlaying = true;
           console.log("Opponent set ball");
         } else if(sp[0] == "put"){
           putOpponentBall(parseFloat(sp[1]),parseFloat(sp[2]));
