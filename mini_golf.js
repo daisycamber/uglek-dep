@@ -326,19 +326,17 @@ function checkObstacleCollisions() {
   for(var i = 0; i < obstacles.length; i++){
   for(var o = 0; o < obstacles.length; o++){
     if(i != o){
-        var body = obstacles[o];
-         var obs = obstacles[i];
         // If collided
-        if(pythagorean(Math.abs(body.x - obs.x),Math.abs(body.y - obs.y)) < (obstacleSize[o] + obstacleSize[i])){
-          let vCollision = {x: obs.x - body.x, y: obs.y - body.y};
-          let distance = Math.sqrt((obs.x-body.x)*(obs.x-body.x) + (obs.y-body.y)*(obs.y-body.y));
+        if(pythagorean(Math.abs(obstacles[o].x - obstacles[i].x),Math.abs(obstacles[o].y - obstacles[i].y)) < (obstacleSize[o] + obstacleSize[i])){
+          let vCollision = {x: obs.x - obstacles[o].x, y: obs.y - obstacles[o].y};
+          let distance = Math.sqrt((obstacles[i].x-obstacles[o].x)*(obstacles[i].x-obstacles[o].x) + (obstacles[i].y-obstacles[o].y)*(obstacles[i].y-obstacles[o].y));
           let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
-          let vRelativeVelocity = {x: obs.vx - body.vx, y: obs.vy - body.vy};
+          let vRelativeVelocity = {x: obstacles[i].vx - obstacles[o].vx, y: obstacles[i].vy - obstacles[o].vy};
           let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
-          body.vx += (speed * vCollisionNorm.x);
-          body.vy += (speed * vCollisionNorm.y);
-          obs.vx -= (speed * vCollisionNorm.x);
-          obs.vy -= (speed * vCollisionNorm.y);
+          obstacles[o].vx += (speed * vCollisionNorm.x);
+          obstacles[o].vy += (speed * vCollisionNorm.y);
+          obstacles[i].vx -= (speed * vCollisionNorm.x);
+          obstacles[i].vy -= (speed * vCollisionNorm.y);
         }
       }
     }
@@ -484,6 +482,8 @@ function wonDialog(){
   text = "Your opponent won!"
   if(opponentball && playerball && opponentball.inHole && playerball.inHole){
     text = "You and your opponent won!"
+  } else if(playerball.inHole) {
+    text = "You won!"
   }
   wonText = new createjs.Text(text, TEXTTYPE, "#000000")
   wonText.x = leftbound + 500;
