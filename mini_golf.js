@@ -720,6 +720,7 @@ function startGame(newGame){
         wonGame = true;
         wonDialog();
       }
+      ticks = 0;
     }
     
 
