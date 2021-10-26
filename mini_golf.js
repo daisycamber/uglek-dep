@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.472
+// By Jasper Camber Holton. V0.0.473
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -166,6 +166,8 @@ function putOpponentBall(x,y){
         playerball.graphics.beginFill("white").drawCircle(0, 0, ballSize);
         playerball.x = evt.stageX/scale;
         playerball.y = evt.stageY/scale;
+        movestartx = evt.stageX;
+        movestarty = evt.stageY;
         playerball.vx = 0;
         playerball.vy = 0;
         container.addChild(playerball);
