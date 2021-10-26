@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.467
+// By Jasper Camber Holton. V0.0.468
 var seed = 7;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
