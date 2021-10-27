@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.0.482
+// By Jasper Camber Holton. V0.0.483
 var seed = 9;
 let TEXTTYPE = "bold " + 42 + "px Arial";
 var maxv = 15;
@@ -241,7 +241,7 @@ for(var i = 0; i < 7; i++){
 var putted = false;
 
 stage.on("stagemousedown", function(evt) {
-          if(!pressmovestarted){
+          if(!pressmovestarted && ballplaced){
           movestartx = evt.stageX;
             movestarty = evt.stageY;
             pressmovestarted = true;
