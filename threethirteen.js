@@ -1365,7 +1365,7 @@ var lastDiscard;
     read();
     setTimeout(function() {
       handleTurn();
-    }, 5000);
+    }, 4000);
   }
   handleTurn();
   /*function handleTick(event) {
