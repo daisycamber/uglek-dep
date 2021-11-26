@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0123 - Fixing
+// By Jasper Camber Holton. V0.1.0124 - Interval to 5 seconds
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1360,22 +1360,8 @@ var lastDiscard;
     }
   }
   let ticks = 0;
-  
-  function handleTurn(){
-    read();
-    setTimeout(function() {
-      handleTurn();
-    }, 4000);
-  }
-  handleTurn();
-  /*function handleTick(event) {
-    if(ticks > TURNTIME*60){
-      ticks = 0;
+    var mainInterval = setInterval(function() {
       read();
-    }
-    ticks++;
-    stage.update();
-  }*/
-  //createjs.Ticker.addEventListener("tick", handleTick);
+    }, 5000);
   stage.update();
 })();
