@@ -1139,7 +1139,11 @@ var lastDiscard;
     const Http = new XMLHttpRequest();
     const url="https://uglek.com/game/" + id + "/play/";
     Http.open("GET", url);
-    Http.send();
+    try {
+      Http.send();
+    } catch(error){
+      console.log(error);
+    }
     Http.onload = function() {
       if(Http.readyState === Http.DONE){
         gameplay = Http.responseText.split("/");
