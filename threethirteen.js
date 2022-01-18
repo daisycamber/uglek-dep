@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0124 - Interval to 5 seconds
+// By Jasper Camber Holton. V0.1.0125 - Fixed hanging up at error
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
