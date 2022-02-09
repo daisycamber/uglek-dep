@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Typo fixed takeDiscard
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Again fixing
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1170,7 +1170,6 @@ var lastDiscard;
           }
         }
     currentTurn = gp.length-1;
-    setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
   }
   
 
