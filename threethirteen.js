@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Fixing current player
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Typo fixed takeDiscard
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1147,7 +1147,7 @@ var lastDiscard;
               if(sp[1] == "deck"){
                 drawCardFromDeck();
               } else if(sp[1] == "discard"){
-                drawDiscard();
+                takeDiscard();
               }
               canPlayerDraw = false;
             canPlayerDiscard = true;
