@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - fix 3
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - More fixes
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1121,15 +1121,12 @@ var lastDiscard;
           sp = gp[i].split(",");
           if(sp[0] == "join" && sp[2] != user){
             opponentJoinedGame();
-            currentTurn = i+1;
           } else if(sp[0] == "draw" && sp[2] != user){
               if(sp[1] == "deck"){
                 opponentDrawDeck();
               } else if(sp[1] == "discard"){
                 opponentTakeDiscard();
               }
-              canPlayerDraw = false;
-            currentTurn = i+1;
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
             if(gameIsWon){
@@ -1138,18 +1135,17 @@ var lastDiscard;
               nextRound();
               gameIsWon = false;
             }
-            currentTurn = i+1;
           } else if(sp[0] == "join" && sp[2] == user){ // For player
             //opponentJoinedGame();
-            currentTurn = i+1;
           } else if(sp[0] == "draw" && sp[2] == user){ 
+                         canPlayerDraw = true;
               if(sp[1] == "deck"){
                 drawCardFromDeck();
               } else if(sp[1] == "discard"){
                 drawDiscard();
               }
-              canPlayerDraw = false;
-            currentTurn = i+1;
+                         canPlayerDraw = false;
+ 
           } else if(sp[0] == "discard" && sp[2] == user){
             theDiscard = sp[1].split('.')
             discardCard = parseInt(theDiscard[0])
@@ -1161,9 +1157,9 @@ var lastDiscard;
               nextRound();
               gameIsWon = false;
             }
-            currentTurn = i+1;
           }
         }
+    currentTurn = gp.length;
   }
   
 
