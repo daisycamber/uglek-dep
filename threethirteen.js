@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Even more fixes again
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Even more fixes again and again
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1166,6 +1166,7 @@ var lastDiscard;
           }
         }
     currentTurn = gp.length;
+    setCurrentPlayer(canPlayerDraw);
   }
   
 
