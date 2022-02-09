@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0125 - Fixed hanging up at error
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -285,6 +285,37 @@ function drawOpponentHandFaceup(){
     opponentHandCount++;
   }
 }
+  
+  function playerDiscard(card, suit){
+    canPlayerDiscard = false;
+          canPlayerDraw = false;
+          nCards = [] // New cards and suits
+          nSuits = []
+          var count = 0; // our count for the new hand
+          for(var x = 0; x < playerHandCards.length; x++){
+            if(!(suit == playerHandSuits[x] && card == playerHandCards[x])){
+              nCards[count] = playerHandCards[x]
+              nSuits[count] = playerHandSuits[x]
+              count++;
+            }
+          }
+          discardcard[discardcard.length] = event.target.card
+          discardsuit[discardsuit.length] = event.target.suit
+          playerHandCards = nCards
+          playerHandSuits = nSuits
+          drawDiscard();
+          
+
+          checkPlayerWin();
+          drawHand();
+          if(opponentWinsOnNextDiscard){
+            opponentWonGame();
+          } else {
+            canPlayerDiscard = false;
+            canPlayerDraw = false;
+          }
+          setCurrentPlayer(false);
+  }
 
   function drawHand(){
     var playerHandCount = 0;
@@ -304,34 +335,8 @@ function drawOpponentHandFaceup(){
       playerHandObjects[playerHandCount].card = playerHandCards[i]
       playerHandObjects[playerHandCount].on("mousedown", function(event) {
         if(canPlayerDiscard){
-          canPlayerDiscard = false;
-          canPlayerDraw = false;
-          nCards = [] // New cards and suits
-          nSuits = []
-          var count = 0; // our count for the new hand
-          for(var x = 0; x < playerHandCards.length; x++){
-            if(!(event.target.suit == playerHandSuits[x] && event.target.card == playerHandCards[x])){
-              nCards[count] = playerHandCards[x]
-              nSuits[count] = playerHandSuits[x]
-              count++;
-            }
-          }
-          discardcard[discardcard.length] = event.target.card
-          discardsuit[discardsuit.length] = event.target.suit
-          playerHandCards = nCards
-          playerHandSuits = nSuits
-          drawDiscard();
+          playerDiscard(event.target.card, event.target.suit);
           send("discard,"+event.target.card + "." + event.target.suit,+","+user)
-
-          checkPlayerWin();
-          drawHand();
-          if(opponentWinsOnNextDiscard){
-            opponentWonGame();
-          } else {
-            canPlayerDiscard = false;
-            canPlayerDraw = false;
-          }
-          setCurrentPlayer(false);
         }
       });
       playerHandCount++;
@@ -1109,10 +1114,66 @@ var lastDiscard;
     opponentScoreText.text = input
   }
 
-
+  var recovered = false;
+  
+  function recoverState(gp){
+    for(let i = 0; i < gp.length; i++){
+          sp = gp[i].split(",");
+          if(sp[0] == "join" && sp[2] != user){
+            opponentJoinedGame();
+            currentTurn = i+1;
+          } else if(sp[0] == "draw" && sp[2] != user){
+              if(sp[1] == "deck"){
+                opponentDrawDeck();
+              } else if(sp[1] == "discard"){
+                opponentTakeDiscard();
+              }
+              canPlayerDraw = false;
+            currentTurn = i+1;
+          } else if(sp[0] == "discard" && sp[2] != user){
+            opponentDiscard(sp[1]);
+            if(gameIsWon){
+              container.removeChild(wonContainer);
+              // Start next game
+              nextRound();
+              gameIsWon = false;
+            }
+            currentTurn = i+1;
+          } else if(sp[0] == "join" && sp[2] == user){ // For player
+            //opponentJoinedGame();
+            currentTurn = i+1;
+          } else if(sp[0] == "draw" && sp[2] == user){ 
+              if(sp[1] == "deck"){
+                drawCardFromDeck();
+              } else if(sp[1] == "discard"){
+                drawDiscard();
+              }
+              canPlayerDraw = false;
+            currentTurn = i+1;
+          } else if(sp[0] == "discard" && sp[2] == user){
+            theDiscard = sp[1].split('.')
+            discardCard = parseInt(theDiscard[0])
+            discardSuit = parseInt(theDiscard[1])
+            playerDiscard(discardCard, discardSuit);
+            if(gameIsWon){
+              container.removeChild(wonContainer);
+              // Start next game
+              nextRound();
+              gameIsWon = false;
+            }
+            currentTurn = i+1;
+          }
+        }
+  }
+  
 
   function readCallback(){
     gp = gameplay;
+    if(!recovered && gp.length() > 1){
+      console.log("Recovering state"):
+      recovered = true;
+      recoverState(gp);
+    }
         for(let i = currentTurn; i < gp.length; i++){
           sp = gp[i].split(",");
           if(sp[0] == "join" && sp[2] != user){
