@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - fix 2
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - fix 3
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -299,8 +299,8 @@ function drawOpponentHandFaceup(){
               count++;
             }
           }
-          discardcard[discardcard.length] = event.target.card
-          discardsuit[discardsuit.length] = event.target.suit
+          discardcard[discardcard.length] = card
+          discardsuit[discardsuit.length] = suit
           playerHandCards = nCards
           playerHandSuits = nSuits
           drawDiscard();
