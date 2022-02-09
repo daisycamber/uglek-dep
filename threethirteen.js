@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - Again fixing
+// By Jasper Camber Holton. V0.1.0126 - Recovering gameplay state - More fixes
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1132,14 +1132,15 @@ var lastDiscard;
             setCurrentPlayer(false);
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
+            canPlayerDraw = true;
+            setCurrentPlayer(true);
             if(gameIsWon){
               container.removeChild(wonContainer);
               // Start next game
               nextRound();
               gameIsWon = false;
             }
-            canPlayerDraw = true;
-            setCurrentPlayer(true);
+            
           } else if(sp[0] == "join" && sp[2] == user){ // For player
             //opponentJoinedGame();
           } else if(sp[0] == "draw" && sp[2] == user){ 
@@ -1160,13 +1161,14 @@ var lastDiscard;
             discardSuit = parseInt(theDiscard[1])
             playerDiscard(discardCard, discardSuit);
             canPlayerDiscard = false;
+            setCurrentPlayer(false);
             if(gameIsWon){
               container.removeChild(wonContainer);
               // Start next game
               nextRound();
               gameIsWon = false;
             }
-            setCurrentPlayer(false);
+            
           }
         }
     currentTurn = gp.length-1;
