@@ -336,7 +336,7 @@ function drawOpponentHandFaceup(){
       playerHandObjects[playerHandCount].on("mousedown", function(event) {
         if(canPlayerDiscard){
           playerDiscard(event.target.card, event.target.suit);
-          send("discard,"+event.target.card + "." + event.target.suit,+","+user)
+          send("discard," + event.target.card + "." + event.target.suit + "," + user)
         }
       });
       playerHandCount++;
