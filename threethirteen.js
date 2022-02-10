@@ -1174,7 +1174,6 @@ var lastDiscard;
           }
         }
     currentTurn = gp.length-1;
-    setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
   }
   
 
