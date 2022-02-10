@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0143 - Trying to properly set player (again)
+// By Jasper Camber Holton. V0.1.0144 - Trying to properly set player (again)
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
