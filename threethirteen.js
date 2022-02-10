@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0130 - Now recovers gameplay - Polishing agaun - Trying this
+// By Jasper Camber Holton. V0.1.0130 - Now recovers gameplay - Polishing again - Trying this
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
