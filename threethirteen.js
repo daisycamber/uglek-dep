@@ -1174,7 +1174,7 @@ var lastDiscard;
           }
         }
     currentTurn = gp.length-1;
-    //setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
+    setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
   }
   
 
@@ -1200,6 +1200,7 @@ var lastDiscard;
             currentTurn = i+1;
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
+            canPlayerDraw = true;
             currentTurn = i+1;
           }
         }
