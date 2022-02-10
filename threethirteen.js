@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0127 - Now recovers gameplay
+// By Jasper Camber Holton. V0.1.0127 - Now recovers gameplay - Fixing "Oppponent Joined" dialog
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1043,11 +1043,11 @@ var lastDiscard;
           container.removeChild(opjContainer);
         }, 5000);
       container.addChild(opjContainer);
+      if(user == player1){
+        canPlayerDraw = true;
+      }
     }
     joinShowed = true;
-    if(user == player1){
-      canPlayerDraw = true;
-    }
   }
   var playerscore = 0;
   var psoffset = 30;
