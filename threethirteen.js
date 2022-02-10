@@ -1123,9 +1123,8 @@ var lastDiscard;
     for(let i = 0; i < gp.length-1; i++){
       console.log("Recovering turn: " + gp[i]);
           sp = gp[i].split(",");
-      
           if(sp[0] == "join" && sp[2] != user){
-            opponentJoinedGame();
+            consolelog("Opponent Joined");
           } else if(sp[0] == "draw" && sp[2] != user){
               if(sp[1] == "deck"){
                 opponentDrawDeck();
