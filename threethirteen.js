@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0133 - Now recovers gameplay - Recovered fix
+// By Jasper Camber Holton. V0.1.0133 - Now recovers gameplay - Fixing set current player
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -1176,7 +1176,7 @@ var lastDiscard;
             
           }
         }
-    setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
+    //setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
     currentTurn = gp.length-1;
   }
   
