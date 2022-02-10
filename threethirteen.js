@@ -720,6 +720,8 @@ function stringDeck(deck) {
     var cr = currentRound + 1
     var deckCount = cr*2+1
     // display 5 results
+    
+    canPlayerDiscard = false;
 
     if(user == player1){
       console.log("Ready player 1")
@@ -1332,19 +1334,6 @@ var lastDiscard;
   function wonGame() {
     if(!gameIsWon){
       calculateAndDrawScores();
-      if(user == player1){
-        if((currentRound+1)%2 == 0){
-          canPlayerDraw = true;
-        } else {
-          canPlayerDraw = false;
-        }
-      } else {
-        if((currentRound+1)%2 == 1){
-          canPlayerDraw = true;
-        } else {
-          canPlayerDraw = false;
-        }
-      }
       gameIsWon = true;
       wonContainer = new createjs.Container();
       wonDialog = new createjs.Shape();
@@ -1373,7 +1362,6 @@ var lastDiscard;
       wonContainer.addChild(wonDialog);
       wonContainer.addChild(wonText);
       container.addChild(wonContainer);
-
       drawOpponentHandFaceup();
       prepareForNextRound();
     }
