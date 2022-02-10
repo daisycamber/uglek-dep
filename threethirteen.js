@@ -1131,7 +1131,6 @@ var lastDiscard;
               } else if(sp[1] == "discard"){
                 opponentTakeDiscard();
               }
-            setCurrentPlayer(false);
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
             canPlayerDraw = true;
@@ -1154,7 +1153,6 @@ var lastDiscard;
               }
               canPlayerDraw = false;
             canPlayerDiscard = true;
-            setCurrentPlayer(true);
  
           } else if(sp[0] == "discard" && sp[2] == user){
             canPlayerDiscard = true;
