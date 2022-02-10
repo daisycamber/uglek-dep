@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0130 - Now recovers gameplay - Polishing agaun
+// By Jasper Camber Holton. V0.1.0130 - Now recovers gameplay - Polishing agaun - Trying this
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -1176,6 +1176,7 @@ var lastDiscard;
             
           }
         }
+    setCurrentPlayer(playerCanDraw || playerCanDiscard);
     currentTurn = gp.length-1;
   }
   
