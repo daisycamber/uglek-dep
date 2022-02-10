@@ -1333,13 +1333,13 @@ var lastDiscard;
     if(!gameIsWon){
       calculateAndDrawScores();
       if(user == player1){
-        if((currentRound+1)%2 == 1){
+        if((currentRound+1)%2 == 0){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
         }
       } else {
-        if((currentRound+1)%2 == 0){
+        if((currentRound+1)%2 == 1){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
