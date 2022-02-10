@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0137 - Now recovers gameplay - Fixing set current player
+// By Jasper Camber Holton. V0.1.0138 - Trying to properly set player on new round when recovering gameplay
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
