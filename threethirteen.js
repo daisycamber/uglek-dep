@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0127 - Now recovers gameplay - Setting current player
+// By Jasper Camber Holton. V0.1.0127 - Now recovers gameplay - Setting current player again
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
