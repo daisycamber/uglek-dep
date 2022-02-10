@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0142 - Trying to properly set player (again)
+// By Jasper Camber Holton. V0.1.0143 - Trying to properly set player (again)
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -722,6 +722,8 @@ function stringDeck(deck) {
     // display 5 results
     
     canPlayerDiscard = false;
+    
+    console.log("Current round: " + cr);
 
     if(user == player1){
       console.log("Ready player 1")
@@ -762,7 +764,7 @@ function stringDeck(deck) {
 
     discardcard = [firstdiscard]
     discardsuit = [firstdiscardsuit]
-
+    
     setCurrentPlayer(canPlayerDraw);
   }
 
