@@ -335,7 +335,7 @@ function drawOpponentHandFaceup(){
       playerHandObjects[playerHandCount].suit = playerHandSuits[i]
       playerHandObjects[playerHandCount].card = playerHandCards[i]
       playerHandObjects[playerHandCount].on("mousedown", function(event) {
-        if(canPlayerDiscard){
+        if(gameReady && canPlayerDiscard){
           playerDiscard(event.target.card, event.target.suit);
           send("discard," + event.target.card + "." + event.target.suit + "," + user)
         }
@@ -1159,7 +1159,7 @@ var lastDiscard;
               canPlayerDraw = false;
             canPlayerDiscard = true;
  
-          } else if(sp[0] == "discard" && sp[2] == user){c
+          } else if(sp[0] == "discard" && sp[2] == user){
             canPlayerDiscard = true;
             theDiscard = sp[1].split('.')
             discardCard = parseInt(theDiscard[0])
