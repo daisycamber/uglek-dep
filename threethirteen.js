@@ -736,9 +736,9 @@ function stringDeck(deck) {
         opponentHandSuits[i-cr] = deck[i].Suit
       }
       if(cr%2 == 0){
-        canPlayerDraw = true;
-      } else {
         canPlayerDraw = false;
+      } else {
+        canPlayerDraw = true;
       }
     } else {
       console.log("Ready player 2")
@@ -750,7 +750,7 @@ function stringDeck(deck) {
           playerHandCards[i-cr] = deck[i].Value
           playerHandSuits[i-cr] = deck[i].Suit
         }
-        if(cr%2 == 1){
+        if(cr%2 == 0){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
