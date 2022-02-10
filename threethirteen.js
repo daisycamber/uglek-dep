@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0127 - Now recovers gameplay - Setting current player again
+// By Jasper Camber Holton. V0.1.0127 - Now recovers gameplay - Testing
 (function threethirteen(){
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
@@ -1124,7 +1124,7 @@ var lastDiscard;
       console.log("Recovering turn: " + gp[i]);
           sp = gp[i].split(",");
           if(sp[0] == "join" && sp[2] != user){
-            consolelog("Opponent Joined");
+            console.log("Opponent Joined");
           } else if(sp[0] == "draw" && sp[2] != user){
               if(sp[1] == "deck"){
                 opponentDrawDeck();
