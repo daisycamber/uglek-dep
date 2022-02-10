@@ -1141,14 +1141,12 @@ var lastDiscard;
           } else if(sp[0] == "discard" && sp[2] != user){
             opponentDiscard(sp[1]);
             canPlayerDraw = true;
-            setCurrentPlayer(true);
             if(gameIsWon){
               container.removeChild(wonContainer);
               // Start next game
               nextRound();
               gameIsWon = false;
             }
-            
           } else if(sp[0] == "join" && sp[2] == user){ // For player
             //opponentJoinedGame();
           } else if(sp[0] == "draw" && sp[2] == user){ 
@@ -1168,7 +1166,6 @@ var lastDiscard;
             discardSuit = parseInt(theDiscard[1])
             playerDiscard(discardCard, discardSuit);
             canPlayerDiscard = false;
-            setCurrentPlayer(false);
             if(gameIsWon){
               container.removeChild(wonContainer);
               // Start next game
@@ -1178,7 +1175,7 @@ var lastDiscard;
             
           }
         }
-    //setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
+    setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
     currentTurn = gp.length-1;
   }
   
