@@ -1030,22 +1030,25 @@ var lastDiscard;
   }
 
   var opjContainer;
+  var joinShowed = false;
   function opponentJoinedGame(){
-    opjContainer = new createjs.Container();
-      var opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
-      opjText.x = leftbound + 500;
-      opjText.y = topbound + 270;
-      opjText.textAlign = 'center';
-      opjContainer.addChild(opjText);
-      setTimeout(() => {
-        container.removeChild(opjContainer);
-      }, 5000);
-    container.addChild(opjContainer);
+    if(!joinShowed){
+      opjContainer = new createjs.Container();
+        var opjText = new createjs.Text("Opponent Joined Game", TEXTTYPE, "#000000")
+        opjText.x = leftbound + 500;
+        opjText.y = topbound + 270;
+        opjText.textAlign = 'center';
+        opjContainer.addChild(opjText);
+        setTimeout(() => {
+          container.removeChild(opjContainer);
+        }, 5000);
+      container.addChild(opjContainer);
+    }
+    joinShowed = true;
     if(user == player1){
       canPlayerDraw = true;
     }
   }
-
   var playerscore = 0;
   var psoffset = 30;
   var playerScore = new createjs.Shape();
