@@ -1,5 +1,6 @@
-// By Jasper Camber Holton. V0.1.0129 - Now recovers gameplay - Fixes
+// By Jasper Camber Holton. V0.1.0129 - Now recovers gameplay - Polishes
 (function threethirteen(){
+  var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
   var currentTurn = 0;
   var lastPlayerScore = 0;
@@ -944,44 +945,46 @@ var lastDiscard;
     lastDiscard = discard
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
-      //console.log("canPlayerDraw: " + canPlayerDraw);f
-      if(canPlayerDraw && playerHandCards.length < currentRound + 1){
-        canPlayerDraw = false;
-        canPlayerDiscard = true;
-        takeDiscard();
-        send("draw,discard,"+user)
-      } else {
-        canPlayerDraw = false;
-        canPlayerDiscard = true;
+      if(gameReady){
+        //console.log("canPlayerDraw: " + canPlayerDraw);f
+        if(canPlayerDraw && playerHandCards.length < currentRound + 1){
+          canPlayerDraw = false;
+          canPlayerDiscard = true;
+          takeDiscard();
+          send("draw,discard,"+user)
+        } else {
+          canPlayerDraw = false;
+          canPlayerDiscard = true;
+        }
       }
     });
   }
   var currentCard = currentRound*2 + 1 + 1;
 
   function drawCardFromDeck(){
-    if(currentCard < 52){
-      playerHandCards[playerHandCards.length] = deck[currentCard].Value
-      playerHandSuits[playerHandSuits.length] = deck[currentCard].Suit
-      currentCard++;
-    } else {
-      // Use discard as ndeck
-      ndeck = []
-      for(var x = 0; x < discardcard.length; x++){
-        ndeck[ndeck.length] = (new Card(discardcard[x], discardsuit[x]))
+    
+      if(currentCard < 52){
+        playerHandCards[playerHandCards.length] = deck[currentCard].Value
+        playerHandSuits[playerHandSuits.length] = deck[currentCard].Suit
+        currentCard++;
+      } else {
+        // Use discard as ndeck
+        ndeck = []
+        for(var x = 0; x < discardcard.length; x++){
+          ndeck[ndeck.length] = (new Card(discardcard[x], discardsuit[x]))
+        }
+        currentCard = 1;
+        discardcard = [ndeck[0].Value]
+        discardsuit = [ndeck[0].Suit]
+        deck = []
+        for(var x = 1; x < ndeck.length; x++){
+          deck[x-1] = ndeck[x]
+        }
+        drawDiscard();
       }
-      currentCard = 1;
-      discardcard = [ndeck[0].Value]
-      discardsuit = [ndeck[0].Suit]
-      deck = []
-      for(var x = 1; x < ndeck.length; x++){
-        deck[x-1] = ndeck[x]
-      }
-      drawDiscard();
-    }
-    canPlayerDraw = false;
-    canPlayerDiscard = true;
-    drawHand();
-
+      canPlayerDraw = false;
+      canPlayerDiscard = true;
+      drawHand();
   }
 
   function drawDeck(cardsInDeck) { // The number of cards to draw
@@ -992,14 +995,16 @@ var lastDiscard;
     cardDeck = drawFacedownCard(300,500);
     cardDeck.on("mousedown", function(event) {
       //console.log("canPlayerDraw: " + canPlayerDraw);
-      if(canPlayerDraw && playerHandCards.length < currentRound + 1){
-        canPlayerDraw = false;
-        canPlayerDiscard = true;
-        drawCardFromDeck();
-        send("draw,deck,"+user)
-      } else {
-        canPlayerDraw = false;
-        canPlayerDiscard = true;
+      if(gameReady){
+        if(canPlayerDraw && playerHandCards.length < currentRound + 1){
+          canPlayerDraw = false;
+          canPlayerDiscard = true;
+          drawCardFromDeck();
+          send("draw,deck,"+user)
+        } else {
+          canPlayerDraw = false;
+          canPlayerDiscard = true;
+        }
       }
     });
   }
@@ -1154,7 +1159,7 @@ var lastDiscard;
               canPlayerDraw = false;
             canPlayerDiscard = true;
  
-          } else if(sp[0] == "discard" && sp[2] == user){
+          } else if(sp[0] == "discard" && sp[2] == user){c
             canPlayerDiscard = true;
             theDiscard = sp[1].split('.')
             discardCard = parseInt(theDiscard[0])
@@ -1177,6 +1182,9 @@ var lastDiscard;
 
   function readCallback(){
     gp = gameplay;
+    if(!gameReady){
+      gameReady = true;
+    }
     if(!recovered && gp.length > 2){
       console.log("Recovering state");
       recovered = true;
