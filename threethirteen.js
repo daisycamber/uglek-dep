@@ -1175,7 +1175,7 @@ var lastDiscard;
           }
         }
     currentTurn = gp.length-1;
-    container.removeChild(opjContainer);
+    setCurrentPlayer(canPlayerDraw || canPlayerDiscard);
   }
   
 
