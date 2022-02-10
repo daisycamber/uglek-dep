@@ -1180,7 +1180,7 @@ var lastDiscard;
 
   function readCallback(){
     gp = gameplay;
-    if(!recovered && gp.length > 1){
+    if(!recovered && gp.length > 2){
       console.log("Recovering state");
       recovered = true;
       recoverState(gp);
