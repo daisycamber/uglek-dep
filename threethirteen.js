@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0129 - Now recovers gameplay - Polishes
+// By Jasper Camber Holton. V0.1.0130 - Now recovers gameplay - Polishes
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
