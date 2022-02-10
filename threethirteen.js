@@ -1186,7 +1186,7 @@ var lastDiscard;
     if(!gameReady){
       gameReady = true;
     }
-    if(!recovered && gp.length > 2){
+    if(!recovered && gp.length > 3){
       console.log("Recovering state");
       recovered = true;
       recoverState(gp);
