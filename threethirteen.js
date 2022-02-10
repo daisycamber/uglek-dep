@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0145 - Trying to properly set player (again and again)
+// By Jasper Camber Holton. V0.1.0146 - Trying to properly set player (again and again)
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -735,7 +735,7 @@ function stringDeck(deck) {
         opponentHandCards[i-cr] = deck[i].Value
         opponentHandSuits[i-cr] = deck[i].Suit
       }
-      if(cr%2 == 0){
+      if(cr%2 == 1){
         canPlayerDraw = false;
       } else {
         canPlayerDraw = true;
@@ -750,7 +750,7 @@ function stringDeck(deck) {
           playerHandCards[i-cr] = deck[i].Value
           playerHandSuits[i-cr] = deck[i].Suit
         }
-        if(cr%2 == 0){
+        if(cr%2 == 1){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
