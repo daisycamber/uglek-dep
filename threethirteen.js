@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0132 - Now recovers gameplay - Fixing
+// By Jasper Camber Holton. V0.1.0133 - Now recovers gameplay - Recovered fix
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -1186,10 +1186,12 @@ var lastDiscard;
     if(!gameReady){
       gameReady = true;
     }
-    if(!recovered && gp.length > 3){
+    if(!recovered && gp.length > 2){
       console.log("Recovering state");
       recovered = true;
       recoverState(gp);
+    } else if(!recovered){
+      recovered = true;
     }
         for(let i = currentTurn; i < gp.length-1; i++){
           sp = gp[i].split(",");
