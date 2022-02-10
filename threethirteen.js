@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0138 - Trying to properly set player on new round when recovering gameplay
+// By Jasper Camber Holton. V0.1.0139 - Trying to properly set player on new round when recovering gameplay (again)
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -733,7 +733,7 @@ function stringDeck(deck) {
         opponentHandCards[i-cr] = deck[i].Value
         opponentHandSuits[i-cr] = deck[i].Suit
       }
-      if(cr%2 == 0){
+      if(cr%2 == 1){
         canPlayerDraw = true;
       } else {
         canPlayerDraw = false;
@@ -748,7 +748,7 @@ function stringDeck(deck) {
           playerHandCards[i-cr] = deck[i].Value
           playerHandSuits[i-cr] = deck[i].Suit
         }
-        if(cr%2 == 1){
+        if(cr%2 == 0){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
