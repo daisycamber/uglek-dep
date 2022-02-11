@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V0.1.0147 - Trying to properly set player (again and again and again)
+// By Jasper Camber Holton. V1.0.01 - Fixed player turn and recovery working, setting ad height
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
