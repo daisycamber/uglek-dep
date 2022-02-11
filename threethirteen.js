@@ -66,7 +66,7 @@
     } catch {
 
     }
-    var ADHEIGHT = 90;
+    var ADHEIGHT = 120;
     if(dontshowad == "true"){
       ADHEIGHT = 0;
     }
