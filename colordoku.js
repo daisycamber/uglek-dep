@@ -44,7 +44,7 @@
   let container = new createjs.Container();
   scale = container.scale = less / 1000;
   background = new createjs.Shape();
-  background.graphics.beginFill("#b0afb3").drawRect(0, 0, window.innerWidth, window.innerHeight); //
+  background.graphics.beginFill("#b0afb3").drawRect(0, 0, 1000, 1000); //
   stage.addChild(background);
   stage.addChild(container);
   leftbound = (width - less) / 2 / scale;
