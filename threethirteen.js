@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.01 - Fixing won game logic to be more cohesive
+// By Jasper Camber Holton. V1.0.02 - Fixing won game logic to be more cohesive, fixed wonGame
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
