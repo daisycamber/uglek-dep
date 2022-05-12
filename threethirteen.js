@@ -949,7 +949,7 @@ function opponentDiscard(input){
   setCurrentPlayer(true);
   if(preparingForNextRound){
    nextRound(); 
-    wonGame = false
+    gameIsWon = false;
     container.removeChild(wonContainer);
   }
 }
