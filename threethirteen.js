@@ -708,8 +708,9 @@ function stringDeck(deck) {
       dropConfetti();
       stage.update();
   }
-  //
+  var preparingForNextRound = false;
   function prepareForNextRound(){
+    preparingForNextRound = true;
     createAndShuffleDeck();
 
     opponentHandCards = []
@@ -770,6 +771,7 @@ function stringDeck(deck) {
 
   function nextRound(){ // Fix it so when you go to next round the player cant get stuck with canPlayerDraw = false if they haven't hit the won dialog
     currentRound = currentRound + 1;
+    preparingForNextRound = false;
     if(currentRound == 14){
       drawGameFinishedDialog();
     } else {
@@ -781,6 +783,11 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
+      if(currentRound%2 == 0){
+          canPlayerDraw = true;
+      } else {
+          canPlayerDraw = false;
+      }
       setCurrentPlayer(canPlayerDraw);
       setRoundText();
     }
@@ -940,6 +947,9 @@ function opponentDiscard(input){
     wonGame();
   }
   setCurrentPlayer(true);
+  if(preparingForNextRound){
+   nextRound(); 
+  }
 }
 var lastDiscard;
   function drawDiscard(){
