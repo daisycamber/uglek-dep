@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.01 - Fixed player turn and recovery working, setting ad height
+// By Jasper Camber Holton. V1.0.01 - Fixing won game logic to be more cohesive
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -949,6 +949,8 @@ function opponentDiscard(input){
   setCurrentPlayer(true);
   if(preparingForNextRound){
    nextRound(); 
+    wonGame = false
+    container.removeChild(wonContainer);
   }
 }
 var lastDiscard;
