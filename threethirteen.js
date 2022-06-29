@@ -305,8 +305,6 @@ function drawOpponentHandFaceup(){
           playerHandCards = nCards
           playerHandSuits = nSuits
           drawDiscard();
-          
-
           checkPlayerWin();
           drawHand();
           if(opponentWinsOnNextDiscard){
@@ -783,10 +781,18 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      if(currentRound%2 == 0){
-          canPlayerDraw = true;
+      if(user == player1){
+        if(currentRound%2 == 0){
+            canPlayerDraw = true;
+        } else {
+            canPlayerDraw = false;
+        }
       } else {
-          canPlayerDraw = false;
+        if(currentRound%2 == 0){
+            canPlayerDraw = false;
+        } else {
+            canPlayerDraw = true;
+        }
       }
       setCurrentPlayer(canPlayerDraw);
       setRoundText();
