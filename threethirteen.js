@@ -288,6 +288,7 @@ function drawOpponentHandFaceup(){
 }
   
   function playerDiscard(card, suit){
+    if(canPlayerDiscard) {
     canPlayerDiscard = false;
           canPlayerDraw = false;
           nCards = [] // New cards and suits
@@ -314,6 +315,7 @@ function drawOpponentHandFaceup(){
             canPlayerDraw = false;
           }
           setCurrentPlayer(false);
+    }
   }
 
   function drawHand(){
@@ -794,6 +796,7 @@ function stringDeck(deck) {
             canPlayerDraw = false;
         }
       }
+      canPlayerDiscard = false;
       setCurrentPlayer(canPlayerDraw);
       setRoundText();
     }
@@ -984,7 +987,7 @@ var lastDiscard;
   var currentCard = currentRound*2 + 1 + 1;
 
   function drawCardFromDeck(){
-    
+    if(canPlayerDraw){
       if(currentCard < 52){
         playerHandCards[playerHandCards.length] = deck[currentCard].Value
         playerHandSuits[playerHandSuits.length] = deck[currentCard].Suit
@@ -1007,6 +1010,7 @@ var lastDiscard;
       canPlayerDraw = false;
       canPlayerDiscard = true;
       drawHand();
+}
   }
 
   function drawDeck(cardsInDeck) { // The number of cards to draw
