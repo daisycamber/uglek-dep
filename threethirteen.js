@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.01 - Fixing discard and draw 3
+// By Jasper Camber Holton. V1.0.01 - Fixing discard and draw 4
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
