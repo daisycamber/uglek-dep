@@ -975,9 +975,10 @@ var lastDiscard;
       if(gameReady){
         //console.log("canPlayerDraw: " + canPlayerDraw);f
         if(canPlayerDraw && playerHandCards.length < currentRound + 1){
+          takeDiscard();
           canPlayerDraw = false;
           canPlayerDiscard = true;
-          takeDiscard();
+          
           send("draw,discard,"+user)
         } else {
           canPlayerDraw = false;
@@ -1025,9 +1026,10 @@ var lastDiscard;
       //console.log("canPlayerDraw: " + canPlayerDraw);
       if(gameReady){
         if(canPlayerDraw && playerHandCards.length < currentRound + 1){
+          drawCardFromDeck();
           canPlayerDraw = false;
           canPlayerDiscard = true;
-          drawCardFromDeck();
+          
           send("draw,deck,"+user)
         }
       }
