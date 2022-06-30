@@ -101,6 +101,8 @@
     if(user == player2){
       send("join,x,"+user);
       canPlayerDraw = false;
+    } else {
+      canPlayerDraw = true;
     }
     let less = window.innerWidth;
     if(canvasHeight < less){
