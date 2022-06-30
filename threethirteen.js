@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.01 - Fixing discard and draw
+// By Jasper Camber Holton. V1.0.01 - Fixing discard and draw 2
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -722,8 +722,6 @@ function stringDeck(deck) {
     var deckCount = cr*2+1
     // display 5 results
     
-    canPlayerDiscard = false;
-    
     console.log("Current round: " + cr);
 
     if(user == player1){
@@ -875,6 +873,7 @@ var discardsuit = [firstdiscardsuit]
 
 
 function takeDiscard(){
+  if(canPlayerDraw) {
   container.removeChild(discard)
   playerHandCards[playerHandCards.length] = discardcard[discardcard.length-1]
   playerHandSuits[playerHandSuits.length] = discardsuit[discardsuit.length-1]
@@ -883,6 +882,7 @@ function takeDiscard(){
   drawHand();
   if(discardcard.length > 0){
     drawDiscard();
+  }
   }
 }
 
@@ -964,6 +964,7 @@ function opponentDiscard(input){
 }
 var lastDiscard;
   function drawDiscard(){
+    if(canPlayerDraw) {
     if(lastDiscard){
       container.removeChild(lastDiscard);
     }
@@ -983,6 +984,7 @@ var lastDiscard;
         }
       }
     });
+    }
   }
   var currentCard = currentRound*2 + 1 + 1;
 
