@@ -759,7 +759,7 @@ function stringDeck(deck) {
     }
     firstdiscard = deck[cr*2 + 1].Value
     firstdiscardsuit = deck[cr*2 + 1].Suit
-    currentCard = cr*2 + 1 + 1;
+    currentCard = cr*2 + 1 + 2;
 
 
 
@@ -987,7 +987,7 @@ var lastDiscard;
       }
     });
   }
-  var currentCard = currentRound*2 + 1 + 1;
+  var currentCard = currentRound*2 + 1 + 2;
 
   function drawCardFromDeck(){
     if(canPlayerDraw){
