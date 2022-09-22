@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.01 - No more discarding wildcard
+// By Jasper Camber Holton. V1.0.02 - Fixing won game logic to be more cohesive, fixed wonGame
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -101,8 +101,6 @@
     if(user == player2){
       send("join,x,"+user);
       canPlayerDraw = false;
-    } else {
-      canPlayerDraw = true;
     }
     let less = window.innerWidth;
     if(canvasHeight < less){
@@ -290,7 +288,6 @@ function drawOpponentHandFaceup(){
 }
   
   function playerDiscard(card, suit){
-    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound) {
     canPlayerDiscard = false;
           canPlayerDraw = false;
           nCards = [] // New cards and suits
@@ -308,6 +305,8 @@ function drawOpponentHandFaceup(){
           playerHandCards = nCards
           playerHandSuits = nSuits
           drawDiscard();
+          
+
           checkPlayerWin();
           drawHand();
           if(opponentWinsOnNextDiscard){
@@ -317,7 +316,6 @@ function drawOpponentHandFaceup(){
             canPlayerDraw = false;
           }
           setCurrentPlayer(false);
-    }
   }
 
   function drawHand(){
@@ -724,6 +722,8 @@ function stringDeck(deck) {
     var deckCount = cr*2+1
     // display 5 results
     
+    canPlayerDiscard = false;
+    
     console.log("Current round: " + cr);
 
     if(user == player1){
@@ -759,7 +759,7 @@ function stringDeck(deck) {
     }
     firstdiscard = deck[cr*2 + 1].Value
     firstdiscardsuit = deck[cr*2 + 1].Suit
-    currentCard = cr*2 + 1 + 2;
+    currentCard = cr*2 + 1 + 1;
 
 
 
@@ -783,20 +783,11 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      if(user == player1){
-        if(currentRound%2 == 0){
-            canPlayerDraw = false;
-        } else {
-            canPlayerDraw = true;
-        }
+      if(currentRound%2 == 0){
+          canPlayerDraw = true;
       } else {
-        if(currentRound%2 == 0){
-            canPlayerDraw = true;
-        } else {
-            canPlayerDraw = false;
-        }
+          canPlayerDraw = false;
       }
-      canPlayerDiscard = false;
       setCurrentPlayer(canPlayerDraw);
       setRoundText();
     }
@@ -875,7 +866,6 @@ var discardsuit = [firstdiscardsuit]
 
 
 function takeDiscard(){
-if(canPlayerDraw) {
   container.removeChild(discard)
   playerHandCards[playerHandCards.length] = discardcard[discardcard.length-1]
   playerHandSuits[playerHandSuits.length] = discardsuit[discardsuit.length-1]
@@ -884,7 +874,6 @@ if(canPlayerDraw) {
   drawHand();
   if(discardcard.length > 0){
     drawDiscard();
-  }
   }
 }
 
@@ -975,10 +964,9 @@ var lastDiscard;
       if(gameReady){
         //console.log("canPlayerDraw: " + canPlayerDraw);f
         if(canPlayerDraw && playerHandCards.length < currentRound + 1){
-          takeDiscard();
           canPlayerDraw = false;
           canPlayerDiscard = true;
-          
+          takeDiscard();
           send("draw,discard,"+user)
         } else {
           canPlayerDraw = false;
@@ -987,10 +975,10 @@ var lastDiscard;
       }
     });
   }
-  var currentCard = currentRound*2 + 1 + 2;
+  var currentCard = currentRound*2 + 1 + 1;
 
   function drawCardFromDeck(){
-    if(canPlayerDraw){
+    
       if(currentCard < 52){
         playerHandCards[playerHandCards.length] = deck[currentCard].Value
         playerHandSuits[playerHandSuits.length] = deck[currentCard].Suit
@@ -1013,7 +1001,6 @@ var lastDiscard;
       canPlayerDraw = false;
       canPlayerDiscard = true;
       drawHand();
-}
   }
 
   function drawDeck(cardsInDeck) { // The number of cards to draw
@@ -1026,11 +1013,13 @@ var lastDiscard;
       //console.log("canPlayerDraw: " + canPlayerDraw);
       if(gameReady){
         if(canPlayerDraw && playerHandCards.length < currentRound + 1){
-          drawCardFromDeck();
           canPlayerDraw = false;
           canPlayerDiscard = true;
-          
+          drawCardFromDeck();
           send("draw,deck,"+user)
+        } else {
+          canPlayerDraw = false;
+          canPlayerDiscard = true;
         }
       }
     });
