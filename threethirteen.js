@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.01 - Fixing discard and draw 4 oui
+// By Jasper Camber Holton. V1.0.01 - No more discarding wildcard
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -290,7 +290,7 @@ function drawOpponentHandFaceup(){
 }
   
   function playerDiscard(card, suit){
-    if(canPlayerDiscard) {
+    if(canPlayerDiscard && card + 1 != currentRound) {
     canPlayerDiscard = false;
           canPlayerDraw = false;
           nCards = [] // New cards and suits
