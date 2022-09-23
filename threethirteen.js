@@ -971,9 +971,6 @@ var lastDiscard;
           canPlayerDiscard = true;
           takeDiscard();
           send("draw,discard,"+user)
-        } else {
-          canPlayerDraw = false;
-          canPlayerDiscard = true;
         }
       }
     });
@@ -1021,9 +1018,6 @@ var lastDiscard;
           canPlayerDiscard = true;
           drawCardFromDeck();
           send("draw,deck,"+user)
-        } else {
-          canPlayerDraw = false;
-          canPlayerDiscard = true;
         }
       }
     });
