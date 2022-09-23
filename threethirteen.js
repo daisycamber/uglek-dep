@@ -321,6 +321,7 @@ function drawOpponentHandFaceup(){
   }
 
   function drawHand(){
+    canPlayerDiscard = false;
     var playerHandCount = 0;
     for(var i = 0; i < playerHandObjects.length; i++){
       container.removeChild(playerHandObjects[i])
@@ -980,7 +981,7 @@ var lastDiscard;
   var currentCard = currentRound*2 + 1 + 1;
 
   function drawCardFromDeck(){
-    
+    if(canPlayerDraw) {
       if(currentCard < 52){
         playerHandCards[playerHandCards.length] = deck[currentCard].Value
         playerHandSuits[playerHandSuits.length] = deck[currentCard].Suit
@@ -1003,6 +1004,7 @@ var lastDiscard;
       canPlayerDraw = false;
       canPlayerDiscard = true;
       drawHand();
+    }
   }
 
   function drawDeck(cardsInDeck) { // The number of cards to draw
