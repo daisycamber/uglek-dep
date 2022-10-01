@@ -786,7 +786,7 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      if(currentRound%2 == 0){
+      if(currentRound%2 == 1){
           canPlayerDraw = (user != player1);
       } else {
           canPlayerDraw = (user == player1);
