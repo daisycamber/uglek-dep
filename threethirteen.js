@@ -288,7 +288,7 @@ function drawOpponentHandFaceup(){
 }
   
   function playerDiscard(card, suit){
-    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound-1) {
+    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound) {
           canPlayerDiscard = false;
           canPlayerDraw = false;
           nCards = [] // New cards and suits
@@ -965,8 +965,8 @@ var lastDiscard;
     discard = drawCard(discardsuit[discardsuit.length-1],discardcard[discardcard.length-1],discardx,discardy);
     discard.on("mousedown", function(event) {
       if(gameReady){
-        //console.log("canPlayerDraw: " + canPlayerDraw);f
-        if(canPlayerDraw && playerHandCards.length < currentRound + 1){
+        console.log("canPlayerDraw: " + canPlayerDraw);
+        if(canPlayerDraw && playerHandCards.length < currentRound + 2){
           canPlayerDraw = false;
           canPlayerDiscard = true;
           takeDiscard();
@@ -1013,7 +1013,8 @@ var lastDiscard;
     cardDeck.on("mousedown", function(event) {
       //console.log("canPlayerDraw: " + canPlayerDraw);
       if(gameReady){
-        if(canPlayerDraw && playerHandCards.length < currentRound + 1){
+        console.log('Can player draw is ' + canPlayerDraw);
+        if(canPlayerDraw && playerHandCards.length < currentRound + 2){
           canPlayerDraw = false;
           canPlayerDiscard = true;
           drawCardFromDeck();
