@@ -739,7 +739,7 @@ function stringDeck(deck) {
         opponentHandCards[i-cr] = deck[i].Value
         opponentHandSuits[i-cr] = deck[i].Suit
       }
-      if(cr%2 == 0){
+      if(cr%2 == 1){
         canPlayerDraw = false;
       } else {
         canPlayerDraw = true;
@@ -754,7 +754,7 @@ function stringDeck(deck) {
           playerHandCards[i-cr] = deck[i].Value
           playerHandSuits[i-cr] = deck[i].Suit
         }
-        if(cr%2 == 0){
+        if(cr%2 == 1){
           canPlayerDraw = true;
         } else {
           canPlayerDraw = false;
