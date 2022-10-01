@@ -288,7 +288,8 @@ function drawOpponentHandFaceup(){
 }
   
   function playerDiscard(card, suit){
-    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound) {
+    console.log("canPlayerDiscard: " + canPlayerDiscard);
+    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound-1) {
           canPlayerDiscard = false;
           canPlayerDraw = false;
           nCards = [] // New cards and suits
