@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.03 - Fixing won game logic to be more cohesive, fixed wonGame
+// By Jasper Camber Holton. V1.0.04 Fixing canPlayerDraw on new round
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
@@ -787,7 +787,7 @@ function stringDeck(deck) {
       drawHand();
       drawDiscard()
       drawOpponentHand();
-      if(currentRound%2 == 1){
+      if(currentRound%2 == 0){
           canPlayerDraw = (user != player1);
       } else {
           canPlayerDraw = (user == player1);
