@@ -289,7 +289,7 @@ function drawOpponentHandFaceup(){
   
   function playerDiscard(card, suit){
     console.log("canPlayerDiscard: " + canPlayerDiscard);
-    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound-1) {
+    if(canPlayerDiscard && card + 1 != currentRound && playerHandCards.length > currentRound) {
           canPlayerDiscard = false;
           canPlayerDraw = false;
           nCards = [] // New cards and suits
@@ -968,9 +968,9 @@ var lastDiscard;
       if(gameReady){
         console.log("canPlayerDraw: " + canPlayerDraw);
         if(canPlayerDraw && playerHandCards.length < currentRound + 2){
+          takeDiscard();
           canPlayerDraw = false;
           canPlayerDiscard = true;
-          takeDiscard();
           send("draw,discard,"+user)
         }
       }
@@ -1016,9 +1016,9 @@ var lastDiscard;
       if(gameReady){
         console.log('Can player draw is ' + canPlayerDraw);
         if(canPlayerDraw && playerHandCards.length < currentRound + 2){
+          drawCardFromDeck();
           canPlayerDraw = false;
           canPlayerDiscard = true;
-          drawCardFromDeck();
           send("draw,deck,"+user)
         }
       }
