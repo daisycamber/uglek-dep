@@ -786,9 +786,9 @@ function stringDeck(deck) {
       drawDiscard()
       drawOpponentHand();
       if(currentRound%2 == 0){
-          canPlayerDraw = (user != player1);
-      } else {
           canPlayerDraw = (user == player1);
+      } else {
+          canPlayerDraw = (user != player1);
       }
       setCurrentPlayer(canPlayerDraw);
       setRoundText();
