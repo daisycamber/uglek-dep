@@ -1,4 +1,4 @@
-// By Jasper Camber Holton. V1.0.04 Fixing canPlayerDraw on new round
+// By Jasper Camber Holton. V1.0.05 Fixing canPlayerDraw on new round
 (function threethirteen(){
   var gameReady = false;
   const TURNTIME = 5; // Turn time in seconds
