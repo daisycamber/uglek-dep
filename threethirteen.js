@@ -38,7 +38,7 @@
   let rng = new RNG(seed);
 
 
-    let canvasid = "game239";
+    let canvasid = "game";
     let canvas = document.getElementById(canvasid);
     let width = canvas.width;
     let height = canvas.height;
